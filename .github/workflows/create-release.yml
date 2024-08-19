@@ -1,6 +1,8 @@
 ---
 on:
-  push:
+  pull_request:
+    types:
+      - closed
     branches:
       - release
 
@@ -15,9 +17,10 @@ jobs:
     name: Export game to Github
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3.3.0
+        uses: actions/checkout@v4.1.7
         with:
           fetch-depth: 0
+          ref: ${{ github.sha }}
 
       - name: Bump version and push tag
         id: bump_tag
@@ -26,6 +29,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           WITH_V: true
           PRERELEASE: false
+          PRERELEASE_SUFFIX: alpha
           DEFAULT_BRANCH: release
           RELEASE_BRANCHES: testing, release
 
@@ -48,7 +52,7 @@ jobs:
           archive_output: true
 
       - name: Create release
-        uses: ncipollo/release-action@v1.12.0
+        uses: ncipollo/release-action@v1.14.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           generateReleaseNotes: true
