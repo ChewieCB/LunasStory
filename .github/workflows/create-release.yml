@@ -123,9 +123,9 @@ jobs:
     needs:
       [
         export_game,
-        release_testing_html,
-        release_testing_windows,
-        release_testing_linux,
+        release_html,
+        release_windows,
+        release_linux,
       ]
     steps:
       - name: get tagged release
