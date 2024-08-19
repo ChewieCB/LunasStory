@@ -11,6 +11,7 @@ config_version=5
 [application]
 
 config/name="Luna's Story"
+run/main_scene="res://src/stages/main/MainStage.tscn"
 config/features=PackedStringArray("4.3", "Mobile")
 config/icon="res://icon.svg"
 
