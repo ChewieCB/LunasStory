@@ -1,8 +1,6 @@
 extends Node2D
 
-signal hover(state: bool)
-signal pickup
-signal drop
+signal item(_item: Node2D, state: bool)
 
 @export_category("Components")
 @export var selectable_component: SelectableComponent
@@ -19,6 +17,8 @@ signal drop
 
 
 func _ready() -> void:
+	add_to_group("ingredients")
+	
 	sprite.texture = object_texture
 	texture_index = randi_range(1, 50)
 	sprite.frame = texture_index
@@ -30,17 +30,16 @@ func _ready() -> void:
 		func(state: bool): 
 			grabbable_component.enable() if state == true else grabbable_component.disable()
 	)
-	selectable_component.was_disabled.connect(func(): toggle_hover_texture(false))
+	#
+	selectable_component.was_disabled.connect(toggle_hover_texture.bind(false))
 	
 	grabbable_component.pickup.connect(follow_component.enable)
 	grabbable_component.pickup.connect(selectable_component.disable)
+	grabbable_component.pickup.connect(_handle_item.bind(true))
+	#
 	grabbable_component.drop.connect(follow_component.disable)
 	grabbable_component.drop.connect(selectable_component.enable)
-
-
-func _input(event: InputEvent) -> void:
-	if Input.is_action_just_released("interact"):
-		emit_signal("drop")
+	grabbable_component.drop.connect(_handle_item.bind(false))
 
 
 func _physics_process(delta: float) -> void:
@@ -55,6 +54,5 @@ func toggle_hover_texture(state: bool):
 		sprite.texture = object_texture
 
 
-func _on_area_2d_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
-	if Input.is_action_just_pressed("interact"):
-		emit_signal("pickup")
+func _handle_item(state: bool) -> void:
+	emit_signal("item", self, state)
