@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bv4k5a00mi5ry"]
+[gd_scene load_steps=9 format=3 uid="uid://bv4k5a00mi5ry"]
 
 [ext_resource type="Script" path="res://src/entities/hand_cursor/hand_cursor.gd" id="1_84bbd"]
 [ext_resource type="Texture2D" uid="uid://y4ylykr2m2hy" path="res://src/entities/hand_cursor/assets/hand_posture_open.png" id="2_c0mcp"]
@@ -6,6 +6,10 @@
 [ext_resource type="Texture2D" uid="uid://1f4em8tb6tvg" path="res://src/entities/hand_cursor/assets/hand_posture_pinch.png" id="3_iuf5l"]
 [ext_resource type="Texture2D" uid="uid://bbjoej60scnsl" path="res://src/entities/hand_cursor/assets/hand_posture_point.png" id="4_3qm6m"]
 [ext_resource type="Texture2D" uid="uid://68uc6fr7f1qu" path="res://src/entities/hand_cursor/assets/hand_posture_grab.png" id="5_57nov"]
+[ext_resource type="Script" path="res://src/entities/hand_cursor/hitbox_component.gd" id="7_6w7j4"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_sd10p"]
+radius = 16.0
 
 [node name="HandCursor" type="Node2D" node_paths=PackedStringArray("visual_component", "open_marker", "pinch_marker", "grab_marker", "point_marker")]
 script = ExtResource("1_84bbd")
@@ -25,6 +29,14 @@ grab_tex = ExtResource("5_57nov")
 [node name="Sprite2D" type="Sprite2D" parent="CursorVisualComponent"]
 texture = ExtResource("4_3qm6m")
 
+[node name="HitboxComponent" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 12
+script = ExtResource("7_6w7j4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+shape = SubResource("CircleShape2D_sd10p")
+
 [node name="OpenMarker" type="Marker2D" parent="."]
 position = Vector2(-8, -5)
 
@@ -36,3 +48,8 @@ position = Vector2(-4, -1)
 
 [node name="PointMarker" type="Marker2D" parent="."]
 position = Vector2(-6, -9)
+
+[connection signal="body_entered" from="HitboxComponent" to="HitboxComponent" method="_on_body_entered"]
+[connection signal="body_entered" from="HitboxComponent" to="HitboxComponent" method="_on_body_entered"]
+[connection signal="body_exited" from="HitboxComponent" to="HitboxComponent" method="_on_body_exited"]
+[connection signal="body_exited" from="HitboxComponent" to="HitboxComponent" method="_on_body_exited"]
