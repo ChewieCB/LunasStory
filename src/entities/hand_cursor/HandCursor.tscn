@@ -50,6 +50,4 @@ position = Vector2(-4, -1)
 position = Vector2(-6, -9)
 
 [connection signal="body_entered" from="HitboxComponent" to="HitboxComponent" method="_on_body_entered"]
-[connection signal="body_entered" from="HitboxComponent" to="HitboxComponent" method="_on_body_entered"]
-[connection signal="body_exited" from="HitboxComponent" to="HitboxComponent" method="_on_body_exited"]
 [connection signal="body_exited" from="HitboxComponent" to="HitboxComponent" method="_on_body_exited"]
