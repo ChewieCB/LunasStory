@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://cojyfxu5j1idb"]
+
+[ext_resource type="Script" path="res://src/stages/main/grabbable_component.gd" id="1_l55nq"]
+
+[node name="GrabbableComponent" type="Area2D"]
+script = ExtResource("1_l55nq")
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]

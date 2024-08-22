@@ -1,3 +1,19 @@
-[gd_scene format=3 uid="uid://b5vhj0fhn8xuq"]
+[gd_scene load_steps=4 format=3 uid="uid://b5vhj0fhn8xuq"]
+
+[ext_resource type="PackedScene" uid="uid://bux1j4jbk8st2" path="res://src/entities/ingredients/Ingredient.tscn" id="1_em8b6"]
+[ext_resource type="PackedScene" uid="uid://bv4k5a00mi5ry" path="res://src/entities/hand_cursor/HandCursor.tscn" id="1_hggav"]
+[ext_resource type="PackedScene" uid="uid://b3vxay7vo5fod" path="res://src/entities/tools/Tool.tscn" id="3_7xpmx"]
 
 [node name="MainStage" type="Node2D"]
+
+[node name="Ingredient1" parent="." node_paths=PackedStringArray("follow_target") instance=ExtResource("1_em8b6")]
+follow_target = NodePath("../HandCursor")
+
+[node name="Tool" parent="." node_paths=PackedStringArray("follow_target") instance=ExtResource("3_7xpmx")]
+position = Vector2(88, -80)
+follow_target = NodePath("../HandCursor")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="HandCursor" parent="." instance=ExtResource("1_hggav")]
+position = Vector2(80, 24)
