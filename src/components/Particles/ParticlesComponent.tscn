@@ -1,19 +1,18 @@
 [gd_scene load_steps=5 format=3 uid="uid://twux0snbpc37"]
 
 [ext_resource type="Script" path="res://src/components/Particles/particles_component.gd" id="1_dkdxa"]
-[ext_resource type="Texture2D" uid="uid://dcl2140ic36pw" path="res://assets/particles/potion/UI potion cloud.png" id="2_v22hj"]
+[ext_resource type="Texture2D" uid="uid://cdqvrwbq7ocl7" path="res://assets/particles/poof sheet.png" id="2_roo8k"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_3pxd2"]
 particles_animation = true
-particles_anim_h_frames = 4
+particles_anim_h_frames = 8
 particles_anim_v_frames = 1
 particles_anim_loop = false
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_b1ykx"]
 particle_flag_disable_z = true
+emission_shape_offset = Vector3(4, 0, 0)
 gravity = Vector3(0, 0, 0)
-scale_min = 0.2
-scale_max = 0.2
 anim_speed_min = 0.7
 anim_speed_max = 0.7
 
@@ -25,8 +24,9 @@ material = SubResource("CanvasItemMaterial_3pxd2")
 emitting = false
 amount = 1
 process_material = SubResource("ParticleProcessMaterial_b1ykx")
-texture = ExtResource("2_v22hj")
+texture = ExtResource("2_roo8k")
 lifetime = 0.3
 one_shot = true
 explosiveness = 0.71
 randomness = 0.25
+trail_lifetime = 0.5

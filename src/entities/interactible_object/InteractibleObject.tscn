@@ -12,9 +12,8 @@ radius = 8.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_gvquo"]
 radius = 16.0
 
-[node name="InteractibleObject" type="Node2D" node_paths=PackedStringArray("hitbox_component", "selectable_component", "grabbable_component", "follow_component", "sprite")]
+[node name="InteractibleObject" type="Node2D" node_paths=PackedStringArray("selectable_component", "grabbable_component", "follow_component", "sprite")]
 script = ExtResource("1_dessu")
-hitbox_component = NodePath("")
 selectable_component = NodePath("SelectableComponent")
 grabbable_component = NodePath("GrabbableComponent")
 follow_component = NodePath("MouseFollowComponent")
