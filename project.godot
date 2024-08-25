@@ -17,6 +17,8 @@ config/icon="res://icon.svg"
 
 [display]
 
+window/size/viewport_width=640
+window/size/viewport_height=360
 window/stretch/mode="canvas_items"
 
 [editor_plugins]
@@ -46,6 +48,8 @@ interact={
 2d_physics/layer_2="Player"
 2d_physics/layer_3="Object"
 2d_physics/layer_4="Actor"
+2d_physics/layer_5="Interactable"
+2d_physics/layer_6="Consumer"
 
 [rendering]
 

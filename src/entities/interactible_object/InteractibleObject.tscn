@@ -1,0 +1,49 @@
+[gd_scene load_steps=8 format=3 uid="uid://rvoxdjdvxnex"]
+
+[ext_resource type="Script" path="res://src/entities/interactible_object/interactible_object.gd" id="1_dessu"]
+[ext_resource type="PackedScene" uid="uid://l82e7lamaemc" path="res://src/components/Selectable/SelectableComponent.tscn" id="2_t56fn"]
+[ext_resource type="PackedScene" uid="uid://b6irvllg6u58o" path="res://src/components/MouseFollow/MouseFollowComponent.tscn" id="3_gm37a"]
+[ext_resource type="PackedScene" uid="uid://cojyfxu5j1idb" path="res://src/components/Grabbable/GrabbableComponent.tscn" id="4_drri7"]
+[ext_resource type="PackedScene" uid="uid://pfmp13n5e2is" path="res://src/components/Hitbox/HitboxComponent.tscn" id="5_2plq5"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_b1q5v"]
+radius = 8.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gvquo"]
+radius = 16.0
+
+[node name="InteractibleObject" type="Node2D" node_paths=PackedStringArray("hitbox_component", "selectable_component", "grabbable_component", "follow_component", "sprite")]
+script = ExtResource("1_dessu")
+hitbox_component = NodePath("")
+selectable_component = NodePath("SelectableComponent")
+grabbable_component = NodePath("GrabbableComponent")
+follow_component = NodePath("MouseFollowComponent")
+sprite = NodePath("Sprite2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+hframes = 5
+vframes = 10
+
+[node name="SelectableComponent" parent="." instance=ExtResource("2_t56fn")]
+collision_layer = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SelectableComponent"]
+shape = SubResource("CircleShape2D_b1q5v")
+
+[node name="MouseFollowComponent" parent="." instance=ExtResource("3_gm37a")]
+
+[node name="GrabbableComponent" parent="." instance=ExtResource("4_drri7")]
+collision_layer = 16
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GrabbableComponent"]
+shape = SubResource("CircleShape2D_gvquo")
+
+[node name="HitboxComponent" parent="." instance=ExtResource("5_2plq5")]
+
+[node name="Area2D" type="Area2D" parent="HitboxComponent"]
+collision_layer = 20
+collision_mask = 44
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent/Area2D"]
+shape = SubResource("CircleShape2D_b1q5v")

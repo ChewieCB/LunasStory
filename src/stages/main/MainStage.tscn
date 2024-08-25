@@ -1,12 +1,45 @@
-[gd_scene load_steps=4 format=3 uid="uid://b5vhj0fhn8xuq"]
+[gd_scene load_steps=5 format=3 uid="uid://b5vhj0fhn8xuq"]
 
 [ext_resource type="PackedScene" uid="uid://bux1j4jbk8st2" path="res://src/entities/ingredients/Ingredient.tscn" id="1_em8b6"]
 [ext_resource type="PackedScene" uid="uid://bv4k5a00mi5ry" path="res://src/entities/hand_cursor/HandCursor.tscn" id="1_hggav"]
 [ext_resource type="PackedScene" uid="uid://b3vxay7vo5fod" path="res://src/entities/tools/Tool.tscn" id="3_7xpmx"]
+[ext_resource type="PackedScene" uid="uid://uot6d4qertbc" path="res://src/entities/cauldron/Cauldron.tscn" id="4_dnt3y"]
 
 [node name="MainStage" type="Node2D"]
 
 [node name="Ingredient1" parent="." node_paths=PackedStringArray("follow_target") instance=ExtResource("1_em8b6")]
+follow_target = NodePath("../HandCursor")
+
+[node name="Ingredient2" parent="." node_paths=PackedStringArray("follow_target") instance=ExtResource("1_em8b6")]
+position = Vector2(-16, -104)
+follow_target = NodePath("../HandCursor")
+
+[node name="Ingredient3" parent="." node_paths=PackedStringArray("follow_target") instance=ExtResource("1_em8b6")]
+position = Vector2(24, -72)
+follow_target = NodePath("../HandCursor")
+
+[node name="Ingredient4" parent="." node_paths=PackedStringArray("follow_target") instance=ExtResource("1_em8b6")]
+position = Vector2(-40, -32)
+follow_target = NodePath("../HandCursor")
+
+[node name="Ingredient5" parent="." node_paths=PackedStringArray("follow_target") instance=ExtResource("1_em8b6")]
+position = Vector2(-88, -112)
+follow_target = NodePath("../HandCursor")
+
+[node name="Ingredient6" parent="." node_paths=PackedStringArray("follow_target") instance=ExtResource("1_em8b6")]
+position = Vector2(-176, -128)
+follow_target = NodePath("../HandCursor")
+
+[node name="Ingredient7" parent="." node_paths=PackedStringArray("follow_target") instance=ExtResource("1_em8b6")]
+position = Vector2(-248, -72)
+follow_target = NodePath("../HandCursor")
+
+[node name="Ingredient8" parent="." node_paths=PackedStringArray("follow_target") instance=ExtResource("1_em8b6")]
+position = Vector2(-208, 8)
+follow_target = NodePath("../HandCursor")
+
+[node name="Cauldron" parent="." node_paths=PackedStringArray("follow_target") instance=ExtResource("4_dnt3y")]
+position = Vector2(-112, -40)
 follow_target = NodePath("../HandCursor")
 
 [node name="Tool" parent="." node_paths=PackedStringArray("follow_target") instance=ExtResource("3_7xpmx")]

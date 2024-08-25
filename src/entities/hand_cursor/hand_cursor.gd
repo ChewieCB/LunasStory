@@ -2,6 +2,8 @@ extends Node2D
 class_name HandCursor
 
 @export var visual_component: CursorVisualComponent
+@export var hitbox_component: HitboxComponent
+
 @export_category("Posture Position Markers")
 @export var open_marker: Marker2D
 @export var pinch_marker: Marker2D
