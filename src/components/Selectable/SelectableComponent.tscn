@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://l82e7lamaemc"]
 
-[ext_resource type="Script" path="res://src/stages/main/selectable_component.gd" id="1_j8prl"]
+[ext_resource type="Script" path="res://src/components/Selectable/selectable_component.gd" id="1_j8prl"]
 
 [node name="SelectableComponent" type="Area2D"]
 collision_layer = 4

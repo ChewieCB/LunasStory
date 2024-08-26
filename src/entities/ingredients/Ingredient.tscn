@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bux1j4jbk8st2"]
+[gd_scene load_steps=11 format=3 uid="uid://bux1j4jbk8st2"]
 
 [ext_resource type="Script" path="res://src/stages/main/hoverable_test.gd" id="1_ipyti"]
 [ext_resource type="Texture2D" uid="uid://btqmy1b6dgx7t" path="res://assets/ingredients_normal.png" id="2_kae0q"]
@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://l82e7lamaemc" path="res://src/components/Selectable/SelectableComponent.tscn" id="4_727f8"]
 [ext_resource type="PackedScene" uid="uid://b6irvllg6u58o" path="res://src/components/MouseFollow/MouseFollowComponent.tscn" id="5_unb27"]
 [ext_resource type="PackedScene" uid="uid://cojyfxu5j1idb" path="res://src/components/Grabbable/GrabbableComponent.tscn" id="6_etj2y"]
+[ext_resource type="Script" path="res://src/components/Hitbox/hitbox_component.gd" id="7_ywfev"]
+[ext_resource type="Script" path="res://src/entities/ingredients/consumable_component.gd" id="8_v8v5x"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_b1q5v"]
 radius = 8.0
@@ -13,11 +15,14 @@ radius = 8.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_gvquo"]
 radius = 16.0
 
-[node name="Ingredient1" type="Node2D" node_paths=PackedStringArray("selectable_component", "grabbable_component", "follow_component")]
+[node name="Ingredient1" type="Node2D" node_paths=PackedStringArray("consumable_component", "hitbox_component", "selectable_component", "grabbable_component", "follow_component", "sprite")]
 script = ExtResource("1_ipyti")
+consumable_component = NodePath("ConsumableComponent")
+hitbox_component = NodePath("HitboxComponent")
 selectable_component = NodePath("SelectableComponent")
 grabbable_component = NodePath("GrabbableComponent")
 follow_component = NodePath("MouseFollowComponent")
+sprite = NodePath("Sprite2D")
 object_texture = ExtResource("2_kae0q")
 hover_texture = ExtResource("3_h7b6g")
 
@@ -25,7 +30,9 @@ hover_texture = ExtResource("3_h7b6g")
 hframes = 5
 vframes = 10
 
-[node name="SelectableComponent" parent="." instance=ExtResource("4_727f8")]
+[node name="SelectableComponent" parent="." node_paths=PackedStringArray("sprite") instance=ExtResource("4_727f8")]
+collision_layer = 16
+sprite = NodePath("../Sprite2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SelectableComponent"]
 shape = SubResource("CircleShape2D_b1q5v")
@@ -33,6 +40,22 @@ shape = SubResource("CircleShape2D_b1q5v")
 [node name="MouseFollowComponent" parent="." instance=ExtResource("5_unb27")]
 
 [node name="GrabbableComponent" parent="." instance=ExtResource("6_etj2y")]
+collision_layer = 16
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GrabbableComponent"]
 shape = SubResource("CircleShape2D_gvquo")
+
+[node name="HitboxComponent" type="Node2D" parent="."]
+script = ExtResource("7_ywfev")
+
+[node name="Area2D" type="Area2D" parent="HitboxComponent"]
+collision_layer = 20
+collision_mask = 44
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent/Area2D"]
+shape = SubResource("CircleShape2D_b1q5v")
+
+[node name="ConsumableComponent" type="Node2D" parent="." node_paths=PackedStringArray("hitbox_component")]
+script = ExtResource("8_v8v5x")
+hitbox_component = NodePath("../HitboxComponent")

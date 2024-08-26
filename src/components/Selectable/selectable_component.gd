@@ -3,6 +3,8 @@ class_name SelectableComponent
 
 signal hover(state: bool)
 
+@export var sprite: Sprite2D
+
 
 func _ready():
 	add_to_group("selectable")
