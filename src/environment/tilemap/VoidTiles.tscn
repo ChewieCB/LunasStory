@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://cma5x6jxj78qw"]
+
+[ext_resource type="Texture2D" uid="uid://q0rfq2xyrhse" path="res://src/environment/tilemap/assets/tiles.png" id="1_ph0pv"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_o7acn"]
+texture = ExtResource("1_ph0pv")
+6:3/0 = 0
+6:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+
+[sub_resource type="TileSet" id="TileSet_insb7"]
+physics_layer_0/collision_layer = 1
+physics_layer_0/collision_mask = 63
+sources/1 = SubResource("TileSetAtlasSource_o7acn")
+
+[node name="VoidTiles" type="TileMapLayer"]
+tile_set = SubResource("TileSet_insb7")
