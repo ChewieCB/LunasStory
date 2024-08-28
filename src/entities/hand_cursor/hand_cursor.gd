@@ -43,7 +43,7 @@ func get_current_cursor_marker() -> Marker2D:
 	return position_markers[visual_component.current_cursor]
 
 
-func hover(state: bool) -> void:
+func hover(_entity: Node2D, state: bool) -> void:
 	if Input.is_action_pressed("interact"):
 		return
 	

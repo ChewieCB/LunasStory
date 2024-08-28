@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://q0rfq2xyrhse" path="res://src/environment/tilemap/assets/tiles.png" id="1_h4t26"]
 
-[sub_resource type="NavigationPolygon" id="NavigationPolygon_n1lfc"]
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_l7tkk"]
 vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)])
@@ -39,7 +39,7 @@ texture = ExtResource("1_h4t26")
 2:1/0/terrains_peering_bit/top_left_corner = 0
 2:1/0/terrains_peering_bit/top_side = 0
 2:1/0/terrains_peering_bit/top_right_corner = 0
-2:1/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_n1lfc")
+2:1/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_l7tkk")
 3:1/0 = 0
 3:1/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_7flvf")
 4:1/0 = 0

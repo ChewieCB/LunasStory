@@ -7,5 +7,10 @@ class_name Ingredient
 
 func _ready() -> void:
 	super()
-	grabbable_component.drop.connect(consumable_component.can_be_consumed)
 	add_to_group("ingredients")
+
+
+func _on_drop(entity: Node2D) -> void:
+	super(entity)
+	if entity == self:
+		consumable_component.can_be_consumed()

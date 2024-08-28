@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://druawb5me37ot"]
+
+[ext_resource type="Script" path="res://src/components/Pathfinding/ai_pathfinding_component.gd" id="1_75ud2"]
+
+[node name="AIPathfindingComponent" type="Node2D"]
+script = ExtResource("1_75ud2")
+enabled = false

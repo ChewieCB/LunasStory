@@ -2,10 +2,5 @@
 
 [ext_resource type="Script" path="res://src/components/Selectable/selectable_component.gd" id="1_j8prl"]
 
-[node name="SelectableComponent" type="Area2D"]
-collision_layer = 4
-collision_mask = 2
+[node name="SelectableComponent" type="Node2D"]
 script = ExtResource("1_j8prl")
-
-[connection signal="area_entered" from="." to="." method="_on_area_entered"]
-[connection signal="area_exited" from="." to="." method="_on_area_exited"]
