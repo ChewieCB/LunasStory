@@ -66,4 +66,6 @@ func _on_drop(entity: Node2D) -> void:
 		selectable_component.enable()
 		grabbable_component.disable()
 		hitbox_component.enable()
+		# Re-enables grabbing if the cursor is still over the object
+		selectable_component.query_hover()
 		_handle_item(false)

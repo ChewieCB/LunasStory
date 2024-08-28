@@ -27,6 +27,7 @@ navigation_enabled = false
 [node name="Ingredient1" parent="." node_paths=PackedStringArray("follow_target") instance=ExtResource("1_em8b6")]
 position = Vector2(-40, -88)
 follow_target = NodePath("../HandCursor")
+texture_index = 1
 
 [node name="Cauldron" parent="." node_paths=PackedStringArray("follow_target") instance=ExtResource("4_dnt3y")]
 position = Vector2(-104, -56)

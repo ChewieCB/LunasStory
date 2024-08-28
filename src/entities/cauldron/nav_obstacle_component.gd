@@ -13,7 +13,7 @@ func _ready() -> void:
 	default_map_rid = entity.get_world_2d().get_navigation_map()
 	await NavigationServer2D.map_changed
 	_get_current_nav_region()
-	call_deferred("create_obstacle")
+	await create_obstacle()
 
 
 func create_obstacle() -> void:
@@ -26,6 +26,12 @@ func create_obstacle() -> void:
 	new_obstacle.carve_navigation_mesh = true
 	
 	var current_nav_region: NavigationRegion2D = _get_current_nav_region()
+	
+	# We only want one obstacle at a time, so make sure to 
+	# remove any existing ones before we create the new one.
+	if is_instance_valid(previous_obstacle):
+		remove_previous_obstacle()
+	
 	current_nav_region.add_child(new_obstacle)
 	_rebake_nav()
 	
@@ -40,7 +46,7 @@ func _remove_obstacle(obstacle: NavigationObstacle2D) -> void:
 	var current_nav_region: NavigationRegion2D = _get_current_nav_region()
 	current_nav_region.remove_child(obstacle)
 	_rebake_nav()
-	obstacle
+	obstacle.queue_free()
 
 
 func _rebake_nav() -> void:

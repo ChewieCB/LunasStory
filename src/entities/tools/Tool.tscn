@@ -27,9 +27,15 @@ hover_texture = ExtResource("3_53mbn")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_osrbq")
 
-[node name="SelectableComponent" parent="." instance=ExtResource("1_gg70h")]
+[node name="SelectableComponent" parent="." node_paths=PackedStringArray("sprite", "area_2d") instance=ExtResource("1_gg70h")]
+sprite = NodePath("../Sprite2D")
+area_2d = NodePath("Area2D")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SelectableComponent"]
+[node name="Area2D" type="Area2D" parent="SelectableComponent"]
+collision_layer = 16
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SelectableComponent/Area2D"]
 shape = SubResource("CircleShape2D_ejoqk")
 
 [node name="GrabbableComponent" parent="." instance=ExtResource("2_ncw25")]

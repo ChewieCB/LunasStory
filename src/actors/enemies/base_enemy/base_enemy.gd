@@ -20,9 +20,9 @@ func _ready() -> void:
 	ai_pathfinding_component.pathfinding_ready.connect(spawn)
 
 
-func _input(event: InputEvent) -> void:
-	if Input.is_action_just_released("interact"):
-		target_pos = get_global_mouse_position()
+#func _input(event: InputEvent) -> void:
+	#if Input.is_action_just_released("interact"):
+		#target_pos = get_global_mouse_position()
 
 #func _physics_process(delta: float) -> void:
 	#var mouse_pos = get_global_mouse_position()
