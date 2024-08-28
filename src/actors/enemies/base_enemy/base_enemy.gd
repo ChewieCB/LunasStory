@@ -14,6 +14,17 @@ var target_pos: Vector2:
 
 @export var state_chart: StateChart
 @export var nav_agent: NavigationAgent2D
+@export var target_node: InteractibleObject:
+	set(value):
+		target_node = value
+		target_node.grabbable_component.drop.connect(
+			func(_entity: Node2D):
+				target_pos = target_node.global_position
+		)
+		target_node.grabbable_component.pickup.connect(
+			func(_entity: Node2D):
+				target_pos = self.global_position
+		)
 
 
 func _ready() -> void:

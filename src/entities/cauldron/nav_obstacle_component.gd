@@ -63,7 +63,7 @@ func _get_current_nav_region() -> NavigationRegion2D:
 	return null
 
 
-func _create_circular_obstacle_outline(obstacle_radius: float, points: int = 16) -> PackedVector2Array:
+func _create_circular_obstacle_outline(obstacle_radius: float, points: int = 8) -> PackedVector2Array:
 	var outline = PackedVector2Array()
 	var angle_increment_rad: float = TAU / points
 	

@@ -45,12 +45,11 @@ nav_agent = NodePath("../NavigationAgent2D")
 current_speed = 50.0
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
-path_desired_distance = 32.0
+path_desired_distance = 8.0
 target_desired_distance = 4.0
 avoidance_enabled = true
 radius = 2.0
 neighbor_distance = 128.0
-debug_enabled = true
 debug_path_custom_color = Color(1, 0.08, 0.08, 1)
 
 [node name="StateChart" type="Node" parent="."]
