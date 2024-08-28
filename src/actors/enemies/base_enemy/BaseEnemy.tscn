@@ -1,0 +1,112 @@
+[gd_scene load_steps=12 format=3 uid="uid://clhm87crkcsl6"]
+
+[ext_resource type="Script" path="res://src/actors/enemies/base_enemy/base_enemy.gd" id="1_ch4pi"]
+[ext_resource type="Texture2D" uid="uid://bxwvf55pjcr52" path="res://src/actors/enemies/assets/cabezo/ghost_enemy_sheet.png" id="1_rqkiv"]
+[ext_resource type="PackedScene" uid="uid://pfmp13n5e2is" path="res://src/components/Hitbox/HitboxComponent.tscn" id="2_sp0wo"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="3_ivg0v"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/parallel_state.gd" id="4_1a6wa"]
+[ext_resource type="PackedScene" uid="uid://druawb5me37ot" path="res://src/components/Pathfinding/AIPathfindingComponent.tscn" id="4_uk0hc"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="5_ihvx6"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="6_74yt5"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="7_8e0vm"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_srcb7"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8h6wu"]
+radius = 16.0
+
+[node name="BaseEnemy" type="CharacterBody2D" node_paths=PackedStringArray("attack_range_hitbox_component", "ai_pathfinding_component", "state_chart", "nav_agent")]
+collision_layer = 8
+collision_mask = 63
+motion_mode = 1
+script = ExtResource("1_ch4pi")
+attack_range_hitbox_component = NodePath("AttackRangeHitbox")
+ai_pathfinding_component = NodePath("AIPathfindingComponent")
+state_chart = NodePath("StateChart")
+nav_agent = NodePath("NavigationAgent2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_rqkiv")
+offset = Vector2(-4, 0)
+hframes = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_srcb7")
+
+[node name="AttackRangeHitbox" parent="." instance=ExtResource("2_sp0wo")]
+
+[node name="Area2D" type="Area2D" parent="AttackRangeHitbox"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRangeHitbox/Area2D"]
+shape = SubResource("CircleShape2D_8h6wu")
+
+[node name="AIPathfindingComponent" parent="." node_paths=PackedStringArray("nav_agent") instance=ExtResource("4_uk0hc")]
+nav_agent = NodePath("../NavigationAgent2D")
+current_speed = 50.0
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+path_desired_distance = 32.0
+target_desired_distance = 4.0
+avoidance_enabled = true
+radius = 2.0
+neighbor_distance = 128.0
+debug_enabled = true
+debug_path_custom_color = Color(1, 0.08, 0.08, 1)
+
+[node name="StateChart" type="Node" parent="."]
+script = ExtResource("3_ivg0v")
+
+[node name="Root" type="Node" parent="StateChart"]
+script = ExtResource("4_1a6wa")
+
+[node name="Movement" type="Node" parent="StateChart/Root"]
+script = ExtResource("5_ihvx6")
+initial_state = NodePath("Spawning")
+
+[node name="Spawning" type="Node" parent="StateChart/Root/Movement"]
+script = ExtResource("6_74yt5")
+
+[node name="toIdle" type="Node" parent="StateChart/Root/Movement/Spawning"]
+script = ExtResource("7_8e0vm")
+to = NodePath("../../Idle")
+event = &"finish_spawn"
+delay_in_seconds = "0.0"
+
+[node name="Idle" type="Node" parent="StateChart/Root/Movement"]
+script = ExtResource("6_74yt5")
+
+[node name="toMoving" type="Node" parent="StateChart/Root/Movement/Idle"]
+script = ExtResource("7_8e0vm")
+to = NodePath("../../Moving")
+event = &"start_moving"
+delay_in_seconds = "0.0"
+
+[node name="Moving" type="Node" parent="StateChart/Root/Movement"]
+script = ExtResource("6_74yt5")
+
+[node name="toIdle" type="Node" parent="StateChart/Root/Movement/Moving"]
+script = ExtResource("7_8e0vm")
+to = NodePath("../../Idle")
+event = &"stop_moving"
+delay_in_seconds = "0.0"
+
+[node name="Attacking" type="Node" parent="StateChart/Root"]
+script = ExtResource("5_ihvx6")
+initial_state = NodePath("Null")
+
+[node name="Null" type="Node" parent="StateChart/Root/Attacking"]
+script = ExtResource("6_74yt5")
+
+[node name="Damage" type="Node" parent="StateChart/Root"]
+script = ExtResource("5_ihvx6")
+initial_state = NodePath("Null")
+
+[node name="Null" type="Node" parent="StateChart/Root/Damage"]
+script = ExtResource("6_74yt5")
+
+[connection signal="velocity_computed" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_velocity_computed"]
+[connection signal="state_entered" from="StateChart/Root/Movement/Spawning" to="." method="_on_spawning_state_entered"]
+[connection signal="state_entered" from="StateChart/Root/Movement/Idle" to="." method="_on_idle_state_entered"]
+[connection signal="state_physics_processing" from="StateChart/Root/Movement/Idle" to="." method="_on_idle_state_physics_processing"]
+[connection signal="state_entered" from="StateChart/Root/Movement/Moving" to="." method="_on_moving_state_entered"]
+[connection signal="state_physics_processing" from="StateChart/Root/Movement/Moving" to="." method="_on_moving_state_physics_processing"]
