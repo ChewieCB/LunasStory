@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ParticleResource" load_steps=5 format=3 uid="uid://df4xulkx6r7kj"]
+
+[ext_resource type="Script" path="res://src/components/Particles/particle_resource.gd" id="1_ucypv"]
+[ext_resource type="Material" uid="uid://bnvl83l8u7baq" path="res://assets/particles/poof/PoofParticlesCanvasMaterial.tres" id="1_uwf6l"]
+[ext_resource type="Material" uid="uid://by2hfft11xigl" path="res://assets/particles/poof/PoofParticlesProcessMaterial.tres" id="2_h2etu"]
+[ext_resource type="Texture2D" uid="uid://cdqvrwbq7ocl7" path="res://assets/particles/poof/poof sheet.png" id="4_2brvj"]
+
+[resource]
+script = ExtResource("1_ucypv")
+process_material = ExtResource("2_h2etu")
+canvas_material = ExtResource("1_uwf6l")
+texture = ExtResource("4_2brvj")
+texture_h_frames = 8
+texture_v_frames = 1

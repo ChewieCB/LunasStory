@@ -3,6 +3,7 @@ class_name HitboxComponent
 
 @onready var entity: Node2D = get_parent()
 @onready var area_2d: Area2D = $Area2D
+@onready var collider: CollisionShape2D = $Area2D/CollisionShape2D
 
 signal area_entered(area: Area2D)
 signal area_exited(area: Area2D)

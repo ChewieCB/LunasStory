@@ -14,7 +14,6 @@ signal pathfinding_ready
 
 
 func _ready() -> void:
-	# This to make sure all NavigationServer stuff is synced
 	process_mode = Node.PROCESS_MODE_DISABLED
 	await get_tree().physics_frame
 	call_deferred("_wait_for_navigation_setup")
@@ -49,3 +48,8 @@ func get_new_nav_agent_velocity() -> Vector2:
 	var intended_velocity: Vector2 = direction * current_speed
 	
 	return intended_velocity
+
+
+func _on_navigation_agent_2d_velocity_computed(safe_velocity):
+	entity.velocity = safe_velocity
+	entity.move_and_slide()

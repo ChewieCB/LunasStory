@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cdqvrwbq7ocl7"
-path="res://.godot/imported/poof sheet.png-848e761881c167756fea5b823562d113.ctex"
+path="res://.godot/imported/poof sheet.png-cbcfa6bbe56d08a2f5e5ef993993d54d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/particles/poof sheet.png"
-dest_files=["res://.godot/imported/poof sheet.png-848e761881c167756fea5b823562d113.ctex"]
+source_file="res://assets/particles/poof/poof sheet.png"
+dest_files=["res://.godot/imported/poof sheet.png-cbcfa6bbe56d08a2f5e5ef993993d54d.ctex"]
 
 [params]
 

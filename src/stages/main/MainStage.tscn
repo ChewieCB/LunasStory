@@ -28,6 +28,34 @@ navigation_enabled = false
 position = Vector2(-40, -88)
 follow_target = NodePath("../HandCursor")
 
+[node name="Ingredient2" parent="." node_paths=PackedStringArray("follow_target") instance=ExtResource("1_em8b6")]
+position = Vector2(-32, -48)
+follow_target = NodePath("../HandCursor")
+
+[node name="Ingredient3" parent="." node_paths=PackedStringArray("follow_target") instance=ExtResource("1_em8b6")]
+position = Vector2(-56, -8)
+follow_target = NodePath("../HandCursor")
+
+[node name="Ingredient4" parent="." node_paths=PackedStringArray("follow_target") instance=ExtResource("1_em8b6")]
+position = Vector2(-96, 0)
+follow_target = NodePath("../HandCursor")
+
+[node name="Ingredient5" parent="." node_paths=PackedStringArray("follow_target") instance=ExtResource("1_em8b6")]
+position = Vector2(-136, -8)
+follow_target = NodePath("../HandCursor")
+
+[node name="Ingredient6" parent="." node_paths=PackedStringArray("follow_target") instance=ExtResource("1_em8b6")]
+position = Vector2(-168, -32)
+follow_target = NodePath("../HandCursor")
+
+[node name="Ingredient7" parent="." node_paths=PackedStringArray("follow_target") instance=ExtResource("1_em8b6")]
+position = Vector2(-168, -72)
+follow_target = NodePath("../HandCursor")
+
+[node name="Ingredient8" parent="." node_paths=PackedStringArray("follow_target") instance=ExtResource("1_em8b6")]
+position = Vector2(-128, -104)
+follow_target = NodePath("../HandCursor")
+
 [node name="Cauldron" parent="." node_paths=PackedStringArray("follow_target") instance=ExtResource("4_dnt3y")]
 position = Vector2(-104, -56)
 follow_target = NodePath("../HandCursor")

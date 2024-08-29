@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dcl2140ic36pw"
-path="res://.godot/imported/UI potion cloud.png-5f9ccb69830b5ecc10fc7187f77a4e51.ctex"
+path="res://.godot/imported/UI potion cloud.png-fb0dcbf43e7c7b42826e636fe9fc70ae.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/particles/potion/UI potion cloud.png"
-dest_files=["res://.godot/imported/UI potion cloud.png-5f9ccb69830b5ecc10fc7187f77a4e51.ctex"]
+source_file="res://assets/particles/UI potion cloud.png"
+dest_files=["res://.godot/imported/UI potion cloud.png-fb0dcbf43e7c7b42826e636fe9fc70ae.ctex"]
 
 [params]
 
