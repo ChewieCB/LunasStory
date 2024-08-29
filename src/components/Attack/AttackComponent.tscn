@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://ckjpj7tql40n"]
+
+[ext_resource type="Script" path="res://src/components/Attack/attack_component.gd" id="1_n4q0o"]
+
+[node name="AttackComponent" type="Node2D" node_paths=PackedStringArray("generic_cooldown_timer")]
+script = ExtResource("1_n4q0o")
+generic_cooldown_timer = NodePath("Timer")
+
+[node name="Timer" type="Timer" parent="."]

@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="AttackResource" load_steps=3 format=3 uid="uid://1inbc73g0pyu"]
+
+[ext_resource type="Resource" uid="uid://df4xulkx6r7kj" path="res://assets/particles/poof/PoofParticle.tres" id="1_3iool"]
+[ext_resource type="Script" path="res://src/components/Attack/attack_resource.gd" id="1_3nfdt"]
+
+[resource]
+script = ExtResource("1_3nfdt")
+targeting_mode = 0
+max_targets = 1
+attack_range = 16
+attack_delay = 0.0
+cooldown = 1.0
+damage = 10
+armour_penetration = 0
+name = "Headbutt"
+particle_size = 64
+attack_particle = ExtResource("1_3iool")
+attack_sfx = Array[AudioStream]([])
