@@ -19,7 +19,7 @@ enum TargetingMode {
 @export var armour_penetration: int = 0
 
 @export_category("Display")
-@export var name: String
+@export var name: String = "UNKNOWN"
 @export var particle_size: int = 64
 @export var attack_particle: ParticleResource
 @export var attack_sfx: Array[AudioStream]
@@ -32,22 +32,22 @@ func _ready():
 	_attack_sfx_full.shuffle()
 
 
-func get_targets(attacker: AIAgent) -> Array[Node2D]:
+func get_target_areas(attacker: AIAgent) -> Array[Area2D]:
 	# Get target
-	var bodies_in_range = attacker.attack_range_area.get_overlapping_bodies()
+	var areas_in_range = attacker.attack_range_hitbox_component.area_2d.get_overlapping_areas()
 	
-	if not bodies_in_range:
+	if not areas_in_range:
 		return []
 	
-	#bodies_in_range.filter(func(x): return x.current_health > 0)
-	bodies_in_range.sort_custom(
+	areas_in_range.sort_custom(
 		func(a, b):
 			if a.global_position.distance_to(attacker.global_position) < b.global_position.distance_to(attacker.global_position):
 				return true
 			return false
 	)
 	
-	return bodies_in_range
+	return areas_in_range
+	
 	## Sort again to prioritise targets
 	#if attacker.priority_targets:
 		#bodies_in_range.sort_custom(
