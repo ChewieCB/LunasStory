@@ -14,6 +14,7 @@ signal item(_item: Node2D, state: bool)
 @export var sprite: Sprite2D
 @export var object_texture: Texture
 @export var hover_texture: Texture
+@export var randomize_texture: bool = false
 @export var texture_index: int = 1
 
 
@@ -21,8 +22,9 @@ signal item(_item: Node2D, state: bool)
 
 func _ready() -> void:	
 	sprite.texture = object_texture
-	#texture_index = randi_range(1, 50)
-	#sprite.frame = texture_index
+	if randomize_texture:
+		texture_index = randi_range(1, 50)
+		sprite.frame = texture_index
 	
 	follow_component.target = follow_target
 	
