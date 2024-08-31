@@ -3,6 +3,7 @@ class_name AttackComponent
 
 signal finish_attack(_attack: AttackResource)
 signal cooldown_finished(_attack: AttackResource)
+signal attack_failed(_attack: AttackResource)
 
 @export_category("Components")
 @export var attack_range_hitbox_component: HitboxComponent
@@ -30,7 +31,7 @@ func _ready() -> void:
 
 func attack(target: Node2D, attack: AttackResource = current_attack) -> void:
 	if not is_attack_in_range(target, attack):
-		emit_signal("finish_attack", attack)
+		emit_signal("attack_failed", attack)
 		return
 	
 	# Create the attack particles, assign the target as the parent, and connect the cleanup

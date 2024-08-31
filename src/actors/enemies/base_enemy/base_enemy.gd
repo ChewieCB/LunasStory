@@ -13,17 +13,9 @@ class_name AIAgent
 @export var target_node: InteractibleObject:
 	set(value):
 		target_node = value
-		target_node.grabbable_component.drop.connect(
-			func(_entity: Node2D):
-				target_pos = target_node.global_position
-				ai_pathfinding_component.set_nav_target_position(target_pos)
-		)
-		target_node.grabbable_component.pickup.connect(
-			func(_entity: Node2D):
-				target_pos = self.global_position
-				if velocity != Vector2.ZERO:
-					ai_pathfinding_component.stop_moving()
-		)
+		if target_node.grabbable_component:
+			target_node.grabbable_component.drop.connect(_drop_target)
+			target_node.grabbable_component.pickup.connect(_pickup_target)
 
 
 var target_pos: Vector2:
@@ -39,6 +31,7 @@ func _ready() -> void:
 	ai_pathfinding_component.navigation_finished.connect(_on_navigation_finished)
 	attack_component.cooldown_finished.connect(_on_attack_cooldown_finished)
 	attack_component.finish_attack.connect(_on_attack_finished)
+	attack_component.attack_failed.connect(_on_attack_failed)
 
 
 func _spawn():
@@ -101,8 +94,20 @@ func _on_attack_hitbox_triggered(area: Area2D) -> void:
 		state_chart.send_event("start_attack")
 
 func _on_attack_cooldown_finished(_attack: AttackResource) -> void:
-	if attack_component.is_attack_in_range(target_node, _attack):
-		state_chart.send_event("start_attack")
+	state_chart.send_event("end_cooldown")
 
 func _on_attack_finished(_attack: AttackResource) -> void:
-	state_chart.send_event("finish_attack")
+	state_chart.send_event("start_cooldown")
+
+func _on_attack_failed(_attack: AttackResource) -> void:
+	state_chart.send_event("abort_attack")
+
+func _pickup_target(_entity: Node2D) -> void:
+	target_pos = self.global_position
+	if velocity != Vector2.ZERO:
+		ai_pathfinding_component.stop_moving()
+	state_chart.send_event("abort_attack")
+
+func _drop_target(_entity: Node2D) -> void:
+	target_pos = target_node.global_position
+	ai_pathfinding_component.set_nav_target_position(target_pos)

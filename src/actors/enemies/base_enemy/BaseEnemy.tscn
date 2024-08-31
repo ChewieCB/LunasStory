@@ -139,7 +139,28 @@ script = ExtResource("6_74yt5")
 [node name="toIdle" type="Node" parent="StateChart/Root/Attacking/Attack"]
 script = ExtResource("7_8e0vm")
 to = NodePath("../../Idle")
-event = &"finish_attack"
+event = &"abort_attack"
+delay_in_seconds = "0.0"
+
+[node name="toCooldown" type="Node" parent="StateChart/Root/Attacking/Attack"]
+script = ExtResource("7_8e0vm")
+to = NodePath("../../Cooldown")
+event = &"start_cooldown"
+delay_in_seconds = "0.0"
+
+[node name="Cooldown" type="Node" parent="StateChart/Root/Attacking"]
+script = ExtResource("6_74yt5")
+
+[node name="toIdle" type="Node" parent="StateChart/Root/Attacking/Cooldown"]
+script = ExtResource("7_8e0vm")
+to = NodePath("../../Idle")
+event = &"abort_attack"
+delay_in_seconds = "0.0"
+
+[node name="toAttack" type="Node" parent="StateChart/Root/Attacking/Cooldown"]
+script = ExtResource("7_8e0vm")
+to = NodePath("../../Attack")
+event = &"end_cooldown"
 delay_in_seconds = "0.0"
 
 [node name="Damage" type="Node" parent="StateChart/Root"]
