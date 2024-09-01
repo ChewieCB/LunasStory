@@ -3,6 +3,7 @@ class_name AttackComponent
 
 signal finish_attack(_attack: AttackResource)
 signal cooldown_finished(_attack: AttackResource)
+signal cooldown_aborted(_attack: AttackResource)
 signal attack_failed(_attack: AttackResource)
 
 @export_category("Components")
@@ -16,8 +17,12 @@ signal attack_failed(_attack: AttackResource)
 @onready var current_attack: AttackResource:
 	set(value):
 		current_attack = value
-var in_cooldown: Array[AttackResource]
-var cooldown_timers: Array
+		var _timer = Timer.new()
+		add_child(_timer)
+		current_attack.cooldown_timer = _timer
+		current_attack.cooldown_ended.connect(_on_cooldown_finished)
+		current_attack.cooldown_aborted.connect(_on_cooldown_aborted)
+
 var priority_targets = []
 
 @onready var entity: Node2D = get_parent()
@@ -29,7 +34,7 @@ func _ready() -> void:
 
 
 func attack(target: Node2D, attack: AttackResource = current_attack) -> void:
-	if not is_attack_in_range(target, attack):
+	if not is_attack_in_range(target, attack) or not attack.cooldown_timer.is_stopped():
 		emit_signal("attack_failed", attack)
 		return
 	
@@ -49,11 +54,12 @@ func attack(target: Node2D, attack: AttackResource = current_attack) -> void:
 	attack.play_attack_sfx()
 
 	emit_signal("finish_attack", attack)
+	
 	_attack_cooldown(attack)
 
 
 func is_in_cooldown(_attack: AttackResource) -> bool:
-	return in_cooldown.has(_attack)
+	return not _attack.cooldown_timer.is_stopped()
 
 
 func is_attack_in_range(target_node: Node2D, attack: AttackResource) -> bool:
@@ -70,92 +76,8 @@ func get_next_attack() -> AttackResource:
 	return null
 
 
-## This is needlessly complicated for our current use case, return to this if we have AoE attacks
-func attack_complex(_attack: AttackResource = current_attack) -> void:
-	var targets = _attack.get_target_areas(entity)
-	if targets:
-		var particles: GPUParticles2D = particles_component.spawn_one_shot_particle()
-		
-		if _attack.targeting_mode == AttackResource.TargetingMode.SINGLE:
-			var _target = targets.front()
-			# TODO - work out scale
-			#attack_particles.scale = attack.attack_range
-			_target.add_child(particles)
-			particles.position = _target.position
-		elif _attack.targeting_mode == AttackResource.TargetingMode.MULTIPLE:
-			for _target in targets:
-				var _particles_clone = particles.duplicate()
-				_target.add_child(_particles_clone)
-				_particles_clone.finished.connect(
-					func():
-					particles.queue_free()
-				)
-				particles.queue_free()
-		else:
-			add_child(particles)
-		
-		if particles:
-			particles.finished.connect(
-				func():
-				particles.queue_free()
-			)
-		
-		var target_count: int = 0
-		for target in targets:
-			#if target.health_component.current_health <= 0:
-				#if target in priority_targets:
-					#priority_targets.erase(target)
-				#continue
-			
-			if _attack.targeting_mode == AttackResource.TargetingMode.MULTIPLE:
-				if target_count >= _attack.max_targets:
-					break
-				
-			# Damage and armour penetration
-			# TODO - playtest and tweak armour damage reduction 
-			var modified_damage = _attack.damage #* entity.attributes.strength
-			# TODO - figure out an intuitive armour/armour penetration system
-			#if _attack.armour_penetration < target.attributes.armour:
-				#modified_damage = clamp(
-					#modified_damage / target.attributes.armour,
-					#0,
-					#modified_damage
-				#)
-			#target.health_component.damage(modified_damage)
-			
-			if modified_damage > 0:
-				# TODO - spawn a particle emitter for each attack instance
-				particles.emitting = true
-				#anim_player.play("attack")
-				_attack.play_attack_sfx()
-			else:
-				#anim_player.play("block")
-				_attack.play_block_sfx()
-			
-			target_count += 1
-		
-		emit_signal("finish_attack", _attack)
-	
-		_attack_cooldown(_attack)
-		#status_ui._spawn_attack_indicator(attack.name, 0.6)
-		#current_attack = null
-		
-		# Generic cooldown to prevent spamming inputs each frame
-		generic_cooldown_timer.start(0.4)
-
-
 func _attack_cooldown(_attack: AttackResource = current_attack) -> void:
-	in_cooldown.append(_attack)
-	var cd_timer = get_tree().create_timer(
-		_attack.cooldown# * remap(entity.attributes.dexterity, 0, 1, 3, 0.25)
-	)
-	cooldown_timers.append(cd_timer)
-	
-	await cd_timer.timeout
-	
-	in_cooldown.erase(_attack)
-	cooldown_timers.erase(cd_timer)
-	emit_signal("cooldown_finished", _attack)
+	_attack.start_cooldown()
 
 
 func _update_attack_collider(attack: AttackResource) -> void:
@@ -164,3 +86,12 @@ func _update_attack_collider(attack: AttackResource) -> void:
 		new_shape.radius = attack.attack_range
 		attack_range_collider.shape = new_shape
 		await get_tree().physics_frame
+
+
+func _on_cooldown_finished(_attack: AttackResource) -> void:
+	if not _attack.is_cooldown_aborted:
+		emit_signal("cooldown_finished", _attack)
+
+
+func _on_cooldown_aborted(_attack: AttackResource) -> void:
+	emit_signal("cooldown_aborted", _attack)
