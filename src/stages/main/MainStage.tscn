@@ -69,6 +69,10 @@ follow_target = NodePath("../HandCursor")
 position = Vector2(40, -24)
 follow_target = NodePath("../HandCursor")
 
+[node name="BaseEnemy" parent="." node_paths=PackedStringArray("target_node") instance=ExtResource("7_negkk")]
+position = Vector2(-160, -120)
+target_node = NodePath("../Cauldron")
+
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="HandCursor" parent="." instance=ExtResource("1_hggav")]
