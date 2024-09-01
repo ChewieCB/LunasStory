@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://clhm87crkcsl6"]
+[gd_scene load_steps=17 format=3 uid="uid://clhm87crkcsl6"]
 
 [ext_resource type="Script" path="res://src/actors/enemies/base_enemy/base_enemy.gd" id="1_ch4pi"]
 [ext_resource type="Texture2D" uid="uid://bxwvf55pjcr52" path="res://src/actors/enemies/assets/cabezo/ghost_enemy_sheet.png" id="1_rqkiv"]
@@ -6,22 +6,42 @@
 [ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="3_ivg0v"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/parallel_state.gd" id="4_1a6wa"]
 [ext_resource type="PackedScene" uid="uid://druawb5me37ot" path="res://src/components/Pathfinding/AIPathfindingComponent.tscn" id="4_uk0hc"]
+[ext_resource type="PackedScene" uid="uid://ckjpj7tql40n" path="res://src/components/Attack/AttackComponent.tscn" id="4_vdv4v"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="5_ihvx6"]
+[ext_resource type="Script" path="res://src/components/Attack/attack_resource.gd" id="5_yo8xg"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="6_74yt5"]
+[ext_resource type="PackedScene" uid="uid://twux0snbpc37" path="res://src/components/Particles/ParticlesComponent.tscn" id="6_vem6n"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="7_8e0vm"]
+[ext_resource type="Resource" uid="uid://bfll8kxvcyxn2" path="res://assets/particles/impact/ImpactParticle.tres" id="8_v0c0v"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_srcb7"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8h6wu"]
 radius = 16.0
 
-[node name="BaseEnemy" type="CharacterBody2D" node_paths=PackedStringArray("attack_range_hitbox_component", "ai_pathfinding_component", "state_chart", "nav_agent")]
+[sub_resource type="Resource" id="Resource_ti5ql"]
+script = ExtResource("5_yo8xg")
+targeting_mode = 0
+max_targets = 1
+attack_range = 32
+attack_delay = 0.0
+cooldown = 1.8
+damage = 15
+armour_penetration = 0
+name = "UNKNOWN"
+particle_size = 64
+attack_particle = ExtResource("8_v0c0v")
+attack_sfx = Array[AudioStream]([])
+
+[node name="BaseEnemy" type="CharacterBody2D" node_paths=PackedStringArray("attack_range_hitbox_component", "ai_pathfinding_component", "attack_component", "particles_component", "state_chart", "nav_agent")]
 collision_layer = 8
 collision_mask = 63
 motion_mode = 1
 script = ExtResource("1_ch4pi")
 attack_range_hitbox_component = NodePath("AttackRangeHitbox")
 ai_pathfinding_component = NodePath("AIPathfindingComponent")
+attack_component = NodePath("AttackComponent")
+particles_component = NodePath("ParticlesComponent")
 state_chart = NodePath("StateChart")
 nav_agent = NodePath("NavigationAgent2D")
 
@@ -36,17 +56,31 @@ shape = SubResource("CircleShape2D_srcb7")
 [node name="AttackRangeHitbox" parent="." instance=ExtResource("2_sp0wo")]
 
 [node name="Area2D" type="Area2D" parent="AttackRangeHitbox"]
+collision_layer = 8
+collision_mask = 36
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRangeHitbox/Area2D"]
 shape = SubResource("CircleShape2D_8h6wu")
+debug_color = Color(0.991003, 0, 0.271208, 0.42)
+
+[node name="AttackComponent" parent="." node_paths=PackedStringArray("attack_range_hitbox_component", "particles_component") instance=ExtResource("4_vdv4v")]
+attack_range_hitbox_component = NodePath("../AttackRangeHitbox")
+particles_component = NodePath("../ParticlesComponent")
+attacks = Array[ExtResource("5_yo8xg")]([SubResource("Resource_ti5ql")])
 
 [node name="AIPathfindingComponent" parent="." node_paths=PackedStringArray("nav_agent") instance=ExtResource("4_uk0hc")]
 nav_agent = NodePath("../NavigationAgent2D")
 current_speed = 50.0
+enabled = true
+
+[node name="ParticlesComponent" parent="." instance=ExtResource("6_vem6n")]
+position = Vector2(-4, 0)
+default_particle = ExtResource("8_v0c0v")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
-path_desired_distance = 8.0
-target_desired_distance = 4.0
+path_desired_distance = 2.0
+target_desired_distance = 2.0
+simplify_path = true
 avoidance_enabled = true
 radius = 2.0
 neighbor_distance = 128.0
@@ -54,13 +88,14 @@ debug_path_custom_color = Color(1, 0.08, 0.08, 1)
 
 [node name="StateChart" type="Node" parent="."]
 script = ExtResource("3_ivg0v")
+track_in_editor = true
 
 [node name="Root" type="Node" parent="StateChart"]
 script = ExtResource("4_1a6wa")
 
 [node name="Movement" type="Node" parent="StateChart/Root"]
 script = ExtResource("5_ihvx6")
-initial_state = NodePath("Spawning")
+initial_state = NodePath("Idle")
 
 [node name="Spawning" type="Node" parent="StateChart/Root/Movement"]
 script = ExtResource("6_74yt5")
@@ -91,21 +126,64 @@ delay_in_seconds = "0.0"
 
 [node name="Attacking" type="Node" parent="StateChart/Root"]
 script = ExtResource("5_ihvx6")
-initial_state = NodePath("Null")
+initial_state = NodePath("Idle")
 
-[node name="Null" type="Node" parent="StateChart/Root/Attacking"]
+[node name="Idle" type="Node" parent="StateChart/Root/Attacking"]
 script = ExtResource("6_74yt5")
+
+[node name="toAttack" type="Node" parent="StateChart/Root/Attacking/Idle"]
+script = ExtResource("7_8e0vm")
+to = NodePath("../../Attack")
+event = &"start_attack"
+delay_in_seconds = "0.0"
+
+[node name="Attack" type="Node" parent="StateChart/Root/Attacking"]
+script = ExtResource("6_74yt5")
+
+[node name="toIdle" type="Node" parent="StateChart/Root/Attacking/Attack"]
+script = ExtResource("7_8e0vm")
+to = NodePath("../../Idle")
+event = &"abort_attack"
+delay_in_seconds = "0.0"
+
+[node name="toCooldown" type="Node" parent="StateChart/Root/Attacking/Attack"]
+script = ExtResource("7_8e0vm")
+to = NodePath("../../Cooldown")
+event = &"start_cooldown"
+delay_in_seconds = "0.0"
+
+[node name="Cooldown" type="Node" parent="StateChart/Root/Attacking"]
+script = ExtResource("6_74yt5")
+
+[node name="toIdle" type="Node" parent="StateChart/Root/Attacking/Cooldown"]
+script = ExtResource("7_8e0vm")
+to = NodePath("../../Idle")
+event = &"abort_attack"
+delay_in_seconds = "0.0"
+
+[node name="toAttack" type="Node" parent="StateChart/Root/Attacking/Cooldown"]
+script = ExtResource("7_8e0vm")
+to = NodePath("../../Attack")
+event = &"end_cooldown"
+delay_in_seconds = "0.0"
 
 [node name="Damage" type="Node" parent="StateChart/Root"]
 script = ExtResource("5_ihvx6")
-initial_state = NodePath("Null")
+initial_state = NodePath("Idle")
 
-[node name="Null" type="Node" parent="StateChart/Root/Damage"]
+[node name="Idle" type="Node" parent="StateChart/Root/Damage"]
 script = ExtResource("6_74yt5")
 
-[connection signal="velocity_computed" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_velocity_computed"]
-[connection signal="state_entered" from="StateChart/Root/Movement/Spawning" to="." method="_on_spawning_state_entered"]
+[node name="Hurt" type="Node" parent="StateChart/Root/Damage"]
+script = ExtResource("6_74yt5")
+
+[node name="Dead" type="Node" parent="StateChart/Root/Damage"]
+script = ExtResource("6_74yt5")
+
+[connection signal="area_entered" from="AttackRangeHitbox/Area2D" to="." method="_on_attack_hitbox_triggered"]
+[connection signal="velocity_computed" from="NavigationAgent2D" to="AIPathfindingComponent" method="_on_navigation_agent_2d_velocity_computed"]
 [connection signal="state_entered" from="StateChart/Root/Movement/Idle" to="." method="_on_idle_state_entered"]
-[connection signal="state_physics_processing" from="StateChart/Root/Movement/Idle" to="." method="_on_idle_state_physics_processing"]
 [connection signal="state_entered" from="StateChart/Root/Movement/Moving" to="." method="_on_moving_state_entered"]
-[connection signal="state_physics_processing" from="StateChart/Root/Movement/Moving" to="." method="_on_moving_state_physics_processing"]
+[connection signal="state_entered" from="StateChart/Root/Attacking/Attack" to="." method="_on_attacking_attack_state_entered"]
+[connection signal="state_exited" from="StateChart/Root/Attacking/Attack" to="." method="_on_attacking_attack_state_exited"]
+[connection signal="state_entered" from="StateChart/Root/Damage/Dead" to="." method="_on_dead_state_entered"]

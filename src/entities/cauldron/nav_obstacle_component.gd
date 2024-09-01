@@ -19,7 +19,7 @@ func _ready() -> void:
 func create_obstacle() -> void:
 	var new_obstacle := NavigationObstacle2D.new()
 	var obstacle_radius: float = obstacle_collider.shape.radius
-	new_obstacle.radius = obstacle_radius
+	#new_obstacle.radius = obstacle_radius
 	new_obstacle.vertices = _create_circular_obstacle_outline(obstacle_radius)
 	new_obstacle.global_position = entity.global_position
 	new_obstacle.affect_navigation_mesh = true

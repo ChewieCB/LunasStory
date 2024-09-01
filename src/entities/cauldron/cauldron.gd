@@ -6,6 +6,8 @@ class_name Cauldron
 @export var dynamic_nav_obstacle: DynamicNavObstacleComponent
 @export var particles_component: ParticlesComponent
 
+#@export var consumption_particle: ParticleResource
+
 
 func _ready() -> void:
 	super()
@@ -14,7 +16,13 @@ func _ready() -> void:
 
 func _consume_ingredient(ingredient: Ingredient) -> void:
 	print("%s consumed!" % ingredient.name)
-	particles_component.emit()
+	var particles = particles_component.spawn_one_shot_particle()
+	add_child(particles)
+	particles.finished.connect(func(): 
+		remove_child(particles) 
+		particles.queue_free()
+	)
+	particles.emitting = true
 
 
 func _on_pickup(entity: Node2D) -> void:

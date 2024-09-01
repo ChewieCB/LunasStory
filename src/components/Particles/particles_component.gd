@@ -1,12 +1,31 @@
+@tool
 extends BaseComponent
 class_name ParticlesComponent
 
-@onready var particles: GPUParticles2D = $GPUParticles2D
+@export var default_particle: ParticleResource
+@export var test_particle_in_editor: bool = false:
+	set(value):
+		test_particle_in_editor = value
+		if test_particle_in_editor:
+			_test_particle_in_editor()
 
 
-func emit():
-	particles.emitting = true
+func spawn_one_shot_particle(particle: ParticleResource = default_particle) -> GPUParticles2D:
+	var particles = GPUParticles2D.new()
+	
+	particles.amount = 1
+	particles.process_material = particle.process_material
+	particles.material = particle.canvas_material
+	particles.texture = particle.texture
+	particles.one_shot = true
+	
+	return particles
 
 
-func stop():
-	particles.emitting = false
+func _test_particle_in_editor() -> void:
+	if Engine.is_editor_hint():
+		var test_particle = spawn_one_shot_particle()
+		add_child(test_particle)
+		test_particle.finished.connect(test_particle.queue_free)
+		test_particle.emitting = true
+		test_particle_in_editor = false

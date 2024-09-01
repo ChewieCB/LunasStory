@@ -1,8 +1,49 @@
-[gd_scene load_steps=2 format=3 uid="uid://cojyfxu5j1idb"]
+[gd_scene load_steps=6 format=3 uid="uid://cojyfxu5j1idb"]
 
 [ext_resource type="Script" path="res://src/components/Grabbable/grabbable_component.gd" id="1_l55nq"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="2_47oxw"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="3_n4ykt"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="4_iow73"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="5_a6t5h"]
 
-[node name="GrabbableComponent" type="Area2D"]
+[node name="GrabbableComponent" type="Area2D" node_paths=PackedStringArray("state_chart")]
 script = ExtResource("1_l55nq")
+state_chart = NodePath("StateChart")
 
-[connection signal="input_event" from="." to="." method="_on_input_event"]
+[node name="StateChart" type="Node" parent="."]
+script = ExtResource("2_47oxw")
+track_in_editor = true
+
+[node name="Status" type="Node" parent="StateChart"]
+script = ExtResource("3_n4ykt")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateChart/Status"]
+script = ExtResource("4_iow73")
+
+[node name="toHeld" type="Node" parent="StateChart/Status/Idle"]
+script = ExtResource("5_a6t5h")
+to = NodePath("../../Held")
+event = &"pickup"
+delay_in_seconds = "0.0"
+
+[node name="Held" type="Node" parent="StateChart/Status"]
+script = ExtResource("4_iow73")
+
+[node name="toDropped" type="Node" parent="StateChart/Status/Held"]
+script = ExtResource("5_a6t5h")
+to = NodePath("../../Dropped")
+event = &"drop"
+delay_in_seconds = "0.0"
+
+[node name="Dropped" type="Node" parent="StateChart/Status"]
+script = ExtResource("4_iow73")
+
+[node name="toIdle" type="Node" parent="StateChart/Status/Dropped"]
+script = ExtResource("5_a6t5h")
+to = NodePath("../../Idle")
+event = &"settle"
+delay_in_seconds = "0.0"
+
+[connection signal="state_entered" from="StateChart/Status/Held" to="." method="_on_held_state_entered"]
+[connection signal="state_entered" from="StateChart/Status/Dropped" to="." method="_on_dropped_state_entered"]

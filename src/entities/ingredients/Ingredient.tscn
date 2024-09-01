@@ -25,6 +25,7 @@ follow_component = NodePath("MouseFollowComponent")
 sprite = NodePath("Sprite2D")
 object_texture = ExtResource("2_kae0q")
 hover_texture = ExtResource("3_h7b6g")
+randomize_texture = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 hframes = 5
@@ -43,9 +44,10 @@ shape = SubResource("CircleShape2D_b1q5v")
 
 [node name="MouseFollowComponent" parent="." instance=ExtResource("5_unb27")]
 
-[node name="GrabbableComponent" parent="." instance=ExtResource("6_etj2y")]
+[node name="GrabbableComponent" parent="." node_paths=PackedStringArray("selectable_component") instance=ExtResource("6_etj2y")]
 collision_layer = 16
 collision_mask = 2
+selectable_component = NodePath("../SelectableComponent")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GrabbableComponent"]
 shape = SubResource("CircleShape2D_gvquo")

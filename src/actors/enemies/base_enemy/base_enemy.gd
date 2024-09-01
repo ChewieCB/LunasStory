@@ -1,119 +1,115 @@
 extends CharacterBody2D
-class_name BaseEnemy
-
-#var target_node: Node2D
-var target_pos: Vector2:
-	set(value):
-		target_pos = value
-		ai_pathfinding_component.set_nav_target_position(target_pos)
-		print("%s moving to %s" % [self.name, target_pos])
+class_name AIAgent
 
 @export_category("Components")
 @export var attack_range_hitbox_component: HitboxComponent
 @export var ai_pathfinding_component: AIPathfindingComponent
+@export var attack_component: AttackComponent
+@export var particles_component: ParticlesComponent
 
+@export_category("Nodes")
 @export var state_chart: StateChart
 @export var nav_agent: NavigationAgent2D
 @export var target_node: InteractibleObject:
 	set(value):
 		target_node = value
-		target_node.grabbable_component.drop.connect(
-			func(_entity: Node2D):
-				target_pos = target_node.global_position
-		)
-		target_node.grabbable_component.pickup.connect(
-			func(_entity: Node2D):
-				target_pos = self.global_position
-		)
+		if target_node:
+			if target_node.grabbable_component:
+				target_node.grabbable_component.drop.connect(_drop_target)
+				target_node.grabbable_component.pickup.connect(_pickup_target)
+			await ai_pathfinding_component.pathfinding_ready
+			target_pos = target_node.global_position
+
+
+var target_pos: Vector2:
+	set(value):
+		target_pos = value
+		ai_pathfinding_component.set_nav_target_position(target_pos)
 
 
 func _ready() -> void:
-	ai_pathfinding_component.pathfinding_ready.connect(spawn)
+	ai_pathfinding_component.pathfinding_ready.connect(_spawn)
+	ai_pathfinding_component.nav_target_updated.connect(_on_nav_target_updated)
+	ai_pathfinding_component.navigation_finished.connect(_on_navigation_finished)
+	attack_component.cooldown_finished.connect(_on_attack_cooldown_finished)
+	attack_component.finish_attack.connect(_on_attack_finished)
+	attack_component.attack_failed.connect(_on_attack_failed)
+	ai_pathfinding_component.enable()
 
 
-#func _input(event: InputEvent) -> void:
-	#if Input.is_action_just_released("interact"):
-		#target_pos = get_global_mouse_position()
-
-#func _physics_process(delta: float) -> void:
-	#var mouse_pos = get_global_mouse_position()
-	#nav_agent.target_position = mouse_pos
-	#
-	#var current_agent_position: Vector2 = global_position
-	#var next_path_position: Vector2 = nav_agent.get_next_path_position()
-	#var direction: Vector2 = current_agent_position.direction_to(next_path_position)
-	#var intended_velocity: Vector2 = direction * 50.0
-	#
-	#if nav_agent.is_navigation_finished():
-		#return
-	#
-	#if nav_agent.avoidance_enabled:
-		#nav_agent.set_velocity(intended_velocity)
-	#else:
-		#_on_navigation_agent_2d_velocity_computed(intended_velocity)
-	#
-	#print(velocity)
-	#move_and_slide()
-
-
-func spawn():
-	# TODO - SFX hook
-	# TODO - enemy UI hook
-	# TODO - attacks hook
-	# TODO - spawn animnation
-	pass
-	
-
-func hurt():
-	# TODO - hurt visuals
-	# TODO - sfx hook
+func _spawn():
+	# TODO - get target
 	pass
 
 
-func die():
+func _hurt():
+	# TODO
+	pass
+
+
+func _die():
 	state_chart.send_event("stop_moving")
-	#state_chart.send_event("death")
-	# TODO - SFX Hook
-	# TODO - particle effects
-	# TODO - drop debris
-
-# <======================= STATE LOGIC =======================>
-
-func _on_spawning_state_entered():
-	# TODO - animation
-	print("spawned %s" % self.name)
-	state_chart.send_event("finish_spawn")
+	state_chart.send_event("death")
 
 
 func _on_idle_state_entered():
-	ai_pathfinding_component.disable()
-	print("%s idle" % self.name)
-	nav_agent.target_position = global_position
-
-func _on_idle_state_physics_processing(_delta):
-	if nav_agent.target_position != global_position:
-		state_chart.send_event("start_moving")
-	return
+	if velocity != Vector2.ZERO:
+		ai_pathfinding_component.stop_moving()
 
 
-func _on_moving_state_entered() -> void:
-	ai_pathfinding_component.enable()
+func _on_moving_state_entered():
+	if not target_node:
+		state_chart.send_event("stop_moving")
 
-func _on_moving_state_physics_processing(_delta):
+
+func _on_attacking_attack_state_entered():
+	state_chart.send_event("stop_moving")
+	attack_component.attack(target_node)
+
+
+func _on_attacking_attack_state_exited():
 	pass
-	#if not target_pos:
-		#return
-	#
-	#var current_agent_position: Vector2 = global_position
-	#var next_path_position: Vector2 = nav_agent.get_next_path_position()
-	#var direction: Vector2 = current_agent_position.direction_to(next_path_position)
-	#var intended_velocity: Vector2 = direction * 7.0
-	#nav_agent.set_velocity(intended_velocity)
-	#
-	#if nav_agent.is_navigation_finished():
-		#return
+	#attack_component.disable()
 
 
-func _on_navigation_agent_2d_velocity_computed(safe_velocity):
-	velocity = safe_velocity
-	move_and_slide()
+func _on_dead_state_entered():
+	#anim_player.play("death")
+	#await anim_player.animation_finished
+	queue_free()
+
+
+#func _on_walking_state_entered():
+	#anim_player.play("walk")
+#
+#
+#func _on_walking_state_exited():
+	#anim_player.stop()
+
+
+func _on_nav_target_updated(_new_target_pos: Vector2) -> void:
+	state_chart.send_event("start_moving")
+
+func _on_navigation_finished() -> void:
+	state_chart.send_event("stop_moving")
+
+func _on_attack_hitbox_triggered(area: Area2D) -> void:
+	if area == target_node.hitbox_component.area_2d:
+		state_chart.send_event("start_attack")
+
+func _on_attack_cooldown_finished(_attack: AttackResource) -> void:
+	state_chart.send_event("end_cooldown")
+
+func _on_attack_finished(_attack: AttackResource) -> void:
+	state_chart.send_event("start_cooldown")
+
+func _on_attack_failed(_attack: AttackResource) -> void:
+	state_chart.send_event("abort_attack")
+
+func _pickup_target(_entity: Node2D) -> void:
+	target_pos = self.global_position
+	if velocity != Vector2.ZERO:
+		ai_pathfinding_component.stop_moving()
+	state_chart.send_event("abort_attack")
+
+func _drop_target(_entity: Node2D) -> void:
+	target_pos = target_node.global_position

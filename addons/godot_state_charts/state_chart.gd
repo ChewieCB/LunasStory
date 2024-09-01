@@ -226,4 +226,3 @@ func _get_configuration_warnings() -> PackedStringArray:
 			warnings.append("StateChart's child must be a State")
 	return warnings
 
-

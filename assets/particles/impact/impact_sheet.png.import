@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cdqvrwbq7ocl7"
-path="res://.godot/imported/poof sheet.png-848e761881c167756fea5b823562d113.ctex"
+uid="uid://dgxtbdn5im2ne"
+path="res://.godot/imported/impact_sheet.png-c3283a9181ad70f90a5a355673e7f50e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/particles/poof sheet.png"
-dest_files=["res://.godot/imported/poof sheet.png-848e761881c167756fea5b823562d113.ctex"]
+source_file="res://assets/particles/impact/impact_sheet.png"
+dest_files=["res://.godot/imported/impact_sheet.png-c3283a9181ad70f90a5a355673e7f50e.ctex"]
 
 [params]
 

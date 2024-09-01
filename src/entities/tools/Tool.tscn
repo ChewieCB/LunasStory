@@ -38,7 +38,8 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SelectableComponent/Area2D"]
 shape = SubResource("CircleShape2D_ejoqk")
 
-[node name="GrabbableComponent" parent="." instance=ExtResource("2_ncw25")]
+[node name="GrabbableComponent" parent="." node_paths=PackedStringArray("selectable_component") instance=ExtResource("2_ncw25")]
+selectable_component = NodePath("../SelectableComponent")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GrabbableComponent"]
 shape = SubResource("CircleShape2D_xhrw3")

@@ -14,6 +14,7 @@ signal item(_item: Node2D, state: bool)
 @export var sprite: Sprite2D
 @export var object_texture: Texture
 @export var hover_texture: Texture
+@export var randomize_texture: bool = false
 @export var texture_index: int = 1
 
 
@@ -21,14 +22,19 @@ signal item(_item: Node2D, state: bool)
 
 func _ready() -> void:	
 	sprite.texture = object_texture
-	#texture_index = randi_range(1, 50)
-	#sprite.frame = texture_index
+	if randomize_texture:
+		texture_index = randi_range(1, 50)
+		sprite.frame = texture_index
 	
-	follow_component.target = follow_target
+	# TODO - further decouple these components if possible
+	if follow_component:
+		follow_component.target = follow_target
 	
 	selectable_component.hover.connect(_on_hover)
-	grabbable_component.pickup.connect(_on_pickup)
-	grabbable_component.drop.connect(_on_drop)
+	
+	if grabbable_component:
+		grabbable_component.pickup.connect(_on_pickup)
+		grabbable_component.drop.connect(_on_drop)
 
 
 func toggle_hover_texture(state: bool):
@@ -45,11 +51,6 @@ func _handle_item(state: bool) -> void:
 func _on_hover(entity: Node2D, state: bool) -> void:
 	if entity == self:
 		toggle_hover_texture(state)
-		match state:
-			true:
-				grabbable_component.enable()
-			false:
-				grabbable_component.disable()
 
 
 func _on_pickup(entity: Node2D) -> void:
