@@ -16,7 +16,6 @@ signal attack_failed(_attack: AttackResource)
 @onready var current_attack: AttackResource:
 	set(value):
 		current_attack = value
-		#_update_attack_collider(current_attack)
 var in_cooldown: Array[AttackResource]
 var cooldown_timers: Array
 var priority_targets = []
@@ -37,6 +36,7 @@ func attack(target: Node2D, attack: AttackResource = current_attack) -> void:
 	# Create the attack particles, assign the target as the parent, and connect the cleanup
 	var particles: GPUParticles2D = particles_component.spawn_one_shot_particle()
 	target.add_child(particles)
+	particles.global_position = entity.global_position.lerp(target.global_position, 0.5)
 	particles.finished.connect(particles.queue_free)
 	
 	## DAMAGE GOES HERE - when we have the health component implemented

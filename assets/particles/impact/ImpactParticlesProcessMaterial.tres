@@ -1,0 +1,8 @@
+[gd_resource type="ParticleProcessMaterial" format=3 uid="uid://nno1k71vf7x5"]
+
+[resource]
+particle_flag_disable_z = true
+emission_shape_offset = Vector3(4, 0, 0)
+gravity = Vector3(0, 0, 0)
+anim_speed_min = 1.5
+anim_speed_max = 1.5
