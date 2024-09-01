@@ -1,7 +1,13 @@
+@tool
 extends BaseComponent
 class_name ParticlesComponent
 
 @export var default_particle: ParticleResource
+@export var test_particle_in_editor: bool = false:
+	set(value):
+		test_particle_in_editor = value
+		if test_particle_in_editor:
+			_test_particle_in_editor()
 
 
 func spawn_one_shot_particle(particle: ParticleResource = default_particle) -> GPUParticles2D:
@@ -14,3 +20,12 @@ func spawn_one_shot_particle(particle: ParticleResource = default_particle) -> G
 	particles.one_shot = true
 	
 	return particles
+
+
+func _test_particle_in_editor() -> void:
+	if Engine.is_editor_hint():
+		var test_particle = spawn_one_shot_particle()
+		add_child(test_particle)
+		test_particle.finished.connect(test_particle.queue_free)
+		test_particle.emitting = true
+		test_particle_in_editor = false
