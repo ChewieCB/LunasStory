@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://uot6d4qertbc"]
+[gd_scene load_steps=12 format=3 uid="uid://uot6d4qertbc"]
 
 [ext_resource type="Script" path="res://src/entities/cauldron/cauldron.gd" id="1_5x1ej"]
 [ext_resource type="Texture2D" uid="uid://ttq6xocxdktr" path="res://src/entities/cauldron/assets/cauldron_unlit.png" id="1_x47gi"]
@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://l82e7lamaemc" path="res://src/components/Selectable/SelectableComponent.tscn" id="4_i3fde"]
 [ext_resource type="Script" path="res://src/components/Hitbox/hitbox_component.gd" id="7_lhmb4"]
 [ext_resource type="PackedScene" uid="uid://twux0snbpc37" path="res://src/components/Particles/ParticlesComponent.tscn" id="8_5t560"]
+[ext_resource type="PackedScene" uid="uid://cojyfxu5j1idb" path="res://src/components/Grabbable/GrabbableComponent.tscn" id="8_hl6fj"]
+[ext_resource type="PackedScene" uid="uid://b6irvllg6u58o" path="res://src/components/MouseFollow/MouseFollowComponent.tscn" id="9_s4w0b"]
 [ext_resource type="Script" path="res://src/entities/cauldron/nav_obstacle_component.gd" id="9_xlrat"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_sc7qq"]
@@ -14,12 +16,14 @@ radius = 32.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_2j1k7"]
 radius = 16.0
 
-[node name="Cauldron" type="Node2D" node_paths=PackedStringArray("dynamic_nav_obstacle", "particles_component", "hitbox_component", "selectable_component", "sprite")]
+[node name="Cauldron" type="Node2D" node_paths=PackedStringArray("dynamic_nav_obstacle", "particles_component", "hitbox_component", "selectable_component", "grabbable_component", "follow_component", "sprite")]
 script = ExtResource("1_5x1ej")
 dynamic_nav_obstacle = NodePath("DynamicNavObstacleComponent")
 particles_component = NodePath("ParticlesComponent")
 hitbox_component = NodePath("HitboxComponent")
 selectable_component = NodePath("SelectableComponent")
+grabbable_component = NodePath("GrabbableComponent")
+follow_component = NodePath("FollowComponent")
 sprite = NodePath("Sprite2D")
 object_texture = ExtResource("1_x47gi")
 hover_texture = ExtResource("3_7jo42")
@@ -36,6 +40,15 @@ collision_layer = 16
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SelectableComponent/Area2D"]
+shape = SubResource("CircleShape2D_sc7qq")
+
+[node name="FollowComponent" parent="." instance=ExtResource("9_s4w0b")]
+
+[node name="GrabbableComponent" parent="." node_paths=PackedStringArray("selectable_component", "collider") instance=ExtResource("8_hl6fj")]
+selectable_component = NodePath("../SelectableComponent")
+collider = NodePath("CollisionShape2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GrabbableComponent"]
 shape = SubResource("CircleShape2D_sc7qq")
 
 [node name="HitboxComponent" type="Node2D" parent="."]
