@@ -1,6 +1,10 @@
 extends Resource
 class_name AttackResource
 
+signal cooldown_started(_attack: AttackResource)
+signal cooldown_ended(_attack: AttackResource)
+signal cooldown_aborted(_attack: AttackResource)
+
 enum TargetingMode {
 	SINGLE,
 	MULTIPLE,
@@ -24,6 +28,14 @@ enum TargetingMode {
 @export var attack_particle: ParticleResource
 @export var attack_sfx: Array[AudioStream]
 var _attack_sfx_full = []
+
+var cooldown_timer: Timer:
+	set(value):
+		cooldown_timer = value
+		cooldown_timer.wait_time = cooldown
+		cooldown_timer.one_shot = true
+		cooldown_timer.timeout.connect(_finish_cooldown)
+var is_cooldown_aborted: bool = false
 
 
 func _ready():
@@ -89,3 +101,18 @@ func play_attack_sfx():
 func play_block_sfx():
 	pass
 	#GameManager.play_sfx_shuffled(_block_sfx_full, block_sfx)
+
+
+func start_cooldown() -> void:
+	cooldown_timer.start()
+	emit_signal("cooldown_started", self)
+
+
+func abort_cooldown() -> void:
+	emit_signal("cooldown_aborted", self)
+	is_cooldown_aborted = true
+
+
+func _finish_cooldown() -> void:
+	emit_signal("cooldown_ended", self)
+	is_cooldown_aborted = false

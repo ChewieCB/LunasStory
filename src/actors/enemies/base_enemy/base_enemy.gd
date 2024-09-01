@@ -62,6 +62,11 @@ func _on_moving_state_entered():
 		state_chart.send_event("stop_moving")
 
 
+func _on_attacking_idle_state_entered() -> void:
+	pass
+	#attack_component.current_attack.abort_cooldown()
+
+
 func _on_attacking_attack_state_entered():
 	state_chart.send_event("stop_moving")
 	attack_component.attack(target_node)
@@ -69,21 +74,10 @@ func _on_attacking_attack_state_entered():
 
 func _on_attacking_attack_state_exited():
 	pass
-	#attack_component.disable()
 
 
 func _on_dead_state_entered():
-	#anim_player.play("death")
-	#await anim_player.animation_finished
 	queue_free()
-
-
-#func _on_walking_state_entered():
-	#anim_player.play("walk")
-#
-#
-#func _on_walking_state_exited():
-	#anim_player.stop()
 
 
 func _on_nav_target_updated(_new_target_pos: Vector2) -> void:
