@@ -13,9 +13,12 @@ class_name AIAgent
 @export var target_node: InteractibleObject:
 	set(value):
 		target_node = value
-		if target_node.grabbable_component:
-			target_node.grabbable_component.drop.connect(_drop_target)
-			target_node.grabbable_component.pickup.connect(_pickup_target)
+		if target_node:
+			if target_node.grabbable_component:
+				target_node.grabbable_component.drop.connect(_drop_target)
+				target_node.grabbable_component.pickup.connect(_pickup_target)
+			await ai_pathfinding_component.pathfinding_ready
+			target_pos = target_node.global_position
 
 
 var target_pos: Vector2:
@@ -25,18 +28,17 @@ var target_pos: Vector2:
 
 
 func _ready() -> void:
-	# Make sure the NavigationServer is synced
 	ai_pathfinding_component.pathfinding_ready.connect(_spawn)
 	ai_pathfinding_component.nav_target_updated.connect(_on_nav_target_updated)
 	ai_pathfinding_component.navigation_finished.connect(_on_navigation_finished)
 	attack_component.cooldown_finished.connect(_on_attack_cooldown_finished)
 	attack_component.finish_attack.connect(_on_attack_finished)
 	attack_component.attack_failed.connect(_on_attack_failed)
+	ai_pathfinding_component.enable()
 
 
 func _spawn():
-	# TODO
-	ai_pathfinding_component.enable()
+	# TODO - get target
 	pass
 
 
@@ -51,7 +53,8 @@ func _die():
 
 
 func _on_idle_state_entered():
-	ai_pathfinding_component.stop_moving()
+	if velocity != Vector2.ZERO:
+		ai_pathfinding_component.stop_moving()
 
 
 func _on_moving_state_entered():
@@ -110,4 +113,3 @@ func _pickup_target(_entity: Node2D) -> void:
 
 func _drop_target(_entity: Node2D) -> void:
 	target_pos = target_node.global_position
-	ai_pathfinding_component.set_nav_target_position(target_pos)
