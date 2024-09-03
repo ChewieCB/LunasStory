@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://uot6d4qertbc"]
+[gd_scene load_steps=14 format=3 uid="uid://uot6d4qertbc"]
 
 [ext_resource type="Script" path="res://src/entities/cauldron/cauldron.gd" id="1_5x1ej"]
 [ext_resource type="Texture2D" uid="uid://ttq6xocxdktr" path="res://src/entities/cauldron/assets/cauldron_unlit.png" id="1_x47gi"]
@@ -9,6 +9,8 @@
 [ext_resource type="PackedScene" uid="uid://cojyfxu5j1idb" path="res://src/components/Grabbable/GrabbableComponent.tscn" id="8_hl6fj"]
 [ext_resource type="PackedScene" uid="uid://b6irvllg6u58o" path="res://src/components/MouseFollow/MouseFollowComponent.tscn" id="9_s4w0b"]
 [ext_resource type="Script" path="res://src/entities/cauldron/nav_obstacle_component.gd" id="9_xlrat"]
+[ext_resource type="PackedScene" uid="uid://c38ly1pqdi348" path="res://src/components/Health/HealthComponent.tscn" id="10_qqjd1"]
+[ext_resource type="PackedScene" uid="uid://lysd0wn0n81t" path="res://src/ui/health_bar/HealthBar.tscn" id="11_gob0u"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_sc7qq"]
 radius = 32.0
@@ -16,11 +18,12 @@ radius = 32.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_2j1k7"]
 radius = 16.0
 
-[node name="Cauldron" type="Node2D" node_paths=PackedStringArray("dynamic_nav_obstacle", "particles_component", "hitbox_component", "selectable_component", "grabbable_component", "follow_component", "sprite")]
+[node name="Cauldron" type="Node2D" node_paths=PackedStringArray("dynamic_nav_obstacle", "particles_component", "hitbox_component", "health_component", "selectable_component", "grabbable_component", "follow_component", "sprite")]
 script = ExtResource("1_5x1ej")
 dynamic_nav_obstacle = NodePath("DynamicNavObstacleComponent")
 particles_component = NodePath("ParticlesComponent")
 hitbox_component = NodePath("HitboxComponent")
+health_component = NodePath("HealthComponent")
 selectable_component = NodePath("SelectableComponent")
 grabbable_component = NodePath("GrabbableComponent")
 follow_component = NodePath("FollowComponent")
@@ -67,6 +70,25 @@ position = Vector2(0, -7)
 [node name="DynamicNavObstacleComponent" type="Node2D" parent="." node_paths=PackedStringArray("obstacle_collider")]
 script = ExtResource("9_xlrat")
 obstacle_collider = NodePath("../HitboxComponent/Area2D/CollisionShape2D")
+
+[node name="HealthComponent" parent="." instance=ExtResource("10_qqjd1")]
+
+[node name="HealthBar" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("11_gob0u")]
+z_index = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -56.0
+offset_top = -48.0
+offset_right = 56.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.5, 0.5)
+pivot_offset = Vector2(56, 24)
+health_component = NodePath("../HealthComponent")
 
 [connection signal="area_entered" from="HitboxComponent/Area2D" to="HitboxComponent" method="_on_area_2d_area_entered"]
 [connection signal="area_exited" from="HitboxComponent/Area2D" to="HitboxComponent" method="_on_area_2d_area_exited"]

@@ -10,5 +10,3 @@ script = ExtResource("1_ucypv")
 process_material = ExtResource("2_h2etu")
 canvas_material = ExtResource("1_uwf6l")
 texture = ExtResource("4_2brvj")
-texture_h_frames = 8
-texture_v_frames = 1

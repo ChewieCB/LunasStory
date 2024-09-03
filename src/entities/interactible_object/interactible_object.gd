@@ -5,6 +5,7 @@ signal item(_item: Node2D, state: bool)
 
 @export_category("Components")
 @export var hitbox_component: HitboxComponent
+@export var health_component: HealthComponent
 @export var selectable_component: SelectableComponent
 @export var grabbable_component: GrabbableComponent
 @export var follow_component: FollowComponent
@@ -18,9 +19,7 @@ signal item(_item: Node2D, state: bool)
 @export var texture_index: int = 1
 
 
-
-
-func _ready() -> void:	
+func _ready() -> void:
 	sprite.texture = object_texture
 	if randomize_texture:
 		texture_index = randi_range(1, 50)

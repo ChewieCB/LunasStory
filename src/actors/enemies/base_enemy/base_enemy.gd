@@ -17,6 +17,8 @@ class_name AIAgent
 			if target_node.grabbable_component:
 				target_node.grabbable_component.drop.connect(_drop_target)
 				target_node.grabbable_component.pickup.connect(_pickup_target)
+			if target_node.health_component:
+				target_node.health_component.died.connect(_target_dead)
 			await ai_pathfinding_component.pathfinding_ready
 			target_pos = target_node.global_position
 
@@ -107,3 +109,8 @@ func _pickup_target(_entity: Node2D) -> void:
 
 func _drop_target(_entity: Node2D) -> void:
 	target_pos = target_node.global_position
+
+func _target_dead() -> void:
+	target_node = null
+	target_pos = self.global_position
+	state_chart.send_event("abort_attack")
