@@ -11,6 +11,7 @@ offset_bottom = 40.0
 value = 70.0
 texture_progress = ExtResource("1_73uer")
 script = ExtResource("2_5e845")
+hide_ui_on_death = true
 
 [node name="DamageBar" type="TextureProgressBar" parent="."]
 z_index = -1

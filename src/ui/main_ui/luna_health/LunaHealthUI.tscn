@@ -1,0 +1,67 @@
+[gd_scene load_steps=13 format=3 uid="uid://dvtolvauk4son"]
+
+[ext_resource type="Texture2D" uid="uid://dkvrh4x8r6rvb" path="res://src/ui/main_ui/luna_health/assets/portrait_frame_80x80.png" id="1_sxd70"]
+[ext_resource type="Script" path="res://src/ui/main_ui/luna_health/luna_health_ui.gd" id="1_uffv1"]
+[ext_resource type="Texture2D" uid="uid://boi43fwli7d2h" path="res://src/ui/main_ui/luna_health/assets/luna_portrait_80x80_1.png" id="2_jhbeq"]
+[ext_resource type="Texture2D" uid="uid://dh544qaxpjlbn" path="res://src/ui/main_ui/luna_health/assets/cauldron_health_bar_80x80.png" id="3_f4tjm"]
+[ext_resource type="PackedScene" uid="uid://lysd0wn0n81t" path="res://src/ui/health_bar/HealthBar.tscn" id="3_tsx0v"]
+[ext_resource type="Texture2D" uid="uid://dfqmm5ymmcdqp" path="res://src/ui/main_ui/luna_health/assets/luna_portrait_80x80_2.png" id="3_wf4ht"]
+[ext_resource type="Texture2D" uid="uid://nr15yt77fub3" path="res://src/ui/main_ui/luna_health/assets/cauldron_health_bar_trans_80x80.png" id="4_c57yp"]
+[ext_resource type="Texture2D" uid="uid://qei2t82uyyw8" path="res://src/ui/main_ui/luna_health/assets/luna_portrait_80x80_3.png" id="4_ogjxu"]
+[ext_resource type="Texture2D" uid="uid://b45uj40l0x1jk" path="res://src/ui/main_ui/luna_health/assets/luna_portrait_80x80_4.png" id="5_0scdk"]
+[ext_resource type="Texture2D" uid="uid://bw8eres16apx2" path="res://src/ui/main_ui/luna_health/assets/luna_portrait_80x80_5.png" id="6_x5c6r"]
+[ext_resource type="Texture2D" uid="uid://cpmmbaxsis6u3" path="res://src/ui/main_ui/luna_health/assets/cauldron_health_bar_fill_red_37x9_.png" id="10_4jtvv"]
+[ext_resource type="Texture2D" uid="uid://djmguvacc0mer" path="res://src/ui/main_ui/luna_health/assets/cauldron_health_bar_fill_white_37x9_.png" id="12_rlla8"]
+
+[node name="LunaHealthUI" type="Control"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_uffv1")
+damage_portrait_texures = Array[Texture]([ExtResource("2_jhbeq"), ExtResource("3_wf4ht"), ExtResource("4_ogjxu"), ExtResource("5_0scdk"), ExtResource("6_x5c6r")])
+
+[node name="PortraitMargin" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -40.0
+offset_right = 40.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Frame" type="TextureRect" parent="PortraitMargin"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("1_sxd70")
+
+[node name="Portrait" type="TextureRect" parent="PortraitMargin"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="HealthBar" parent="PortraitMargin" instance=ExtResource("3_tsx0v")]
+layout_mode = 2
+value = 20.0
+texture_under = ExtResource("4_c57yp")
+texture_progress = ExtResource("10_4jtvv")
+texture_progress_offset = Vector2(24, 61)
+hide_ui_on_death = false
+
+[node name="DamageBar" parent="PortraitMargin/HealthBar" index="0"]
+texture_under = ExtResource("3_f4tjm")
+texture_progress = ExtResource("12_rlla8")
+texture_progress_offset = Vector2(24, 61)
+
+[editable path="PortraitMargin/HealthBar"]
