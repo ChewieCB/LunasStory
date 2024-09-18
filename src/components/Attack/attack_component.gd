@@ -34,7 +34,8 @@ func _ready() -> void:
 
 
 func attack(target: Node2D, attack: AttackResource = current_attack) -> void:
-	if not is_attack_in_range(target, attack) or not attack.cooldown_timer.is_stopped():
+	if not is_attack_in_range(target, attack) or \
+	not attack.cooldown_timer.is_stopped():
 		emit_signal("attack_failed", attack)
 		return
 	
@@ -44,9 +45,9 @@ func attack(target: Node2D, attack: AttackResource = current_attack) -> void:
 	particles.global_position = entity.global_position.lerp(target.global_position, 0.5)
 	particles.finished.connect(particles.queue_free)
 	
-	## DAMAGE GOES HERE - when we have the health component implemented
-	print("THWAK! %s attacked %s with its %s attack!" % [entity.name, target.name, attack.name])
-	#
+	if target.health_component:
+		target.health_component.damage(attack.damage)
+		print("THWAK! %s attacked %s with its %s attack for %s damage!" % [entity.name, target.name, attack.name, attack.damage])
 	
 	# Emit the particles, sound, and other juice at the point of impact
 	particles.emitting = true

@@ -1,7 +1,6 @@
 extends InteractibleObject
 class_name Cauldron
 
-
 @export_category("Components")
 @export var dynamic_nav_obstacle: DynamicNavObstacleComponent
 @export var particles_component: ParticlesComponent

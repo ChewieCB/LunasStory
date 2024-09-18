@@ -10,21 +10,14 @@ class_name AIAgent
 @export_category("Nodes")
 @export var state_chart: StateChart
 @export var nav_agent: NavigationAgent2D
-@export var target_node: InteractibleObject:
-	set(value):
-		target_node = value
-		if target_node:
-			if target_node.grabbable_component:
-				target_node.grabbable_component.drop.connect(_drop_target)
-				target_node.grabbable_component.pickup.connect(_pickup_target)
-			await ai_pathfinding_component.pathfinding_ready
-			target_pos = target_node.global_position
-
+@export var target_node: InteractibleObject: set = _set_target_node
 
 var target_pos: Vector2:
 	set(value):
 		target_pos = value
 		ai_pathfinding_component.set_nav_target_position(target_pos)
+		if target_pos != self.global_position:
+			state_chart.send_event("start_moving")
 
 
 func _ready() -> void:
@@ -34,7 +27,6 @@ func _ready() -> void:
 	attack_component.cooldown_finished.connect(_on_attack_cooldown_finished)
 	attack_component.finish_attack.connect(_on_attack_finished)
 	attack_component.attack_failed.connect(_on_attack_failed)
-	ai_pathfinding_component.enable()
 
 
 func _spawn():
@@ -52,6 +44,36 @@ func _die():
 	state_chart.send_event("death")
 
 
+func _set_target_node(new_target: InteractibleObject) -> void:
+	# If we're clearing the target, we need to disconnect its signals from the enemy
+	if new_target == null:
+		_disconnect_signal_callbacks(target_node)
+	
+	target_node = new_target
+	
+	if target_node:
+		_connect_signal_callbacks(target_node)
+		await ai_pathfinding_component.pathfinding_ready
+		target_pos = target_node.global_position
+
+
+func _connect_signal_callbacks(target: InteractibleObject) -> void:
+	if target_node.grabbable_component:
+		target_node.grabbable_component.drop.connect(_drop_target)
+		target_node.grabbable_component.pickup.connect(_pickup_target)
+	if target_node.health_component:
+		target_node.health_component.died.connect(_target_dead)
+
+
+func _disconnect_signal_callbacks(target: InteractibleObject) -> void:
+	if target_node.grabbable_component:
+		target_node.grabbable_component.drop.disconnect(_drop_target)
+		target_node.grabbable_component.pickup.disconnect(_pickup_target)
+	if target_node.health_component:
+		target_node.health_component.died.disconnect(_target_dead)
+
+## ======== STATE MACHINE CALLBACKS ========
+
 func _on_idle_state_entered():
 	if velocity != Vector2.ZERO:
 		ai_pathfinding_component.stop_moving()
@@ -64,7 +86,6 @@ func _on_moving_state_entered():
 
 func _on_attacking_idle_state_entered() -> void:
 	pass
-	#attack_component.current_attack.abort_cooldown()
 
 
 func _on_attacking_attack_state_entered():
@@ -79,6 +100,7 @@ func _on_attacking_attack_state_exited():
 func _on_dead_state_entered():
 	queue_free()
 
+## ======== Signal Callbacks ========
 
 func _on_nav_target_updated(_new_target_pos: Vector2) -> void:
 	state_chart.send_event("start_moving")
@@ -87,8 +109,9 @@ func _on_navigation_finished() -> void:
 	state_chart.send_event("stop_moving")
 
 func _on_attack_hitbox_triggered(area: Area2D) -> void:
-	if area == target_node.hitbox_component.area_2d:
-		state_chart.send_event("start_attack")
+	if target_node:
+		if area == target_node.hitbox_component.area_2d:
+			state_chart.send_event("start_attack")
 
 func _on_attack_cooldown_finished(_attack: AttackResource) -> void:
 	state_chart.send_event("end_cooldown")
@@ -107,3 +130,8 @@ func _pickup_target(_entity: Node2D) -> void:
 
 func _drop_target(_entity: Node2D) -> void:
 	target_pos = target_node.global_position
+
+func _target_dead() -> void:
+	target_node = null
+	target_pos = self.global_position
+	state_chart.send_event("abort_attack")

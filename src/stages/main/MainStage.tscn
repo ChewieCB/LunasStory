@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=4 uid="uid://b5vhj0fhn8xuq"]
+[gd_scene load_steps=11 format=4 uid="uid://b5vhj0fhn8xuq"]
 
 [ext_resource type="PackedScene" uid="uid://bux1j4jbk8st2" path="res://src/entities/ingredients/Ingredient.tscn" id="1_em8b6"]
 [ext_resource type="PackedScene" uid="uid://cma5x6jxj78qw" path="res://src/environment/tilemap/VoidTiles.tscn" id="1_gwaru"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://uot6d4qertbc" path="res://src/entities/cauldron/Cauldron.tscn" id="4_dnt3y"]
 [ext_resource type="PackedScene" uid="uid://clhm87crkcsl6" path="res://src/actors/enemies/base_enemy/BaseEnemy.tscn" id="7_negkk"]
 [ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="8_00xee"]
+[ext_resource type="PackedScene" uid="uid://dvtolvauk4son" path="res://src/ui/main_ui/luna_health/LunaHealthUI.tscn" id="9_ebxeo"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_ta56x"]
 vertices = PackedVector2Array(270, -190, 286, -190, 286, -174, 258, -66, 194, -82, 146, -162, 350, -174, 350, -94, 258, -50, 366, -94, 366, -50, 194, -66, 110, -82, 110, -50, 94, -50, 98, -62, 94, -34, 78, -34, 82, -46, -2, -18, -2, 30, -130, 30, -130, 62, -158, 62, -158, 14, -2, -30, -190, 14, -190, -34, -114, -110, -2, -110, -290, -34, -290, -2, -334, -2, -334, -18, -366, -18, -366, -50, -350, -62, -302, -78, -274, -46, -382, -50, -382, -62, -350, -78, -302, -110, -290, -110, -290, -94, -274, -94, -206, -46, -206, -94, -190, -94, -190, -142, -114, -142, 66, -30, 66, -46, 82, -62, 114, -162, 114, -190, 146, -190, 146, -222, 270, -222, 146, -94, 98, -94, 78, -18)
@@ -99,4 +100,31 @@ offset_right = 632.0
 offset_bottom = 208.0
 initial_node_to_watch = NodePath("../../../BaseEnemy/StateChart")
 
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="MainUI" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="LunaHealthUI" parent="UI/MainUI" node_paths=PackedStringArray("health_component") instance=ExtResource("9_ebxeo")]
+layout_mode = 1
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 64.0
+offset_top = 64.0
+offset_right = 64.0
+offset_bottom = 64.0
+grow_horizontal = 1
+grow_vertical = 1
+health_component = NodePath("../../../Cauldron/HealthComponent")
+
 [editable path="BaseEnemy"]
+[editable path="Cauldron"]
