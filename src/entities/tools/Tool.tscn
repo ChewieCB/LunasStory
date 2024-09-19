@@ -12,7 +12,7 @@
 radius = 16.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_xhrw3"]
-radius = 32.0
+radius = 16.0
 
 [node name="Tool" type="Node2D" node_paths=PackedStringArray("hitbox_component", "selectable_component", "grabbable_component", "follow_component", "sprite")]
 script = ExtResource("1_toqp3")
@@ -26,6 +26,15 @@ hover_texture = ExtResource("3_53mbn")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_osrbq")
+
+[node name="HitboxComponent" parent="." instance=ExtResource("7_bryfa")]
+
+[node name="Area2D" type="Area2D" parent="HitboxComponent"]
+collision_layer = 84
+collision_mask = 12
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent/Area2D"]
+shape = SubResource("CircleShape2D_ejoqk")
 
 [node name="SelectableComponent" parent="." node_paths=PackedStringArray("sprite", "area_2d") instance=ExtResource("1_gg70h")]
 sprite = NodePath("../Sprite2D")
@@ -46,9 +55,5 @@ shape = SubResource("CircleShape2D_xhrw3")
 
 [node name="FollowComponent" parent="." instance=ExtResource("5_xjewd")]
 
-[node name="HitboxComponent" parent="." instance=ExtResource("7_bryfa")]
-
-[node name="Area2D" type="Area2D" parent="HitboxComponent"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent/Area2D"]
-shape = SubResource("CircleShape2D_ejoqk")
+[connection signal="area_entered" from="HitboxComponent/Area2D" to="HitboxComponent" method="_on_area_2d_area_entered"]
+[connection signal="area_exited" from="HitboxComponent/Area2D" to="HitboxComponent" method="_on_area_2d_area_exited"]

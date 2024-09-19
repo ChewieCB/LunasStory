@@ -4,6 +4,8 @@ class_name AIAgent
 @export_category("Components")
 @export var attack_range_hitbox_component: HitboxComponent
 @export var ai_pathfinding_component: AIPathfindingComponent
+@export var hitbox_component: HitboxComponent
+@export var health_component: HealthComponent
 @export var attack_component: AttackComponent
 @export var particles_component: ParticlesComponent
 
@@ -27,6 +29,11 @@ func _ready() -> void:
 	attack_component.cooldown_finished.connect(_on_attack_cooldown_finished)
 	attack_component.finish_attack.connect(_on_attack_finished)
 	attack_component.attack_failed.connect(_on_attack_failed)
+	health_component.health_changed.connect(_on_health_changed)
+	health_component.died.connect(_on_died)
+	await get_tree().physics_frame
+	for tool in get_tree().get_nodes_in_group("tools"):
+		tool.tool_damage.connect(_take_tool_damage)
 
 
 func _spawn():
@@ -97,7 +104,22 @@ func _on_attacking_attack_state_exited():
 	pass
 
 
-func _on_dead_state_entered():
+func _on_damage_hurt_state_entered() -> void:
+	# Play animation/particles/sfx
+	# TODO
+	# Fallback in case the damage killed the agent:
+	## We always want to go from hurt -> dead instead of idle -> dead 
+	## so our anims and juice play out for the impact
+	if health_component.current_health == 0:
+		state_chart.send_event("died")
+		return
+	# Wait for anims to finish
+	await get_tree().create_timer(1.0).timeout
+	# Send recover signal
+	state_chart.send_event("damage_recovered")
+
+
+func _on_damage_dead_state_entered() -> void:
 	queue_free()
 
 ## ======== Signal Callbacks ========
@@ -135,3 +157,14 @@ func _target_dead() -> void:
 	target_node = null
 	target_pos = self.global_position
 	state_chart.send_event("abort_attack")
+
+func _take_tool_damage(area: Area2D, damage: float) -> void:
+	if area.get_parent() == hitbox_component:
+		health_component.damage(damage)
+
+func _on_health_changed(new_health: float, prev_health: float) -> void:
+	if new_health < prev_health:
+		state_chart.send_event("damage_taken")
+
+func _on_died() -> void:
+	state_chart.send_event("died")

@@ -14,7 +14,7 @@ func _ready() -> void:
 
 
 func _consume_ingredient(ingredient: Ingredient) -> void:
-	print("%s consumed!" % ingredient.name)
+	print_rich("%s [color=purple]consumed[/color]!" % ingredient.name)
 	var particles = particles_component.spawn_one_shot_particle()
 	add_child(particles)
 	particles.finished.connect(func(): 

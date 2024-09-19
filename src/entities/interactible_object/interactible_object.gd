@@ -58,7 +58,7 @@ func _on_hover(entity: Node2D, state: bool) -> void:
 
 
 func _on_pickup(entity: Node2D) -> void:
-	if entity == self:
+	if entity == self and grabbable_component.is_enabled():
 		follow_component.enable()
 		selectable_component.disable()
 		hitbox_component.disable()

@@ -50,6 +50,7 @@ interact={
 2d_physics/layer_4="Actor"
 2d_physics/layer_5="Interactable"
 2d_physics/layer_6="Consumer"
+2d_physics/layer_7="Tool"
 
 [rendering]
 

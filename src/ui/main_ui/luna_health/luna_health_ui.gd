@@ -8,9 +8,10 @@ extends Control
 
 
 func _ready() -> void:
-	health_component.health_changed.connect(_on_health_changed)
-	health_bar.health_component = health_component
-	portrait.texture = damage_portrait_texures[0]
+	if health_component:
+		health_component.health_changed.connect(_on_health_changed)
+		health_bar.health_component = health_component
+		portrait.texture = damage_portrait_texures[0]
 
 
 func _on_health_changed(new_health: float, prev_health: float) -> void:

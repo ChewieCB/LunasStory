@@ -1,9 +1,10 @@
-[gd_scene load_steps=17 format=3 uid="uid://clhm87crkcsl6"]
+[gd_scene load_steps=19 format=3 uid="uid://clhm87crkcsl6"]
 
 [ext_resource type="Script" path="res://src/actors/enemies/base_enemy/base_enemy.gd" id="1_ch4pi"]
 [ext_resource type="Texture2D" uid="uid://bxwvf55pjcr52" path="res://src/actors/enemies/assets/cabezo/ghost_enemy_sheet.png" id="1_rqkiv"]
 [ext_resource type="PackedScene" uid="uid://pfmp13n5e2is" path="res://src/components/Hitbox/HitboxComponent.tscn" id="2_sp0wo"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="3_ivg0v"]
+[ext_resource type="PackedScene" uid="uid://c38ly1pqdi348" path="res://src/components/Health/HealthComponent.tscn" id="3_tctfl"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/parallel_state.gd" id="4_1a6wa"]
 [ext_resource type="PackedScene" uid="uid://druawb5me37ot" path="res://src/components/Pathfinding/AIPathfindingComponent.tscn" id="4_uk0hc"]
 [ext_resource type="PackedScene" uid="uid://ckjpj7tql40n" path="res://src/components/Attack/AttackComponent.tscn" id="4_vdv4v"]
@@ -13,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://twux0snbpc37" path="res://src/components/Particles/ParticlesComponent.tscn" id="6_vem6n"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="7_8e0vm"]
 [ext_resource type="Resource" uid="uid://bfll8kxvcyxn2" path="res://assets/particles/impact/ImpactParticle.tres" id="8_v0c0v"]
+[ext_resource type="PackedScene" uid="uid://lysd0wn0n81t" path="res://src/ui/health_bar/HealthBar.tscn" id="15_pxubp"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_srcb7"]
 
@@ -33,13 +35,15 @@ particle_size = 64
 attack_particle = ExtResource("8_v0c0v")
 attack_sfx = Array[AudioStream]([])
 
-[node name="BaseEnemy" type="CharacterBody2D" node_paths=PackedStringArray("attack_range_hitbox_component", "ai_pathfinding_component", "attack_component", "particles_component", "state_chart", "nav_agent")]
+[node name="BaseEnemy" type="CharacterBody2D" node_paths=PackedStringArray("attack_range_hitbox_component", "ai_pathfinding_component", "hitbox_component", "health_component", "attack_component", "particles_component", "state_chart", "nav_agent")]
 collision_layer = 8
-collision_mask = 63
+collision_mask = 13
 motion_mode = 1
 script = ExtResource("1_ch4pi")
 attack_range_hitbox_component = NodePath("AttackRangeHitbox")
 ai_pathfinding_component = NodePath("AIPathfindingComponent")
+hitbox_component = NodePath("HitboxComponent")
+health_component = NodePath("HealthComponent")
 attack_component = NodePath("AttackComponent")
 particles_component = NodePath("ParticlesComponent")
 state_chart = NodePath("StateChart")
@@ -51,6 +55,19 @@ offset = Vector2(-4, 0)
 hframes = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_srcb7")
+disabled = true
+
+[node name="HealthComponent" parent="." instance=ExtResource("3_tctfl")]
+max_health = 25.0
+
+[node name="HitboxComponent" parent="." instance=ExtResource("2_sp0wo")]
+
+[node name="Area2D" type="Area2D" parent="HitboxComponent"]
+collision_layer = 8
+collision_mask = 84
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent/Area2D"]
 shape = SubResource("CircleShape2D_srcb7")
 
 [node name="AttackRangeHitbox" parent="." instance=ExtResource("2_sp0wo")]
@@ -174,12 +191,60 @@ initial_state = NodePath("Idle")
 [node name="Idle" type="Node" parent="StateChart/Root/Damage"]
 script = ExtResource("6_74yt5")
 
+[node name="toHurt" type="Node" parent="StateChart/Root/Damage/Idle"]
+script = ExtResource("7_8e0vm")
+to = NodePath("../../Hurt")
+event = &"damage_taken"
+delay_in_seconds = "0.0"
+
 [node name="Hurt" type="Node" parent="StateChart/Root/Damage"]
 script = ExtResource("6_74yt5")
+
+[node name="toIdle" type="Node" parent="StateChart/Root/Damage/Hurt"]
+script = ExtResource("7_8e0vm")
+to = NodePath("../../Idle")
+event = &"damage_recovered"
+delay_in_seconds = "0.0"
+
+[node name="toDead" type="Node" parent="StateChart/Root/Damage/Hurt"]
+script = ExtResource("7_8e0vm")
+to = NodePath("../../Dead")
+event = &"died"
+delay_in_seconds = "0.0"
 
 [node name="Dead" type="Node" parent="StateChart/Root/Damage"]
 script = ExtResource("6_74yt5")
 
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 40.0
+grow_horizontal = 2
+mouse_filter = 2
+
+[node name="HealthBar" parent="Control" node_paths=PackedStringArray("health_component") instance=ExtResource("15_pxubp")]
+z_index = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -17.0
+offset_top = -44.0
+offset_right = 95.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.3, 0.3)
+health_component = NodePath("../../HealthComponent")
+
+[connection signal="area_entered" from="HitboxComponent/Area2D" to="HitboxComponent" method="_on_area_2d_area_entered"]
+[connection signal="area_exited" from="HitboxComponent/Area2D" to="HitboxComponent" method="_on_area_2d_area_exited"]
 [connection signal="area_entered" from="AttackRangeHitbox/Area2D" to="." method="_on_attack_hitbox_triggered"]
 [connection signal="velocity_computed" from="NavigationAgent2D" to="AIPathfindingComponent" method="_on_navigation_agent_2d_velocity_computed"]
 [connection signal="state_entered" from="StateChart/Root/Movement/Idle" to="." method="_on_idle_state_entered"]
@@ -187,4 +252,5 @@ script = ExtResource("6_74yt5")
 [connection signal="state_entered" from="StateChart/Root/Attacking/Idle" to="." method="_on_attacking_idle_state_entered"]
 [connection signal="state_entered" from="StateChart/Root/Attacking/Attack" to="." method="_on_attacking_attack_state_entered"]
 [connection signal="state_exited" from="StateChart/Root/Attacking/Attack" to="." method="_on_attacking_attack_state_exited"]
-[connection signal="state_entered" from="StateChart/Root/Damage/Dead" to="." method="_on_dead_state_entered"]
+[connection signal="state_entered" from="StateChart/Root/Damage/Hurt" to="." method="_on_damage_hurt_state_entered"]
+[connection signal="state_entered" from="StateChart/Root/Damage/Dead" to="." method="_on_damage_dead_state_entered"]

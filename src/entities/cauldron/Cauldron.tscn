@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://uot6d4qertbc"]
+[gd_scene load_steps=13 format=3 uid="uid://uot6d4qertbc"]
 
 [ext_resource type="Script" path="res://src/entities/cauldron/cauldron.gd" id="1_5x1ej"]
 [ext_resource type="Texture2D" uid="uid://ttq6xocxdktr" path="res://src/entities/cauldron/assets/cauldron_unlit.png" id="1_x47gi"]
@@ -7,7 +7,6 @@
 [ext_resource type="Texture2D" uid="uid://fg2bdp05jf4t" path="res://src/entities/cauldron/assets/cauldron_unlit_disabled.png" id="4_u7mho"]
 [ext_resource type="Script" path="res://src/components/Hitbox/hitbox_component.gd" id="7_lhmb4"]
 [ext_resource type="PackedScene" uid="uid://twux0snbpc37" path="res://src/components/Particles/ParticlesComponent.tscn" id="8_5t560"]
-[ext_resource type="PackedScene" uid="uid://cojyfxu5j1idb" path="res://src/components/Grabbable/GrabbableComponent.tscn" id="8_hl6fj"]
 [ext_resource type="PackedScene" uid="uid://b6irvllg6u58o" path="res://src/components/MouseFollow/MouseFollowComponent.tscn" id="9_s4w0b"]
 [ext_resource type="Script" path="res://src/entities/cauldron/nav_obstacle_component.gd" id="9_xlrat"]
 [ext_resource type="PackedScene" uid="uid://c38ly1pqdi348" path="res://src/components/Health/HealthComponent.tscn" id="10_qqjd1"]
@@ -25,7 +24,7 @@ particles_component = NodePath("ParticlesComponent")
 hitbox_component = NodePath("HitboxComponent")
 health_component = NodePath("HealthComponent")
 selectable_component = NodePath("SelectableComponent")
-grabbable_component = NodePath("GrabbableComponent")
+grabbable_component = NodePath("")
 follow_component = NodePath("FollowComponent")
 sprite = NodePath("Sprite2D")
 object_texture = ExtResource("1_x47gi")
@@ -48,19 +47,12 @@ shape = SubResource("CircleShape2D_sc7qq")
 
 [node name="FollowComponent" parent="." instance=ExtResource("9_s4w0b")]
 
-[node name="GrabbableComponent" parent="." node_paths=PackedStringArray("selectable_component", "collider") instance=ExtResource("8_hl6fj")]
-selectable_component = NodePath("../SelectableComponent")
-collider = NodePath("CollisionShape2D")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="GrabbableComponent"]
-shape = SubResource("CircleShape2D_sc7qq")
-
 [node name="HitboxComponent" type="Node2D" parent="."]
 script = ExtResource("7_lhmb4")
 
 [node name="Area2D" type="Area2D" parent="HitboxComponent"]
 collision_layer = 36
-collision_mask = 28
+collision_mask = 12
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent/Area2D"]
 shape = SubResource("CircleShape2D_2j1k7")
