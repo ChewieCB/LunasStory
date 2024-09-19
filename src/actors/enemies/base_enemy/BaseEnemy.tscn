@@ -1,11 +1,13 @@
-[gd_scene load_steps=19 format=3 uid="uid://clhm87crkcsl6"]
+[gd_scene load_steps=21 format=3 uid="uid://clhm87crkcsl6"]
 
 [ext_resource type="Script" path="res://src/actors/enemies/base_enemy/base_enemy.gd" id="1_ch4pi"]
 [ext_resource type="Texture2D" uid="uid://bxwvf55pjcr52" path="res://src/actors/enemies/assets/cabezo/ghost_enemy_sheet.png" id="1_rqkiv"]
 [ext_resource type="PackedScene" uid="uid://pfmp13n5e2is" path="res://src/components/Hitbox/HitboxComponent.tscn" id="2_sp0wo"]
+[ext_resource type="Resource" uid="uid://dr68h35syqink" path="res://assets/particles/stars/StarsParticle.tres" id="3_ffmc0"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="3_ivg0v"]
 [ext_resource type="PackedScene" uid="uid://c38ly1pqdi348" path="res://src/components/Health/HealthComponent.tscn" id="3_tctfl"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/parallel_state.gd" id="4_1a6wa"]
+[ext_resource type="Resource" uid="uid://df4xulkx6r7kj" path="res://assets/particles/poof/PoofParticle.tres" id="4_b58tt"]
 [ext_resource type="PackedScene" uid="uid://druawb5me37ot" path="res://src/components/Pathfinding/AIPathfindingComponent.tscn" id="4_uk0hc"]
 [ext_resource type="PackedScene" uid="uid://ckjpj7tql40n" path="res://src/components/Attack/AttackComponent.tscn" id="4_vdv4v"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="5_ihvx6"]
@@ -48,6 +50,9 @@ attack_component = NodePath("AttackComponent")
 particles_component = NodePath("ParticlesComponent")
 state_chart = NodePath("StateChart")
 nav_agent = NodePath("NavigationAgent2D")
+hit_particle = ExtResource("8_v0c0v")
+damage_particle = ExtResource("3_ffmc0")
+death_particle = ExtResource("4_b58tt")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_rqkiv")
@@ -92,14 +97,13 @@ enabled = true
 
 [node name="ParticlesComponent" parent="." instance=ExtResource("6_vem6n")]
 position = Vector2(-4, 0)
-default_particle = ExtResource("8_v0c0v")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 path_desired_distance = 2.0
 target_desired_distance = 2.0
 simplify_path = true
 avoidance_enabled = true
-radius = 2.0
+radius = 8.0
 neighbor_distance = 128.0
 debug_path_custom_color = Color(1, 0.08, 0.08, 1)
 

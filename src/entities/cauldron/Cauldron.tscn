@@ -17,14 +17,13 @@ radius = 32.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_2j1k7"]
 radius = 16.0
 
-[node name="Cauldron" type="Node2D" node_paths=PackedStringArray("dynamic_nav_obstacle", "particles_component", "hitbox_component", "health_component", "selectable_component", "grabbable_component", "follow_component", "sprite")]
+[node name="Cauldron" type="Node2D" node_paths=PackedStringArray("dynamic_nav_obstacle", "particles_component", "hitbox_component", "health_component", "selectable_component", "follow_component", "sprite")]
 script = ExtResource("1_5x1ej")
 dynamic_nav_obstacle = NodePath("DynamicNavObstacleComponent")
 particles_component = NodePath("ParticlesComponent")
 hitbox_component = NodePath("HitboxComponent")
 health_component = NodePath("HealthComponent")
 selectable_component = NodePath("SelectableComponent")
-grabbable_component = NodePath("")
 follow_component = NodePath("FollowComponent")
 sprite = NodePath("Sprite2D")
 object_texture = ExtResource("1_x47gi")

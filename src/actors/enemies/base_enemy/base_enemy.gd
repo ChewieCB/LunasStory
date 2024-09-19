@@ -14,6 +14,13 @@ class_name AIAgent
 @export var nav_agent: NavigationAgent2D
 @export var target_node: InteractibleObject: set = _set_target_node
 
+@onready var sprite: Sprite2D = $Sprite2D
+
+@export_category("Particles")
+@export var hit_particle: ParticleResource
+@export var damage_particle: ParticleResource
+@export var death_particle: ParticleResource
+
 var target_pos: Vector2:
 	set(value):
 		target_pos = value
@@ -106,7 +113,10 @@ func _on_attacking_attack_state_exited():
 
 func _on_damage_hurt_state_entered() -> void:
 	# Play animation/particles/sfx
-	# TODO
+	var particles_to_spawn = [hit_particle, damage_particle]
+	for _particle in particles_to_spawn:
+		var particles = particles_component.spawn_one_shot_particle(_particle)
+		particles_component.emit_particles(self, particles)
 	# Fallback in case the damage killed the agent:
 	## We always want to go from hurt -> dead instead of idle -> dead 
 	## so our anims and juice play out for the impact
@@ -114,12 +124,18 @@ func _on_damage_hurt_state_entered() -> void:
 		state_chart.send_event("died")
 		return
 	# Wait for anims to finish
-	await get_tree().create_timer(1.0).timeout
+	# TODO
 	# Send recover signal
 	state_chart.send_event("damage_recovered")
 
 
 func _on_damage_dead_state_entered() -> void:
+	var particles = particles_component.spawn_one_shot_particle(death_particle)
+	particles_component.emit_particles(self, particles)
+	
+	sprite.visible = false
+	
+	await particles.finished
 	queue_free()
 
 ## ======== Signal Callbacks ========
@@ -168,3 +184,6 @@ func _on_health_changed(new_health: float, prev_health: float) -> void:
 
 func _on_died() -> void:
 	state_chart.send_event("died")
+	state_chart.send_event("stop_moving")
+	state_chart.send_event("abort_attack")
+	

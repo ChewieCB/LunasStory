@@ -18,8 +18,18 @@ func spawn_one_shot_particle(particle: ParticleResource = default_particle) -> G
 	particles.material = particle.canvas_material
 	particles.texture = particle.texture
 	particles.one_shot = true
+	particles.lifetime = particle.lifetime
 	
 	return particles
+
+
+func emit_particles(node: Node2D, particles: GPUParticles2D) -> void:
+	node.add_child(particles)
+	particles.finished.connect(func(): 
+		node.remove_child(particles) 
+		particles.queue_free()
+	)
+	particles.emitting = true
 
 
 func _test_particle_in_editor() -> void:

@@ -1,8 +1,8 @@
 [gd_scene load_steps=3 format=3 uid="uid://twux0snbpc37"]
 
 [ext_resource type="Script" path="res://src/components/Particles/particles_component.gd" id="1_dkdxa"]
-[ext_resource type="Resource" uid="uid://df4xulkx6r7kj" path="res://assets/particles/poof/PoofParticle.tres" id="2_5edqt"]
+[ext_resource type="Resource" uid="uid://bfll8kxvcyxn2" path="res://assets/particles/impact/ImpactParticle.tres" id="2_46f8g"]
 
 [node name="ParticlesComponent" type="Marker2D"]
 script = ExtResource("1_dkdxa")
-default_particle = ExtResource("2_5edqt")
+default_particle = ExtResource("2_46f8g")

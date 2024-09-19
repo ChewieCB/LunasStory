@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ParticleResource" load_steps=5 format=3 uid="uid://dr68h35syqink"]
+
+[ext_resource type="Material" uid="uid://b0pfmqmibd6ka" path="res://assets/particles/stars/StarsParticlesCanvasMaterial.tres" id="1_hqae3"]
+[ext_resource type="Material" uid="uid://bb1rtlfqc8bc4" path="res://assets/particles/stars/StarsParticlesProcessMaterial.tres" id="2_cyadd"]
+[ext_resource type="Script" path="res://src/components/Particles/particle_resource.gd" id="3_gmyxv"]
+[ext_resource type="Texture2D" uid="uid://dtorfprfqhcl" path="res://assets/particles/stars/stars_particle_sheet.png" id="4_mah2v"]
+
+[resource]
+script = ExtResource("3_gmyxv")
+process_material = ExtResource("2_cyadd")
+canvas_material = ExtResource("1_hqae3")
+texture = ExtResource("4_mah2v")
+lifetime = 0.6
