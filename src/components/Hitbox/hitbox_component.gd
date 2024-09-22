@@ -17,7 +17,12 @@ func _ready() -> void:
 func _set_collision_state(state: bool) -> void:
 	area_2d.monitoring = state
 	area_2d.monitorable = state
-	print("%s hitbox is %s" % [entity.name, ("enabled" if state else "disabled")])
+	print_rich(
+		"%s.%s %s" % [
+			entity.name, self.name, 
+			("[color=green]enabled[/color]" if state else "[color=red]disabled[/color]")
+			]
+	)
 
 
 func check_in_area(area: Area2D) -> bool:
@@ -31,9 +36,22 @@ func check_in_area(area: Area2D) -> bool:
 
 
 func _on_area_2d_area_entered(area: Area2D) -> void:
-	print("%s entered %s area" % [area.get_parent().name, get_parent().name])
-	emit_signal("area_entered", area)
+	if is_instance_valid(area.owner):
+		print_rich(
+			"%s.%s [color=green]entered[/color] %s.%s area" % [
+				area.owner.name, area.get_parent().name, 
+				get_parent().name, self.name
+			]
+		)
+		emit_signal("area_entered", area)
 
 
 func _on_area_2d_area_exited(area: Area2D) -> void:
-	emit_signal("area_exited", area)
+	if is_instance_valid(area.owner):
+		print_rich(
+			"%s.%s [color=red]exited[/color] %s.%s area" % [
+				area.owner.name, area.get_parent().name, 
+				get_parent().name, self.name
+			]
+		)
+		emit_signal("area_exited", area)

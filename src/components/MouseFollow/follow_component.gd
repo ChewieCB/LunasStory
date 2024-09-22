@@ -20,4 +20,6 @@ func _physics_process(delta: float) -> void:
 
 
 func get_target_global_position() -> Vector2:
-	return target.get_current_cursor_marker().global_position
+	if target:
+		return target.get_current_cursor_marker().global_position
+	return entity.global_position

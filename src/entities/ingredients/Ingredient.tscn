@@ -42,22 +42,23 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SelectableComponent/Area2D"]
 shape = SubResource("CircleShape2D_b1q5v")
 
-[node name="MouseFollowComponent" parent="." instance=ExtResource("5_unb27")]
-
-[node name="GrabbableComponent" parent="." node_paths=PackedStringArray("selectable_component") instance=ExtResource("6_etj2y")]
+[node name="GrabbableComponent" parent="." node_paths=PackedStringArray("selectable_component", "collider") instance=ExtResource("6_etj2y")]
 collision_layer = 16
 collision_mask = 2
 selectable_component = NodePath("../SelectableComponent")
+collider = NodePath("CollisionShape2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GrabbableComponent"]
 shape = SubResource("CircleShape2D_gvquo")
+
+[node name="MouseFollowComponent" parent="." instance=ExtResource("5_unb27")]
 
 [node name="HitboxComponent" type="Node2D" parent="."]
 script = ExtResource("7_ywfev")
 
 [node name="Area2D" type="Area2D" parent="HitboxComponent"]
-collision_layer = 20
-collision_mask = 44
+collision_layer = 52
+collision_mask = 108
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent/Area2D"]
 shape = SubResource("CircleShape2D_b1q5v")
@@ -65,3 +66,6 @@ shape = SubResource("CircleShape2D_b1q5v")
 [node name="ConsumableComponent" type="Node2D" parent="." node_paths=PackedStringArray("hitbox_component")]
 script = ExtResource("8_v8v5x")
 hitbox_component = NodePath("../HitboxComponent")
+
+[connection signal="area_entered" from="HitboxComponent/Area2D" to="HitboxComponent" method="_on_area_2d_area_entered"]
+[connection signal="area_exited" from="HitboxComponent/Area2D" to="HitboxComponent" method="_on_area_2d_area_exited"]

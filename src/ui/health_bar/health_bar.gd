@@ -11,9 +11,10 @@ extends TextureProgressBar
 
 func _ready() -> void:
 	await get_owner().ready
-	init_health_ui(health_component.current_health)
-	health_component.health_changed.connect(_on_health_changed)
-	health_component.died.connect(_on_died)
+	if health_component:
+		init_health_ui(health_component.current_health)
+		health_component.health_changed.connect(_on_health_changed)
+		health_component.died.connect(_on_died)
 
 
 func init_health_ui(_health) -> void:

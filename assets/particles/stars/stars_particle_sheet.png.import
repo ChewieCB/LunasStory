@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://3resrpabdow7"
-path="res://.godot/imported/star KO animation sheet.png-60a6752007ccb7ec6a637688aaa98b9d.ctex"
+uid="uid://dtorfprfqhcl"
+path="res://.godot/imported/stars_particle_sheet.png-b5facd1959049f2e06716dd79bdf3d84.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/particles/star KO animation sheet.png"
-dest_files=["res://.godot/imported/star KO animation sheet.png-60a6752007ccb7ec6a637688aaa98b9d.ctex"]
+source_file="res://assets/particles/stars/stars_particle_sheet.png"
+dest_files=["res://.godot/imported/stars_particle_sheet.png-b5facd1959049f2e06716dd79bdf3d84.ctex"]
 
 [params]
 
