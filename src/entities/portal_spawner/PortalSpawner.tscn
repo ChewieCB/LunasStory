@@ -170,16 +170,16 @@ delay_in_seconds = "0.0"
 [node name="Active" type="Node" parent="StateChart/Root/Status"]
 script = ExtResource("18_dgc1s")
 
-[node name="toDormant" type="Node" parent="StateChart/Root/Status/Active"]
-script = ExtResource("19_7q7c7")
-to = NodePath("../../Dormant")
-event = &"deactivate"
-delay_in_seconds = "0.0"
-
 [node name="toExtinct" type="Node" parent="StateChart/Root/Status/Active"]
 script = ExtResource("19_7q7c7")
 to = NodePath("../../Extinct")
 event = &"destroy"
+delay_in_seconds = "0.0"
+
+[node name="toDormant" type="Node" parent="StateChart/Root/Status/Active"]
+script = ExtResource("19_7q7c7")
+to = NodePath("../../Dormant")
+event = &"deactivate"
 delay_in_seconds = "0.0"
 
 [node name="Extinct" type="Node" parent="StateChart/Root/Status"]
@@ -221,7 +221,7 @@ delay_in_seconds = "0.0"
 
 [node name="Spawner" type="Node" parent="StateChart/Root"]
 script = ExtResource("17_obdtw")
-initial_state = NodePath("Idle")
+initial_state = NodePath("Disabled")
 
 [node name="Idle" type="Node" parent="StateChart/Root/Spawner"]
 script = ExtResource("18_dgc1s")
