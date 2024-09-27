@@ -3,6 +3,7 @@ extends Node2D
 
 signal portal_opened
 signal portal_closed
+signal state_chart_initialized
 
 @export_category("Nodes")
 @export var anim_sprite: AnimatedSprite2D
@@ -22,16 +23,16 @@ signal portal_closed
 		var prev_value: bool = is_open
 		is_open = value
 		
-		await ready
-		
 		if prev_value != is_open:
 			open_portal() if is_open else close_portal()
 @export_enum("Dormant", "Active", "Extinct") var portal_state: String = "Dormant":
 	set(value):
+		if not is_node_ready():
+			await ready
+			await get_tree().process_frame
+		
 		var prev_state: String = portal_state
 		portal_state = value
-		
-		await ready
 		
 		if prev_state != portal_state:
 			match portal_state:
@@ -48,6 +49,16 @@ func spawn_agent(agent_type: PackedScene = spawn_type) -> AIAgent:
 	get_parent().add_child(new_agent)
 	
 	return new_agent
+
+## DEBUG
+func _input(event: InputEvent) -> void:
+	if Input.is_action_just_pressed("ui_accept"):
+		is_open = !is_open
+	elif Input.is_action_just_pressed("ui_cancel"):
+		if portal_state == "Dormant":
+			portal_state = "Active"
+		elif portal_state == "Active":
+			portal_state = "Dormant"
 
 
 func open_portal() -> void:
@@ -69,37 +80,44 @@ func deactivate() -> void:
 func _on_dormant_state_entered() -> void:
 	if is_open:
 		anim_sprite.play("dormant")
-	state_chart.send_event("finish_spawn")
+	state_chart.send_event("disable_spawn")
+
+func _on_dormant_event_received(event: StringName) -> void:
+	match event:
+		"open_portal":
+			await anim_sprite.animation_finished
+			anim_sprite.play("dormant")
 
 func _on_active_state_entered() -> void:
 	if not is_open:
 		state_chart.send_event("open_portal")
-	await portal_opened
+		await portal_opened
+	
 	anim_sprite.play("active")
+	state_chart.send_event("finish_spawn")
+
+func _on_active_event_received(event: StringName) -> void:
+	match event:
+		"open_portal":
+			await anim_sprite.animation_finished
+			anim_sprite.play("active")
 
 func _on_extinct_state_entered() -> void:
 	state_chart.send_event("disable_spawn")
 
 
 func _on_open_state_entered() -> void:
-	is_open = true
-	
 	anim_sprite.play("open")
 	await anim_sprite.animation_finished
-	
-	state_chart.send_event("finish_spawn")
+	is_open = true
 	emit_signal("portal_opened")
 
 func _on_closed_state_entered() -> void:
-	await ready
-	if is_open:
-		is_open = false
-		
-		anim_sprite.play("close")
-		await anim_sprite.animation_finished
-		
-		state_chart.send_event("disable_spawn")
-		emit_signal("portal_closed")
+	anim_sprite.play("close")
+	await anim_sprite.animation_finished
+	state_chart.send_event("disable_spawn")
+	is_open = false
+	emit_signal("portal_closed")
 
 
 func _on_spawner_idle_state_entered() -> void:
@@ -108,10 +126,13 @@ func _on_spawner_idle_state_entered() -> void:
 func _on_spawner_spawning_state_entered() -> void:
 	spawn_timer.stop()
 	
-	var new_agent: AIAgent = spawn_agent()
-	await new_agent.ready
-	
-	state_chart.send_event("finish_spawn")
+	if spawn_type:
+		var new_agent: AIAgent = spawn_agent()
+		await new_agent.ready
+		
+		state_chart.send_event("finish_spawn")
+	else:
+		state_chart.send_event("disable_spawn")
 
 func _on_spawner_disabled_state_entered() -> void:
 	spawn_timer.stop()

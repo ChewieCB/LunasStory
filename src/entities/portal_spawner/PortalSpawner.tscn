@@ -123,8 +123,9 @@ portal_state = "Active"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_1s6ir")
+animation = &"active"
 autoplay = "default"
-frame_progress = 0.00129827
+frame_progress = 0.825453
 offset = Vector2(0, -2)
 
 [node name="Area2D" type="Area2D" parent="."]

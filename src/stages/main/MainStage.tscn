@@ -62,7 +62,7 @@ size_flags_vertical = 3
 mouse_filter = 2
 
 [node name="StateChartDebugger" parent="CanvasLayer/Control" instance=ExtResource("8_f135c")]
-custom_minimum_size = Vector2(400, 250)
+custom_minimum_size = Vector2(200, 250)
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -99,6 +99,4 @@ grow_horizontal = 1
 grow_vertical = 1
 health_component = NodePath("../../../Cauldron/HealthComponent")
 
-[editable path="PortalSpawner"]
-[editable path="PortalSpawner/HitboxComponent"]
 [editable path="Cauldron"]
