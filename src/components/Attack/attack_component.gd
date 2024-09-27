@@ -1,6 +1,7 @@
 extends BaseComponent
 class_name AttackComponent
 
+signal attack_chosen(_attack: AttackResource)
 signal finish_attack(_attack: AttackResource)
 signal cooldown_finished(_attack: AttackResource)
 signal cooldown_aborted(_attack: AttackResource)
@@ -22,6 +23,9 @@ signal attack_failed(_attack: AttackResource)
 		current_attack.cooldown_timer = _timer
 		current_attack.cooldown_ended.connect(_on_cooldown_finished)
 		current_attack.cooldown_aborted.connect(_on_cooldown_aborted)
+		if not owner.is_node_ready():
+			await owner.ready
+		emit_signal("attack_chosen", current_attack)
 
 var priority_targets = []
 
@@ -34,8 +38,7 @@ func _ready() -> void:
 
 
 func attack(target: Node2D, attack: AttackResource = current_attack) -> void:
-	if not is_attack_in_range(target, attack) or \
-	not attack.cooldown_timer.is_stopped():
+	if not attack.cooldown_timer.is_stopped():
 		emit_signal("attack_failed", attack)
 		return
 	
@@ -63,9 +66,11 @@ func is_in_cooldown(_attack: AttackResource) -> bool:
 	return not _attack.cooldown_timer.is_stopped()
 
 
+# FIXME - this function might be redundant with the use of the dynamic attack area collider
 func is_attack_in_range(target_node: Node2D, attack: AttackResource) -> bool:
 	if not attack or not generic_cooldown_timer.is_stopped():
 		return false
+	var test0 = entity.global_position.distance_to(target_node.global_position)
 	return entity.global_position.distance_to(target_node.global_position) <= attack.attack_range
 
 

@@ -43,6 +43,7 @@ func _ready() -> void:
 	ai_pathfinding_component.pathfinding_ready.connect(_spawn)
 	ai_pathfinding_component.nav_target_updated.connect(_on_nav_target_updated)
 	ai_pathfinding_component.navigation_finished.connect(_on_navigation_finished)
+	attack_component.attack_chosen.connect(_on_attack_chosen)
 	attack_component.cooldown_finished.connect(_on_attack_cooldown_finished)
 	attack_component.finish_attack.connect(_on_attack_finished)
 	attack_component.attack_failed.connect(_on_attack_failed)
@@ -188,6 +189,9 @@ func _pickup_target(_entity: Node2D) -> void:
 
 func _drop_target(_entity: Node2D) -> void:
 	target_pos = target_node.global_position
+
+func _on_attack_chosen(attack: AttackResource) -> void:
+	attack_range_hitbox_component.collider.shape.radius = attack.attack_range
 
 func _target_dead() -> void:
 	target_node = null

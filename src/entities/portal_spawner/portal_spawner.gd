@@ -4,7 +4,7 @@ class_name PortalSpawner
 
 signal portal_opened
 signal portal_closed
-signal state_chart_initialized
+signal agent_spawned(agent: AIAgent, portal: PortalSpawner)
 
 @export_category("Nodes")
 @export var anim_sprite: AnimatedSprite2D
@@ -17,6 +17,8 @@ signal state_chart_initialized
 	set(value):
 		spawn_time = value
 		spawn_timer.wait_time = spawn_time
+@export var max_spawns: int = -1
+var current_spawns: int = 0
 
 @export_category("Editor Debug")
 @export var is_open: bool = false:
@@ -53,6 +55,7 @@ func spawn_agent(agent_type: PackedScene = spawn_type) -> AIAgent:
 	
 	get_parent().add_child(new_agent)
 	
+	emit_signal("agent_spawned", new_agent, self)
 	return new_agent
 
 ## DEBUG
@@ -129,9 +132,11 @@ func _on_spawner_idle_state_entered() -> void:
 func _on_spawner_spawning_state_entered() -> void:
 	spawn_timer.stop()
 	
-	if spawn_type:
+	if spawn_type and (max_spawns == -1 or current_spawns < max_spawns):
 		var new_agent: AIAgent = spawn_agent()
 		await new_agent.spawned
+		
+		current_spawns += 1
 		
 		state_chart.send_event("finish_spawn")
 	else:
@@ -139,6 +144,7 @@ func _on_spawner_spawning_state_entered() -> void:
 
 func _on_spawner_disabled_state_entered() -> void:
 	spawn_timer.stop()
+	current_spawns = 0
 
 
 func _on_spawn_timer_timeout() -> void:

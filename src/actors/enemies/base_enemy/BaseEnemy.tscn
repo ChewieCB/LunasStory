@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://clhm87crkcsl6"]
+[gd_scene load_steps=23 format=3 uid="uid://clhm87crkcsl6"]
 
 [ext_resource type="Script" path="res://src/actors/enemies/base_enemy/base_enemy.gd" id="1_ch4pi"]
 [ext_resource type="Texture2D" uid="uid://bxwvf55pjcr52" path="res://src/actors/enemies/assets/cabezo/ghost_enemy_sheet.png" id="1_rqkiv"]
@@ -21,6 +21,9 @@
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_srcb7"]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_urmvv"]
+radius = 132.0
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_8h6wu"]
 radius = 132.0
 
@@ -28,7 +31,7 @@ radius = 132.0
 script = ExtResource("5_yo8xg")
 targeting_mode = 0
 max_targets = 1
-attack_range = 38
+attack_range = 12
 attack_delay = 0.0
 cooldown = 1.8
 damage = 15
@@ -78,7 +81,6 @@ collision_mask = 84
 shape = SubResource("CircleShape2D_srcb7")
 
 [node name="TargetGatheringHitbox" type="Node2D" parent="."]
-visible = false
 script = ExtResource("18_rai2j")
 
 [node name="Area2D" type="Area2D" parent="TargetGatheringHitbox"]
@@ -86,8 +88,7 @@ collision_layer = 8
 collision_mask = 52
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TargetGatheringHitbox/Area2D"]
-shape = SubResource("CircleShape2D_8h6wu")
-debug_color = Color(3.85046e-06, 0.649375, 0.147832, 0.42)
+shape = SubResource("CircleShape2D_urmvv")
 
 [node name="AttackRangeHitbox" parent="." instance=ExtResource("2_sp0wo")]
 
@@ -113,8 +114,8 @@ enabled = true
 position = Vector2(-4, 0)
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
-path_desired_distance = 2.0
-target_desired_distance = 2.0
+path_desired_distance = 4.0
+target_desired_distance = 8.0
 simplify_path = true
 avoidance_enabled = true
 radius = 8.0
