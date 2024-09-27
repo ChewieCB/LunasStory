@@ -1,7 +1,10 @@
 extends CharacterBody2D
 class_name AIAgent
 
+signal spawned(agent: AIAgent)
+
 @export_category("Components")
+@export var target_range_hitbox_component: HitboxComponent
 @export var attack_range_hitbox_component: HitboxComponent
 @export var ai_pathfinding_component: AIPathfindingComponent
 @export var hitbox_component: HitboxComponent
@@ -21,6 +24,13 @@ class_name AIAgent
 @export var damage_particle: ParticleResource
 @export var death_particle: ParticleResource
 
+# TODO - work this into a stats component
+@export var target_search_range: float = 128.0:
+	set(value):
+		target_search_range = value
+		#if target_range_hitbox_component:
+			#target_range_hitbox_component.collider.shape.radius = target_search_range
+
 var target_pos: Vector2:
 	set(value):
 		target_pos = value
@@ -33,6 +43,7 @@ func _ready() -> void:
 	ai_pathfinding_component.pathfinding_ready.connect(_spawn)
 	ai_pathfinding_component.nav_target_updated.connect(_on_nav_target_updated)
 	ai_pathfinding_component.navigation_finished.connect(_on_navigation_finished)
+	attack_component.attack_chosen.connect(_on_attack_chosen)
 	attack_component.cooldown_finished.connect(_on_attack_cooldown_finished)
 	attack_component.finish_attack.connect(_on_attack_finished)
 	attack_component.attack_failed.connect(_on_attack_failed)
@@ -44,8 +55,9 @@ func _ready() -> void:
 
 
 func _spawn():
-	# TODO - get target
-	pass
+	await get_tree().physics_frame
+	target_node = target_range_hitbox_component.get_target()
+	emit_signal("spawned", self)
 
 
 func _hurt():
@@ -67,19 +79,28 @@ func _set_target_node(new_target: InteractibleObject) -> void:
 	
 	if target_node:
 		_connect_signal_callbacks(target_node)
-		await ai_pathfinding_component.pathfinding_ready
+		if not ai_pathfinding_component.is_node_ready():
+			await ai_pathfinding_component.pathfinding_ready
 		target_pos = target_node.global_position
 
 
 func _connect_signal_callbacks(target: InteractibleObject) -> void:
+	if not target_node:
+		return
 	if target_node.grabbable_component:
 		target_node.grabbable_component.drop.connect(_drop_target)
 		target_node.grabbable_component.pickup.connect(_pickup_target)
 	if target_node.health_component:
 		target_node.health_component.died.connect(_target_dead)
+	target_node.object_removed.connect(
+		func(object):
+			target_node = target_range_hitbox_component.get_target()
+	)
 
 
 func _disconnect_signal_callbacks(target: InteractibleObject) -> void:
+	if not target_node:
+		return
 	if target_node.grabbable_component:
 		target_node.grabbable_component.drop.disconnect(_drop_target)
 		target_node.grabbable_component.pickup.disconnect(_pickup_target)
@@ -168,6 +189,9 @@ func _pickup_target(_entity: Node2D) -> void:
 
 func _drop_target(_entity: Node2D) -> void:
 	target_pos = target_node.global_position
+
+func _on_attack_chosen(attack: AttackResource) -> void:
+	attack_range_hitbox_component.collider.shape.radius = attack.attack_range
 
 func _target_dead() -> void:
 	target_node = null

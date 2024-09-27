@@ -1,0 +1,285 @@
+[gd_scene load_steps=24 format=3 uid="uid://dcxugwx7ivfx"]
+
+[ext_resource type="Script" path="res://src/entities/portal_spawner/portal_spawner.gd" id="1_7nh3d"]
+[ext_resource type="Texture2D" uid="uid://pn0awgc3pc8a" path="res://src/entities/portal_spawner/assets/active/portal_active_1.png" id="1_urptd"]
+[ext_resource type="Texture2D" uid="uid://khnnl4hkqwkh" path="res://src/entities/portal_spawner/assets/active/portal_active_2.png" id="2_3wnpw"]
+[ext_resource type="PackedScene" uid="uid://clhm87crkcsl6" path="res://src/actors/enemies/base_enemy/BaseEnemy.tscn" id="2_15vrf"]
+[ext_resource type="Texture2D" uid="uid://bals7irrwrlfe" path="res://src/entities/portal_spawner/assets/active/portal_active_3.png" id="3_tnna3"]
+[ext_resource type="Texture2D" uid="uid://03qml2iqvxiv" path="res://src/entities/portal_spawner/assets/active/portal_active_4.png" id="4_v1o66"]
+[ext_resource type="Texture2D" uid="uid://beydep6nvetx5" path="res://src/entities/portal_spawner/assets/opening/portal_opening_6.png" id="5_3w5qw"]
+[ext_resource type="Texture2D" uid="uid://16lwn41jf0qx" path="res://src/entities/portal_spawner/assets/opening/portal_opening_5.png" id="6_gvjfr"]
+[ext_resource type="Texture2D" uid="uid://cd2r5rgre8qxx" path="res://src/entities/portal_spawner/assets/opening/portal_opening_4.png" id="7_dc4qk"]
+[ext_resource type="Texture2D" uid="uid://5064cr05y7d0" path="res://src/entities/portal_spawner/assets/opening/portal_opening_3.png" id="8_t87n8"]
+[ext_resource type="Texture2D" uid="uid://pqt4vccw7drl" path="res://src/entities/portal_spawner/assets/opening/portal_opening_2.png" id="9_2krpe"]
+[ext_resource type="Texture2D" uid="uid://de5swmhsw1ets" path="res://src/entities/portal_spawner/assets/opening/portal_opening_1.png" id="10_nu4bc"]
+[ext_resource type="Texture2D" uid="uid://csvv3fcw7q7ni" path="res://src/entities/portal_spawner/assets/portal_blank_frame.png" id="11_akcs4"]
+[ext_resource type="Texture2D" uid="uid://bipjn6ord8brg" path="res://src/entities/portal_spawner/assets/dormant/portal_dormant_1.png" id="11_hudxd"]
+[ext_resource type="Texture2D" uid="uid://dehgbq7ywmas6" path="res://src/entities/portal_spawner/assets/dormant/portal_dormant_2.png" id="12_ev0w4"]
+[ext_resource type="PackedScene" uid="uid://pfmp13n5e2is" path="res://src/components/Hitbox/HitboxComponent.tscn" id="15_r8edr"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="16_htu2k"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/parallel_state.gd" id="17_6s33n"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="17_obdtw"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="18_dgc1s"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="19_7q7c7"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1s6ir"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_urptd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_3wnpw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_tnna3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_v1o66")
+}],
+"loop": true,
+"name": &"active",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_3w5qw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_gvjfr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_dc4qk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_t87n8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_2krpe")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_nu4bc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_akcs4")
+}],
+"loop": false,
+"name": &"close",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_akcs4")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_hudxd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_ev0w4")
+}],
+"loop": true,
+"name": &"dormant",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_nu4bc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_2krpe")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_t87n8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_dc4qk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_gvjfr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_3w5qw")
+}],
+"loop": false,
+"name": &"open",
+"speed": 20.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_woegi"]
+radius = 16.0
+
+[node name="PortalSpawner" type="Node2D" node_paths=PackedStringArray("anim_sprite", "state_chart", "spawn_timer")]
+script = ExtResource("1_7nh3d")
+anim_sprite = NodePath("AnimatedSprite2D")
+state_chart = NodePath("StateChart")
+spawn_timer = NodePath("SpawnTimer")
+spawn_type = ExtResource("2_15vrf")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_1s6ir")
+animation = &"active"
+autoplay = "default"
+frame_progress = 0.825453
+offset = Vector2(0, -2)
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_woegi")
+
+[node name="HitboxComponent" parent="." instance=ExtResource("15_r8edr")]
+
+[node name="Area2D" type="Area2D" parent="HitboxComponent"]
+collision_layer = 17
+collision_mask = 79
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent/Area2D"]
+shape = SubResource("CircleShape2D_woegi")
+
+[node name="StateChart" type="Node" parent="."]
+script = ExtResource("16_htu2k")
+track_in_editor = true
+
+[node name="Root" type="Node" parent="StateChart"]
+script = ExtResource("17_6s33n")
+
+[node name="Status" type="Node" parent="StateChart/Root"]
+script = ExtResource("17_obdtw")
+initial_state = NodePath("Dormant")
+
+[node name="Dormant" type="Node" parent="StateChart/Root/Status"]
+script = ExtResource("18_dgc1s")
+
+[node name="toActive" type="Node" parent="StateChart/Root/Status/Dormant"]
+script = ExtResource("19_7q7c7")
+to = NodePath("../../Active")
+event = &"activate"
+delay_in_seconds = "0.0"
+
+[node name="toExtinct" type="Node" parent="StateChart/Root/Status/Dormant"]
+script = ExtResource("19_7q7c7")
+to = NodePath("../../Extinct")
+event = &"destroy"
+delay_in_seconds = "0.0"
+
+[node name="Active" type="Node" parent="StateChart/Root/Status"]
+script = ExtResource("18_dgc1s")
+
+[node name="toExtinct" type="Node" parent="StateChart/Root/Status/Active"]
+script = ExtResource("19_7q7c7")
+to = NodePath("../../Extinct")
+event = &"destroy"
+delay_in_seconds = "0.0"
+
+[node name="toDormant" type="Node" parent="StateChart/Root/Status/Active"]
+script = ExtResource("19_7q7c7")
+to = NodePath("../../Dormant")
+event = &"deactivate"
+delay_in_seconds = "0.0"
+
+[node name="Extinct" type="Node" parent="StateChart/Root/Status"]
+script = ExtResource("18_dgc1s")
+
+[node name="toDormant" type="Node" parent="StateChart/Root/Status/Extinct"]
+script = ExtResource("19_7q7c7")
+to = NodePath("../../Dormant")
+event = &"revive_dormant"
+delay_in_seconds = "0.0"
+
+[node name="toActive" type="Node" parent="StateChart/Root/Status/Extinct"]
+script = ExtResource("19_7q7c7")
+to = NodePath("../../Active")
+event = &"revive_active"
+delay_in_seconds = "0.0"
+
+[node name="Aperture" type="Node" parent="StateChart/Root"]
+script = ExtResource("17_obdtw")
+initial_state = NodePath("Closed")
+
+[node name="Closed" type="Node" parent="StateChart/Root/Aperture"]
+script = ExtResource("18_dgc1s")
+
+[node name="toOpen" type="Node" parent="StateChart/Root/Aperture/Closed"]
+script = ExtResource("19_7q7c7")
+to = NodePath("../../Open")
+event = &"open_portal"
+delay_in_seconds = "0.0"
+
+[node name="Open" type="Node" parent="StateChart/Root/Aperture"]
+script = ExtResource("18_dgc1s")
+
+[node name="toClosed" type="Node" parent="StateChart/Root/Aperture/Open"]
+script = ExtResource("19_7q7c7")
+to = NodePath("../../Closed")
+event = &"close_portal"
+delay_in_seconds = "0.0"
+
+[node name="Spawner" type="Node" parent="StateChart/Root"]
+script = ExtResource("17_obdtw")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateChart/Root/Spawner"]
+script = ExtResource("18_dgc1s")
+
+[node name="toSpawning" type="Node" parent="StateChart/Root/Spawner/Idle"]
+script = ExtResource("19_7q7c7")
+to = NodePath("../../Spawning")
+event = &"start_spawn"
+delay_in_seconds = "0.0"
+
+[node name="toDisabled" type="Node" parent="StateChart/Root/Spawner/Idle"]
+script = ExtResource("19_7q7c7")
+to = NodePath("../../Disabled")
+event = &"disable_spawn"
+delay_in_seconds = "0.0"
+
+[node name="Spawning" type="Node" parent="StateChart/Root/Spawner"]
+script = ExtResource("18_dgc1s")
+
+[node name="toIdle" type="Node" parent="StateChart/Root/Spawner/Spawning"]
+script = ExtResource("19_7q7c7")
+to = NodePath("../../Idle")
+event = &"finish_spawn"
+delay_in_seconds = "0.0"
+
+[node name="toDisabled" type="Node" parent="StateChart/Root/Spawner/Spawning"]
+script = ExtResource("19_7q7c7")
+to = NodePath("../../Disabled")
+event = &"disable_spawn"
+delay_in_seconds = "0.0"
+
+[node name="Disabled" type="Node" parent="StateChart/Root/Spawner"]
+script = ExtResource("18_dgc1s")
+
+[node name="toIdle" type="Node" parent="StateChart/Root/Spawner/Disabled"]
+script = ExtResource("19_7q7c7")
+to = NodePath("../../Idle")
+event = &"finish_spawn"
+delay_in_seconds = "0.0"
+
+[node name="toSpawning" type="Node" parent="StateChart/Root/Spawner/Disabled"]
+script = ExtResource("19_7q7c7")
+to = NodePath("../../Spawning")
+event = &"start_spawn"
+delay_in_seconds = "0.0"
+
+[node name="SpawnTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[connection signal="state_entered" from="StateChart/Root/Status/Dormant" to="." method="_on_dormant_state_entered"]
+[connection signal="state_entered" from="StateChart/Root/Status/Active" to="." method="_on_active_state_entered"]
+[connection signal="state_entered" from="StateChart/Root/Status/Extinct" to="." method="_on_extinct_state_entered"]
+[connection signal="state_entered" from="StateChart/Root/Aperture/Closed" to="." method="_on_closed_state_entered"]
+[connection signal="state_entered" from="StateChart/Root/Aperture/Open" to="." method="_on_open_state_entered"]
+[connection signal="state_entered" from="StateChart/Root/Spawner/Idle" to="." method="_on_spawner_idle_state_entered"]
+[connection signal="state_entered" from="StateChart/Root/Spawner/Spawning" to="." method="_on_spawner_spawning_state_entered"]
+[connection signal="state_entered" from="StateChart/Root/Spawner/Disabled" to="." method="_on_spawner_disabled_state_entered"]
+[connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]
+
+[editable path="HitboxComponent"]

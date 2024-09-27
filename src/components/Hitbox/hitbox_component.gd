@@ -35,6 +35,33 @@ func check_in_area(area: Area2D) -> bool:
 	return false
 
 
+func get_target() -> Node2D:
+	var targets = area_2d.get_overlapping_areas()
+	
+	var target_nodes = targets.map(func(element): return element.owner)
+	# Remove any duplicates
+	var unique_targets: Array = []
+	for node in target_nodes:
+		if not unique_targets.has(node):
+			unique_targets.append(node)
+	# Remove any freed nodes
+	unique_targets = unique_targets.filter(func(target): return is_instance_valid(target))
+	# Split by type
+	var cauldron_targets = unique_targets.filter(func(target): return target is Cauldron)
+	var ingredient_targets = unique_targets.filter(func(target): return target is Ingredient)
+	# Sort closest
+	#targets.sort_custom(func(a, b):
+		#if a.global_position.distance_to(self.global_position)\
+		 #< b.global_position.distance_to(self.global_position):
+			#return true
+		#return false
+	#)
+	var weighted_targets = cauldron_targets + ingredient_targets
+	if weighted_targets:
+		return weighted_targets[0]
+	return null
+
+
 func _on_area_2d_area_entered(area: Area2D) -> void:
 	if is_instance_valid(area.owner):
 		print_rich(
