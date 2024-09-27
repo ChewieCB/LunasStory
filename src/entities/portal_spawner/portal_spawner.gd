@@ -20,6 +20,10 @@ signal state_chart_initialized
 @export_category("Editor Debug")
 @export var is_open: bool = false:
 	set(value):
+		if not is_node_ready():
+			await ready
+			await get_tree().process_frame
+		
 		var prev_value: bool = is_open
 		is_open = value
 		
@@ -90,7 +94,7 @@ func _on_dormant_event_received(event: StringName) -> void:
 
 func _on_active_state_entered() -> void:
 	if not is_open:
-		state_chart.send_event("open_portal")
+		is_open = true
 		await portal_opened
 	
 	anim_sprite.play("active")
@@ -109,14 +113,12 @@ func _on_extinct_state_entered() -> void:
 func _on_open_state_entered() -> void:
 	anim_sprite.play("open")
 	await anim_sprite.animation_finished
-	is_open = true
 	emit_signal("portal_opened")
 
 func _on_closed_state_entered() -> void:
 	anim_sprite.play("close")
 	await anim_sprite.animation_finished
 	state_chart.send_event("disable_spawn")
-	is_open = false
 	emit_signal("portal_closed")
 
 

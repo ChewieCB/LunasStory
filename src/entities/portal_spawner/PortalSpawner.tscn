@@ -119,7 +119,6 @@ anim_sprite = NodePath("AnimatedSprite2D")
 state_chart = NodePath("StateChart")
 spawn_timer = NodePath("SpawnTimer")
 spawn_type = ExtResource("2_15vrf")
-portal_state = "Active"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_1s6ir")
@@ -222,7 +221,7 @@ delay_in_seconds = "0.0"
 
 [node name="Spawner" type="Node" parent="StateChart/Root"]
 script = ExtResource("17_obdtw")
-initial_state = NodePath("Disabled")
+initial_state = NodePath("Idle")
 
 [node name="Idle" type="Node" parent="StateChart/Root/Spawner"]
 script = ExtResource("18_dgc1s")
