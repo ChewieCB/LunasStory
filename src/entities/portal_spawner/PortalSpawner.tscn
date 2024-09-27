@@ -269,6 +269,8 @@ event = &"start_spawn"
 delay_in_seconds = "0.0"
 
 [node name="SpawnTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
 
 [connection signal="state_entered" from="StateChart/Root/Status/Dormant" to="." method="_on_dormant_state_entered"]
 [connection signal="state_entered" from="StateChart/Root/Status/Active" to="." method="_on_active_state_entered"]

@@ -1,5 +1,6 @@
 @tool
 extends Node2D
+class_name PortalSpawner
 
 signal portal_opened
 signal portal_closed
@@ -12,7 +13,7 @@ signal state_chart_initialized
 
 @export_category("Spawn Settings")
 @export var spawn_type: PackedScene
-@export var spawn_time: float = 1.0:
+@export var spawn_time: float = 2.0:
 	set(value):
 		spawn_time = value
 		spawn_timer.wait_time = spawn_time
@@ -130,7 +131,7 @@ func _on_spawner_spawning_state_entered() -> void:
 	
 	if spawn_type:
 		var new_agent: AIAgent = spawn_agent()
-		await new_agent.ready
+		await new_agent.spawned
 		
 		state_chart.send_event("finish_spawn")
 	else:

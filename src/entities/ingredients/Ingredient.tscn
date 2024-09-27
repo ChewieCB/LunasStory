@@ -57,7 +57,7 @@ shape = SubResource("CircleShape2D_gvquo")
 script = ExtResource("7_ywfev")
 
 [node name="Area2D" type="Area2D" parent="HitboxComponent"]
-collision_layer = 52
+collision_layer = 20
 collision_mask = 108
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent/Area2D"]

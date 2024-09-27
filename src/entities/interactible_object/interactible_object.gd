@@ -2,6 +2,7 @@ extends Node2D
 class_name InteractibleObject
 
 signal item(_item: Node2D, state: bool)
+signal object_removed(object: InteractibleObject)
 
 @export_category("Components")
 @export var hitbox_component: HitboxComponent
@@ -39,6 +40,11 @@ func _ready() -> void:
 	
 	if health_component:
 		health_component.died.connect(_on_died)
+
+
+func _notification(what):
+	if what == NOTIFICATION_PREDELETE:
+		emit_signal("object_removed", self)
 
 
 func toggle_hover_texture(state: bool):

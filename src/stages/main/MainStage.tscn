@@ -28,6 +28,7 @@ navigation_enabled = false
 
 [node name="PortalSpawner" parent="." instance=ExtResource("4_ea2v8")]
 position = Vector2(-44, -90)
+spawn_time = 1.0
 is_open = true
 
 [node name="Cauldron" parent="." instance=ExtResource("4_dnt3y")]

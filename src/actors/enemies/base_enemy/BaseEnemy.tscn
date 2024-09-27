@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://clhm87crkcsl6"]
+[gd_scene load_steps=22 format=3 uid="uid://clhm87crkcsl6"]
 
 [ext_resource type="Script" path="res://src/actors/enemies/base_enemy/base_enemy.gd" id="1_ch4pi"]
 [ext_resource type="Texture2D" uid="uid://bxwvf55pjcr52" path="res://src/actors/enemies/assets/cabezo/ghost_enemy_sheet.png" id="1_rqkiv"]
@@ -17,17 +17,18 @@
 [ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="7_8e0vm"]
 [ext_resource type="Resource" uid="uid://bfll8kxvcyxn2" path="res://assets/particles/impact/ImpactParticle.tres" id="8_v0c0v"]
 [ext_resource type="PackedScene" uid="uid://lysd0wn0n81t" path="res://src/ui/health_bar/HealthBar.tscn" id="15_pxubp"]
+[ext_resource type="Script" path="res://src/components/Hitbox/hitbox_component.gd" id="18_rai2j"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_srcb7"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8h6wu"]
-radius = 16.0
+radius = 132.0
 
 [sub_resource type="Resource" id="Resource_ti5ql"]
 script = ExtResource("5_yo8xg")
 targeting_mode = 0
 max_targets = 1
-attack_range = 32
+attack_range = 38
 attack_delay = 0.0
 cooldown = 1.8
 damage = 15
@@ -37,11 +38,12 @@ particle_size = 64
 attack_particle = ExtResource("8_v0c0v")
 attack_sfx = Array[AudioStream]([])
 
-[node name="BaseEnemy" type="CharacterBody2D" node_paths=PackedStringArray("attack_range_hitbox_component", "ai_pathfinding_component", "hitbox_component", "health_component", "attack_component", "particles_component", "state_chart", "nav_agent")]
+[node name="BaseEnemy" type="CharacterBody2D" node_paths=PackedStringArray("target_range_hitbox_component", "attack_range_hitbox_component", "ai_pathfinding_component", "hitbox_component", "health_component", "attack_component", "particles_component", "state_chart", "nav_agent")]
 collision_layer = 8
 collision_mask = 13
 motion_mode = 1
 script = ExtResource("1_ch4pi")
+target_range_hitbox_component = NodePath("TargetGatheringHitbox")
 attack_range_hitbox_component = NodePath("AttackRangeHitbox")
 ai_pathfinding_component = NodePath("AIPathfindingComponent")
 hitbox_component = NodePath("HitboxComponent")
@@ -75,11 +77,23 @@ collision_mask = 84
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent/Area2D"]
 shape = SubResource("CircleShape2D_srcb7")
 
+[node name="TargetGatheringHitbox" type="Node2D" parent="."]
+visible = false
+script = ExtResource("18_rai2j")
+
+[node name="Area2D" type="Area2D" parent="TargetGatheringHitbox"]
+collision_layer = 8
+collision_mask = 52
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TargetGatheringHitbox/Area2D"]
+shape = SubResource("CircleShape2D_8h6wu")
+debug_color = Color(3.85046e-06, 0.649375, 0.147832, 0.42)
+
 [node name="AttackRangeHitbox" parent="." instance=ExtResource("2_sp0wo")]
 
 [node name="Area2D" type="Area2D" parent="AttackRangeHitbox"]
-collision_layer = 8
-collision_mask = 36
+collision_layer = 0
+collision_mask = 127
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRangeHitbox/Area2D"]
 shape = SubResource("CircleShape2D_8h6wu")
