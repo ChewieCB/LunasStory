@@ -13,13 +13,13 @@ func _ready() -> void:
 	add_to_group("furniture_big")
 
 
-#func _on_pickup(entity: Node2D) -> void:
-	#super(entity)
-	#if entity == self:
-		#dynamic_nav_obstacle.remove_previous_obstacle()
-#
-#
-#func _on_drop(entity: Node2D) -> void:
-	#super(entity)
-	#if entity == self:
-		#dynamic_nav_obstacle.create_obstacle()
+func _on_pickup(entity: Node2D) -> void:
+	super(entity)
+	if entity == self:
+		dynamic_nav_obstacle.remove_previous_obstacle()
+
+
+func _on_drop(entity: Node2D) -> void:
+	super(entity)
+	if entity == self:
+		dynamic_nav_obstacle.create_obstacle()

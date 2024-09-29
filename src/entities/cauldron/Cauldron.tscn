@@ -58,7 +58,8 @@ shape = SubResource("CircleShape2D_2j1k7")
 [node name="ParticlesComponent" parent="." instance=ExtResource("8_5t560")]
 position = Vector2(0, -7)
 
-[node name="DynamicNavObstacleComponent" parent="." instance=ExtResource("9_ino11")]
+[node name="DynamicNavObstacleComponent" parent="." node_paths=PackedStringArray("obstacle_collider") instance=ExtResource("9_ino11")]
+obstacle_collider = NodePath("../HitboxComponent/Area2D/CollisionShape2D")
 
 [node name="HealthComponent" parent="." instance=ExtResource("10_qqjd1")]
 

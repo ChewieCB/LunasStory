@@ -58,6 +58,7 @@ nav_agent = NodePath("NavigationAgent2D")
 hit_particle = ExtResource("8_v0c0v")
 damage_particle = ExtResource("3_ffmc0")
 death_particle = ExtResource("4_b58tt")
+target_search_range = 512.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_rqkiv")
