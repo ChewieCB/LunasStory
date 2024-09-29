@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=4 uid="uid://b5vhj0fhn8xuq"]
+[gd_scene load_steps=13 format=4 uid="uid://b5vhj0fhn8xuq"]
 
 [ext_resource type="Script" path="res://src/stages/main/main_stage.gd" id="1_a8pxn"]
 [ext_resource type="PackedScene" uid="uid://cma5x6jxj78qw" path="res://src/environment/tilemap/VoidTiles.tscn" id="1_gwaru"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://uot6d4qertbc" path="res://src/entities/cauldron/Cauldron.tscn" id="4_dnt3y"]
 [ext_resource type="PackedScene" uid="uid://dcxugwx7ivfx" path="res://src/entities/portal_spawner/PortalSpawner.tscn" id="4_ea2v8"]
 [ext_resource type="PackedScene" uid="uid://bux1j4jbk8st2" path="res://src/entities/ingredients/Ingredient.tscn" id="5_lfwo2"]
+[ext_resource type="PackedScene" uid="uid://bwhulkm5ypjw2" path="res://src/entities/furniture/FurnitureBig.tscn" id="5_r4y4v"]
 [ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="8_f135c"]
 [ext_resource type="PackedScene" uid="uid://dvtolvauk4son" path="res://src/ui/main_ui/luna_health/LunaHealthUI.tscn" id="9_ebxeo"]
 
@@ -32,6 +33,10 @@ navigation_enabled = false
 position = Vector2(-44, -90)
 spawn_time = 1.0
 is_open = true
+
+[node name="FurnitureBig" parent="." node_paths=PackedStringArray("follow_target") instance=ExtResource("5_r4y4v")]
+position = Vector2(-168, -64)
+follow_target = NodePath("../HandCursor")
 
 [node name="Cauldron" parent="." instance=ExtResource("4_dnt3y")]
 position = Vector2(-120, 0)

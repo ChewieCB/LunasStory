@@ -1,0 +1,66 @@
+[gd_scene load_steps=12 format=3 uid="uid://bwhulkm5ypjw2"]
+
+[ext_resource type="Script" path="res://src/entities/furniture/furniture_big.gd" id="1_ag406"]
+[ext_resource type="Texture2D" uid="uid://dfghcnj0dnxal" path="res://src/entities/furniture/assets/furniture_32x32_1.png" id="2_v5ujm"]
+[ext_resource type="Texture2D" uid="uid://vtw7mcvpnjr5" path="res://src/entities/furniture/assets/furniture_32x32_highlight_1.png" id="3_1rkt7"]
+[ext_resource type="PackedScene" uid="uid://l82e7lamaemc" path="res://src/components/Selectable/SelectableComponent.tscn" id="3_wyaeg"]
+[ext_resource type="PackedScene" uid="uid://cojyfxu5j1idb" path="res://src/components/Grabbable/GrabbableComponent.tscn" id="3_y2bme"]
+[ext_resource type="PackedScene" uid="uid://b6irvllg6u58o" path="res://src/components/MouseFollow/MouseFollowComponent.tscn" id="4_6wpy1"]
+[ext_resource type="PackedScene" uid="uid://pfmp13n5e2is" path="res://src/components/Hitbox/HitboxComponent.tscn" id="5_kbkav"]
+[ext_resource type="PackedScene" uid="uid://twux0snbpc37" path="res://src/components/Particles/ParticlesComponent.tscn" id="6_tuxp4"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xexl2"]
+radius = 22.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_upswy"]
+size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_eawpa"]
+size = Vector2(32, 32)
+
+[node name="FurnitureBig" type="Node2D" node_paths=PackedStringArray("particles_component", "hitbox_component", "selectable_component", "grabbable_component", "follow_component", "sprite")]
+script = ExtResource("1_ag406")
+particles_component = NodePath("ParticlesComponent")
+hitbox_component = NodePath("HitboxComponent")
+selectable_component = NodePath("SelectableComponent")
+grabbable_component = NodePath("GrabbableComponent")
+follow_component = NodePath("FollowComponent")
+sprite = NodePath("Sprite2D")
+object_texture = ExtResource("2_v5ujm")
+hover_texture = ExtResource("3_1rkt7")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_v5ujm")
+
+[node name="SelectableComponent" parent="." node_paths=PackedStringArray("sprite", "area_2d") instance=ExtResource("3_wyaeg")]
+sprite = NodePath("../Sprite2D")
+area_2d = NodePath("Area2D")
+
+[node name="Area2D" type="Area2D" parent="SelectableComponent"]
+collision_layer = 21
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SelectableComponent/Area2D"]
+shape = SubResource("CircleShape2D_xexl2")
+
+[node name="FollowComponent" parent="." instance=ExtResource("4_6wpy1")]
+
+[node name="HitboxComponent" parent="." instance=ExtResource("5_kbkav")]
+
+[node name="Area2D" type="Area2D" parent="HitboxComponent"]
+collision_layer = 20
+collision_mask = 12
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent/Area2D"]
+shape = SubResource("RectangleShape2D_upswy")
+
+[node name="GrabbableComponent" parent="." node_paths=PackedStringArray("selectable_component", "collider") instance=ExtResource("3_y2bme")]
+collision_layer = 20
+collision_mask = 2
+selectable_component = NodePath("../SelectableComponent")
+collider = NodePath("CollisionShape2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GrabbableComponent"]
+shape = SubResource("RectangleShape2D_eawpa")
+
+[node name="ParticlesComponent" parent="." instance=ExtResource("6_tuxp4")]

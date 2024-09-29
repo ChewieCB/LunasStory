@@ -7,8 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://fg2bdp05jf4t" path="res://src/entities/cauldron/assets/cauldron_unlit_disabled.png" id="4_u7mho"]
 [ext_resource type="Script" path="res://src/components/Hitbox/hitbox_component.gd" id="7_lhmb4"]
 [ext_resource type="PackedScene" uid="uid://twux0snbpc37" path="res://src/components/Particles/ParticlesComponent.tscn" id="8_5t560"]
+[ext_resource type="PackedScene" uid="uid://b1idbltbgx3a4" path="res://src/components/NavObstacle/DynamicNavObstacle.tscn" id="9_ino11"]
 [ext_resource type="PackedScene" uid="uid://b6irvllg6u58o" path="res://src/components/MouseFollow/MouseFollowComponent.tscn" id="9_s4w0b"]
-[ext_resource type="Script" path="res://src/entities/cauldron/nav_obstacle_component.gd" id="9_xlrat"]
 [ext_resource type="PackedScene" uid="uid://c38ly1pqdi348" path="res://src/components/Health/HealthComponent.tscn" id="10_qqjd1"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_sc7qq"]
@@ -17,9 +17,8 @@ radius = 32.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_2j1k7"]
 radius = 16.0
 
-[node name="Cauldron" type="Node2D" node_paths=PackedStringArray("dynamic_nav_obstacle", "particles_component", "hitbox_component", "health_component", "selectable_component", "follow_component", "sprite")]
+[node name="Cauldron" type="Node2D" node_paths=PackedStringArray("particles_component", "hitbox_component", "health_component", "selectable_component", "follow_component", "sprite")]
 script = ExtResource("1_5x1ej")
-dynamic_nav_obstacle = NodePath("DynamicNavObstacleComponent")
 particles_component = NodePath("ParticlesComponent")
 hitbox_component = NodePath("HitboxComponent")
 health_component = NodePath("HealthComponent")
@@ -59,9 +58,7 @@ shape = SubResource("CircleShape2D_2j1k7")
 [node name="ParticlesComponent" parent="." instance=ExtResource("8_5t560")]
 position = Vector2(0, -7)
 
-[node name="DynamicNavObstacleComponent" type="Node2D" parent="." node_paths=PackedStringArray("obstacle_collider")]
-script = ExtResource("9_xlrat")
-obstacle_collider = NodePath("../HitboxComponent/Area2D/CollisionShape2D")
+[node name="DynamicNavObstacleComponent" parent="." instance=ExtResource("9_ino11")]
 
 [node name="HealthComponent" parent="." instance=ExtResource("10_qqjd1")]
 
