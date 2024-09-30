@@ -11,9 +11,11 @@ class_name FurnitureBig
 		follow_component_tilemap = value
 		follow_component.tilemap = follow_component_tilemap
 
-var local_pos_DEBUG: Vector2
-var cell_local_pos_DEBUG: Vector2
-var cell_global_pos_DEBUG: Vector2
+@onready var sprite_size: Vector2 = Vector2(
+	sprite.texture.get_width(),
+	sprite.texture.get_height()
+)
+@onready var sprite_offset: Vector2 = sprite_size / 2
 var cell_rect_DEBUG: Rect2
 
 
@@ -23,13 +25,10 @@ func _ready() -> void:
 
 
 func _draw() -> void:
-	draw_circle(local_pos_DEBUG, 1.0, Color.ORANGE)
-	draw_circle(cell_local_pos_DEBUG, 1.0, Color.YELLOW)
-	draw_circle(cell_global_pos_DEBUG, 1.0, Color.GREEN)
-	draw_rect(cell_rect_DEBUG, Color(Color.RED), 0.5)
+	draw_rect(cell_rect_DEBUG, Color(Color.RED, 0.5))
 
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	queue_redraw()
 
 

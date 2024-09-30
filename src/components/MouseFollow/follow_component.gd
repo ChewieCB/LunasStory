@@ -43,34 +43,34 @@ func move_entity_within_grid(pos: Vector2) -> void:
 		)
 		return
 	
-	var local_pos = entity.to_local(pos)
+	var local_pos = tilemap.to_local(pos)
 	var cell_coords = tilemap.local_to_map(local_pos)
 	var cell_local_pos = tilemap.map_to_local(cell_coords)
-	var cell_global_pos = entity.to_global(cell_local_pos)
+	var cell_global_pos = tilemap.to_global(cell_local_pos)
+	var cell_global_pos_offset = cell_global_pos - Vector2(tilemap.tile_set.tile_size) / 2
 	
 	# Only allow placement on valid floor cells
-	var cell_data: TileData = tilemap.get_cell_tile_data(cell_coords)
-	if cell_data:
-		# 0: Walls, 1: Floor
-		var cell_type = cell_data.terrain
-		match cell_type:
-			0:
-				print_rich(
-					"cell_type: %s" % ["[color=yellow]Wall[/color]"]
-				)
-			1:
-				print_rich(
-					"cell_type: %s" % ["[color=green]Floor[/color]"]
-				)
-			_:
-				print_rich(
-					"cell_type: %s" % ["[color=red]Invalid[/color]"]
-				)
+	#var cell_data: TileData = tilemap.get_cell_tile_data(cell_coords)
+	#if cell_data:
+		## 0: Walls, 1: Floor
+		#var cell_type = cell_data.terrain
+		#match cell_type:
+			#0:
+				#print_rich(
+					#"cell_type: %s" % ["[color=yellow]Wall[/color]"]
+				#)
+			#1:
+				#print_rich(
+					#"cell_type: %s" % ["[color=green]Floor[/color]"]
+				#)
+			#_:
+				#print_rich(
+					#"cell_type: %s" % ["[color=red]Invalid[/color]"]
+				#)
 	
-	# Debug cell visualisation
-	entity.local_pos_DEBUG = local_pos
-	entity.cell_local_pos_DEBUG = cell_local_pos
-	entity.cell_global_pos_DEBUG = cell_global_pos
-	entity.cell_rect_DEBUG = Rect2(cell_global_pos, tilemap.tile_set.tile_size)
+	entity.global_position = cell_global_pos_offset + entity.sprite_offset
 	
-	entity.global_position = cell_global_pos + Vector2(tilemap.tile_set.tile_size / 2)
+	entity.cell_rect_DEBUG = Rect2(
+		entity.to_local(cell_global_pos_offset), 
+		entity.sprite_size
+	)
