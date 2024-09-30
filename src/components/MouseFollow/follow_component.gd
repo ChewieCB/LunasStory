@@ -13,7 +13,9 @@ var follow_global_position: Vector2:
 			entity.global_position = follow_global_position
 
 @export var lock_to_grid: bool = false
-@export var tilemap: TileMapLayer
+@export var tilemap: TileMapLayer:
+	set(value): 
+		tilemap = value
 
 
 func _ready():
@@ -50,23 +52,10 @@ func move_entity_within_grid(pos: Vector2) -> void:
 	var cell_global_pos_offset = cell_global_pos - Vector2(tilemap.tile_set.tile_size) / 2
 	
 	# Only allow placement on valid floor cells
-	#var cell_data: TileData = tilemap.get_cell_tile_data(cell_coords)
-	#if cell_data:
-		## 0: Walls, 1: Floor
-		#var cell_type = cell_data.terrain
-		#match cell_type:
-			#0:
-				#print_rich(
-					#"cell_type: %s" % ["[color=yellow]Wall[/color]"]
-				#)
-			#1:
-				#print_rich(
-					#"cell_type: %s" % ["[color=green]Floor[/color]"]
-				#)
-			#_:
-				#print_rich(
-					#"cell_type: %s" % ["[color=red]Invalid[/color]"]
-				#)
+	if check_valid_grid_placement(cell_coords):
+		entity.cell_rect_color_DEBUG = Color(Color.GREEN, 0.5)
+	else:
+		entity.cell_rect_color_DEBUG = Color(Color.RED, 0.5)
 	
 	entity.global_position = cell_global_pos_offset + entity.sprite_offset
 	
@@ -74,3 +63,21 @@ func move_entity_within_grid(pos: Vector2) -> void:
 		entity.to_local(cell_global_pos_offset), 
 		entity.sprite_size
 	)
+
+
+func check_valid_grid_placement(cell_coords: Vector2) -> bool:
+	var tile_size: Vector2 = tilemap.tile_set.tile_size
+	var tiles_to_check = entity.sprite_tiles
+	
+	for tile in tiles_to_check:
+		var cell: Vector2 = Vector2(tile.x / tile_size.x, tile.y / tile_size.y)
+		var cell_pos = cell_coords + cell
+		var cell_data: TileData = tilemap.get_cell_tile_data(cell_pos)
+		if not cell_data:
+			return false
+		# 0: Walls, 1: Floor
+		var cell_type: int = cell_data.terrain
+		if cell_type != 1:
+			return false
+	return true
+		

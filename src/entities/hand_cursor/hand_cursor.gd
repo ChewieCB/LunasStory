@@ -13,15 +13,6 @@ class_name HandCursor
 
 @onready var position_markers := [open_marker, pinch_marker, grab_marker, point_marker]
 
-## DEBUG vars
-@onready var debug_label: RichTextLabel = $DebugPosLabel
-var local_pos_DEBUG: Vector2
-var cell_local_pos_DEBUG: Vector2
-var cell_global_pos_DEBUG: Vector2
-var cell_global_pos_offset_DEBUG: Vector2
-var cell_rect_DEBUG: Rect2
-var cell_type_DEBUG: String
-
 var held_item: Node2D:
 	set(value):
 		if value:
@@ -48,54 +39,6 @@ func _input(event: InputEvent) -> void:
 
 func _physics_process(delta: float) -> void:
 	global_position = get_global_mouse_position()
-	
-	## DEBUG
-	debug_tile_grid_position(tilemap)
-	debug_label.text = """
-	[center][color=purple]%s[/color][/center]
-	[center]%s[/center]
-	""" % [
-		cell_global_pos_offset_DEBUG,
-		cell_type_DEBUG
-	]
-	queue_redraw()
-
-
-#func _draw() -> void:
-	#draw_rect(cell_rect_DEBUG, Color(Color.RED, 0.5))
-
-
-func debug_tile_grid_position(tilemap: TileMapLayer) -> void:
-	if not tilemap:
-		push_error(
-			"Lock to grid enabled but no tilemap is assigned to %s.%s" % [
-				owner.name, self.name
-			]
-		)
-		return
-	
-	var local_pos = tilemap.to_local(self.global_position)
-	var cell_coords = tilemap.local_to_map(local_pos)
-	var cell_local_pos = tilemap.map_to_local(cell_coords)
-	var cell_global_pos = tilemap.to_global(cell_local_pos)
-	var cell_global_pos_offset = cell_global_pos - Vector2(tilemap.tile_set.tile_size) / 2
-	
-	# Only allow placement on valid floor cells
-	var cell_data: TileData = tilemap.get_cell_tile_data(cell_coords)
-	if cell_data:
-		## 0: Walls, 1: Floor
-		var cell_type = cell_data.terrain
-		match cell_type:
-			0:
-				cell_type_DEBUG = "[color=orange]Wall[/color]"
-			1:
-				cell_type_DEBUG = "[color=green]Floor[/color]"
-			_:
-				cell_type_DEBUG = "[color=red]Invalid[/color]"
-	
-	# Debug cell visualisation
-	cell_global_pos_offset_DEBUG = cell_global_pos_offset
-	cell_rect_DEBUG = Rect2(to_local(cell_global_pos_offset), tilemap.tile_set.tile_size)
 
 
 func get_current_cursor_marker() -> Marker2D:
