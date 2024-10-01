@@ -28,8 +28,9 @@ signal spawned(agent: AIAgent)
 @export var target_search_range: float = 128.0:
 	set(value):
 		target_search_range = value
-		#if target_range_hitbox_component:
-			#target_range_hitbox_component.collider.shape.radius = target_search_range
+		await ready
+		if target_range_hitbox_component:
+			target_range_hitbox_component.collider.shape.radius = target_search_range
 
 var target_pos: Vector2:
 	set(value):

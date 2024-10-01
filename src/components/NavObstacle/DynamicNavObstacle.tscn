@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://b1idbltbgx3a4"]
+
+[ext_resource type="Script" path="res://src/entities/cauldron/nav_obstacle_component.gd" id="1_traqy"]
+
+[node name="DynamicNavObstacleComponent" type="Node2D" node_paths=PackedStringArray("obstacle_collider")]
+script = ExtResource("1_traqy")
+obstacle_collider = NodePath("")

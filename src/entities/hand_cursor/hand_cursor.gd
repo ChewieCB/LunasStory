@@ -3,6 +3,7 @@ class_name HandCursor
 
 @export var visual_component: CursorVisualComponent
 @export var hitbox_component: HitboxComponent
+@export var tilemap: TileMapLayer
 
 @export_category("Posture Position Markers")
 @export var open_marker: Marker2D
@@ -22,8 +23,9 @@ var held_item: Node2D:
 
 
 func _ready() -> void:
-	for object in get_tree().get_nodes_in_group("ingredients"):
-		object.item.connect(handle_item)
+	for handle_group in ["ingredients", "furniture_big"]:
+		for object in get_tree().get_nodes_in_group(handle_group):
+			object.item.connect(handle_item)
 	for object in get_tree().get_nodes_in_group("selectable"):
 		object.hover.connect(hover)
 
