@@ -18,23 +18,22 @@ class_name FurnitureBig
 @onready var sprite_offset: Vector2 = sprite_size / 2
 var sprite_tiles: Array[Vector2]
 
-## DEBUG
-var cell_rect_DEBUG: Rect2
-var cell_rect_color_DEBUG: Color
-
 
 func _ready() -> void:
 	super()
 	add_to_group("furniture_big")
 	sprite_tiles = get_tiles_for_sprite(follow_component_tilemap)
+	follow_component.valid_placement_location.connect(_hide_invalid_placement)
+	follow_component.invalid_placement_location.connect(_show_invalid_placement)
+	follow_component.was_disabled.connect(_hide_invalid_placement)
 
 
-func _draw() -> void:
-	draw_rect(cell_rect_DEBUG, cell_rect_color_DEBUG)
+#func _draw() -> void:
+	#draw_rect(cell_rect_DEBUG, cell_rect_color_DEBUG)
 
 
-func _process(delta: float) -> void:
-	queue_redraw()
+#func _process(delta: float) -> void:
+	#queue_redraw()
 
 
 func get_tiles_for_sprite(tilemap: TileMapLayer) -> Array[Vector2]:
@@ -48,6 +47,14 @@ func get_tiles_for_sprite(tilemap: TileMapLayer) -> Array[Vector2]:
 				tiles.append(Vector2(tile_size.x * x_tile, tile_size.y * y_tile))
 		
 		return tiles
+
+
+func _show_invalid_placement() -> void:
+	sprite.modulate = Color.RED
+
+
+func _hide_invalid_placement() -> void:
+	sprite.modulate = Color(1, 1, 1, 1)
 
 
 func _on_pickup(entity: Node2D) -> void:

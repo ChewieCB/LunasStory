@@ -1,6 +1,9 @@
 extends BaseComponent
 class_name FollowComponent
 
+signal valid_placement_location
+signal invalid_placement_location
+
 @onready var entity: Node2D = get_parent()
 
 @export var target: Node2D
@@ -23,7 +26,16 @@ var follow_global_position: Vector2:
 				return data.terrain == 1
 		)
 var valid_floor_tiles: Array[Vector2i]
-var invalid_tiles: Array[Vector2]
+var invalid_tiles: Array[Vector2]:
+	set(value):
+		var prev_invalid_tiles: Array[Vector2] = invalid_tiles
+		invalid_tiles = value
+		
+		if invalid_tiles != prev_invalid_tiles:
+			if invalid_tiles == []:
+				emit_signal("valid_placement_location")
+			else:
+				emit_signal("invalid_placement_location")
 
 
 func _ready():
@@ -96,16 +108,6 @@ func _move_entity_within_grid(global_pos: Vector2) -> void:
 	invalid_tiles = _get_invalid_placment_tiles(cell_coords)
 	
 	entity.global_position = cell_global_pos_offset + entity.sprite_offset
-	
-	# DEBUG
-	entity.cell_rect_DEBUG = Rect2(
-		entity.to_local(cell_global_pos_offset), 
-		entity.sprite_size
-	)
-	if invalid_tiles:
-		entity.cell_rect_color_DEBUG = Color(Color.RED, 0.5)
-	else:
-		entity.cell_rect_color_DEBUG = Color(Color.GREEN, 0.5)
 
 
 func _get_cell_global_position_offset(cell_coords: Vector2, validate_cell: bool = false) -> Vector2:
