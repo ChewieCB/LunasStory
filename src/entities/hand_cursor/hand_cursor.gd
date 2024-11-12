@@ -40,6 +40,7 @@ func _input(event: InputEvent) -> void:
 
 func _physics_process(delta: float) -> void:
 	global_position = get_global_mouse_position()
+	visual_component.global_position = global_position
 
 
 func get_current_cursor_marker() -> Marker2D:

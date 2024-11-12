@@ -16,20 +16,24 @@ script/source = "extends BaseComponent
 
 [node name="HandCursor" type="Node2D" node_paths=PackedStringArray("visual_component", "open_marker", "pinch_marker", "grab_marker", "point_marker")]
 script = ExtResource("1_84bbd")
-visual_component = NodePath("CursorVisualComponent")
+visual_component = NodePath("CursorVisualLayer/CursorVisualComponent")
 open_marker = NodePath("OpenMarker")
 pinch_marker = NodePath("PinchMarker")
 grab_marker = NodePath("GrabMarker")
 point_marker = NodePath("PointMarker")
 
-[node name="CursorVisualComponent" type="Node2D" parent="."]
+[node name="CursorVisualLayer" type="CanvasLayer" parent="."]
+layer = 2
+follow_viewport_enabled = true
+
+[node name="CursorVisualComponent" type="Node2D" parent="CursorVisualLayer"]
 script = ExtResource("2_m85ci")
 open_tex = ExtResource("2_c0mcp")
 pinch_tex = ExtResource("3_iuf5l")
 point_tex = ExtResource("4_3qm6m")
 grab_tex = ExtResource("5_57nov")
 
-[node name="Sprite2D" type="Sprite2D" parent="CursorVisualComponent"]
+[node name="Sprite2D" type="Sprite2D" parent="CursorVisualLayer/CursorVisualComponent"]
 texture = ExtResource("4_3qm6m")
 offset = Vector2(8, 8)
 
