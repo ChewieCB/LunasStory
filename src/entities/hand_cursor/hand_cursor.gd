@@ -28,6 +28,7 @@ func _ready() -> void:
 			object.item.connect(handle_item)
 	for object in get_tree().get_nodes_in_group("selectable"):
 		object.hover.connect(hover)
+	global_position = get_global_mouse_position()
 
 
 func _input(event: InputEvent) -> void:
