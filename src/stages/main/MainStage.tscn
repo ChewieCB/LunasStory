@@ -43,7 +43,7 @@ is_open = true
 portal_state = "Active"
 
 [node name="FurnitureBig" parent="." node_paths=PackedStringArray("follow_component_tilemap", "follow_target") instance=ExtResource("5_r4y4v")]
-position = Vector2(-48, -32)
+position = Vector2(-128, -66)
 follow_component_tilemap = NodePath("../StructureTiles")
 follow_target = NodePath("../HandCursorLayer/HandCursor")
 
@@ -63,12 +63,12 @@ layer = 2
 follow_viewport_enabled = true
 
 [node name="HandCursor" parent="HandCursorLayer" node_paths=PackedStringArray("tilemap") instance=ExtResource("1_hggav")]
-z_index = 5
 position = Vector2(80, 24)
 tilemap = NodePath("../../StructureTiles")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(82, -73)
+position = Vector2(4, -88)
+zoom = Vector2(0.75, 0.75)
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
 navigation_polygon = SubResource("NavigationPolygon_ta56x")
