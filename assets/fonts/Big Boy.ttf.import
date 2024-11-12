@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://dyruok2mvrdnv"
-path="res://.godot/imported/Clarity.ttf-4ce68dba357a04b156b3583f9901073a.fontdata"
+uid="uid://c6nimynn33gk7"
+path="res://.godot/imported/Big Boy.ttf-baa2f91ecf0b69a135d2920d4a1e23a7.fontdata"
 
 [deps]
 
-source_file="res://assets/Clarity.ttf"
-dest_files=["res://.godot/imported/Clarity.ttf-4ce68dba357a04b156b3583f9901073a.fontdata"]
+source_file="res://assets/fonts/Big Boy.ttf"
+dest_files=["res://.godot/imported/Big Boy.ttf-baa2f91ecf0b69a135d2920d4a1e23a7.fontdata"]
 
 [params]
 

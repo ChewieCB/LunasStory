@@ -49,6 +49,10 @@ var current_spawns: int = 0
 					activate()
 
 
+func _ready() -> void:
+	add_to_group("spawner")
+
+
 func spawn_agent(agent_type: PackedScene = spawn_type) -> AIAgent:
 	var new_agent: AIAgent = agent_type.instantiate()
 	new_agent.global_position = self.global_position

@@ -18,7 +18,15 @@ func game_over() -> void:
 	
 	anim_player.play("game_over_in")
 	await anim_player.animation_finished
-	await get_tree().create_timer(0.5).timeout
+
+
+func _on_restart_button_pressed() -> void:
 	anim_player.play("game_over_out")
 	await anim_player.animation_finished
 	get_tree().reload_current_scene()
+
+
+func _on_quit_button_pressed() -> void:
+	anim_player.play("game_over_out")
+	await anim_player.animation_finished
+	get_tree().quit()
