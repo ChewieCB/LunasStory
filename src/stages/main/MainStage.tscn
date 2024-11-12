@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=4 uid="uid://b5vhj0fhn8xuq"]
+[gd_scene load_steps=14 format=4 uid="uid://b5vhj0fhn8xuq"]
 
 [ext_resource type="Script" path="res://src/stages/main/main_stage.gd" id="1_a8pxn"]
 [ext_resource type="PackedScene" uid="uid://cma5x6jxj78qw" path="res://src/environment/tilemap/VoidTiles.tscn" id="1_gwaru"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://bwhulkm5ypjw2" path="res://src/entities/furniture/FurnitureBig.tscn" id="5_r4y4v"]
 [ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="8_f135c"]
 [ext_resource type="PackedScene" uid="uid://dvtolvauk4son" path="res://src/ui/main_ui/luna_health/LunaHealthUI.tscn" id="9_ebxeo"]
+[ext_resource type="PackedScene" uid="uid://ww8bgg1u8m71" path="res://src/ui/game_over/GameOverUI.tscn" id="12_vinen"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_ta56x"]
 vertices = PackedVector2Array(146, -162, 270, -190, 286, -190, 286, -174, 146, -94, 350, -174, 350, -94, 366, -94, 366, -50, 194, -82, 114, -162, 114, -178, 146, -190, 270, -222, -18, -110, -2, -110, -2, -30, 66, -30, 66, -46, 82, -46, 78, -34, 82, -62, 98, -62, 94, -50, 258, -50, 258, -66, 194, -66, 110, -82, 110, -50, 94, -34, -114, -110, -30, -110, -2, -18, -2, 30, -130, 30, -158, 14, -190, -34, -190, -94, -130, 62, -158, 62, -190, 14, -290, -34, -290, -2, -334, -2, -334, -18, -366, -18, -366, -50, -350, -62, -302, -78, -274, -46, -382, -50, -382, -62, -350, -78, -302, -110, -290, -110, -290, -94, -274, -94, -206, -46, -206, -94, -190, -142, -114, -142, 146, -222, -30, -190, -18, -178, 78, -18, 98, -94)
@@ -33,9 +34,16 @@ navigation_enabled = false
 position = Vector2(232, -136)
 spawn_time = 3.0
 is_open = true
+portal_state = "Active"
+
+[node name="PortalSpawner2" parent="." instance=ExtResource("4_ea2v8")]
+position = Vector2(-320, -48)
+spawn_time = 3.0
+is_open = true
+portal_state = "Active"
 
 [node name="FurnitureBig" parent="." node_paths=PackedStringArray("follow_component_tilemap", "follow_target") instance=ExtResource("5_r4y4v")]
-position = Vector2(-48, -32)
+position = Vector2(-128, -66)
 follow_component_tilemap = NodePath("../StructureTiles")
 follow_target = NodePath("../HandCursor")
 
@@ -55,7 +63,8 @@ position = Vector2(80, 24)
 tilemap = NodePath("../StructureTiles")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(82, -73)
+position = Vector2(4, -88)
+zoom = Vector2(0.75, 0.75)
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
 navigation_polygon = SubResource("NavigationPolygon_ta56x")
@@ -112,5 +121,8 @@ offset_bottom = 64.0
 grow_horizontal = 1
 grow_vertical = 1
 health_component = NodePath("../../../Cauldron/HealthComponent")
+
+[node name="GameOverUI" parent="UI" node_paths=PackedStringArray("health_component") instance=ExtResource("12_vinen")]
+health_component = NodePath("../../Cauldron/HealthComponent")
 
 [editable path="Cauldron"]

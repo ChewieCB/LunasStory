@@ -28,6 +28,7 @@ func _ready() -> void:
 			object.item.connect(handle_item)
 	for object in get_tree().get_nodes_in_group("selectable"):
 		object.hover.connect(hover)
+	global_position = get_global_mouse_position()
 
 
 func _input(event: InputEvent) -> void:
@@ -39,6 +40,7 @@ func _input(event: InputEvent) -> void:
 
 func _physics_process(delta: float) -> void:
 	global_position = get_global_mouse_position()
+	visual_component.global_position = global_position
 
 
 func get_current_cursor_marker() -> Marker2D:

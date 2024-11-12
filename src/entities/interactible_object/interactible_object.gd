@@ -84,9 +84,12 @@ func _on_drop(entity: Node2D) -> void:
 
 func _on_died() -> void:
 	selectable_component.disable()
-	grabbable_component.disable()
-	follow_component.disable()
-	hitbox_component.disable()
+	if grabbable_component:
+		grabbable_component.disable()
+	if follow_component:
+		follow_component.disable()
+	if hitbox_component:
+		hitbox_component.disable()
 	
 	if disabled_texture:
 		sprite.texture = disabled_texture
