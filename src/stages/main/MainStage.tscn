@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=4 uid="uid://b5vhj0fhn8xuq"]
+[gd_scene load_steps=15 format=4 uid="uid://b5vhj0fhn8xuq"]
 
 [ext_resource type="Script" path="res://src/stages/main/main_stage.gd" id="1_a8pxn"]
 [ext_resource type="PackedScene" uid="uid://cma5x6jxj78qw" path="res://src/environment/tilemap/VoidTiles.tscn" id="1_gwaru"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://bwhulkm5ypjw2" path="res://src/entities/furniture/FurnitureBig.tscn" id="5_r4y4v"]
 [ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="8_f135c"]
 [ext_resource type="PackedScene" uid="uid://dvtolvauk4son" path="res://src/ui/main_ui/luna_health/LunaHealthUI.tscn" id="9_ebxeo"]
+[ext_resource type="PackedScene" uid="uid://dm0gejh2fcolw" path="res://src/ui/potion_book/PotionBookUI.tscn" id="12_8ltgd"]
 [ext_resource type="PackedScene" uid="uid://ww8bgg1u8m71" path="res://src/ui/game_over/GameOverUI.tscn" id="12_vinen"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_ta56x"]
@@ -122,7 +123,20 @@ grow_horizontal = 1
 grow_vertical = 1
 health_component = NodePath("../../../Cauldron/HealthComponent")
 
+[node name="PotionBookUI" parent="UI/MainUI" instance=ExtResource("12_8ltgd")]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_bottom = 0.0
+offset_left = -72.0
+offset_top = 66.0
+offset_right = -72.0
+offset_bottom = 66.0
+grow_horizontal = 0
+grow_vertical = 1
+
 [node name="GameOverUI" parent="UI" node_paths=PackedStringArray("health_component") instance=ExtResource("12_vinen")]
+visible = false
 health_component = NodePath("../../Cauldron/HealthComponent")
 
 [editable path="Cauldron"]
