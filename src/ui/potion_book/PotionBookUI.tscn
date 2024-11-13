@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://dm0gejh2fcolw"]
 
 [ext_resource type="Texture2D" uid="uid://vjh5jgifvcqg" path="res://src/ui/potion_book/book_ui.png" id="1_4hfqo"]
-[ext_resource type="Texture2D" uid="uid://yxjbv4v6ghli" path="res://src/entities/ingredients/assets/ingredient_000.png" id="2_5abkm"]
-[ext_resource type="FontFile" uid="uid://c6nimynn33gk7" path="res://assets/fonts/Big Boy.ttf" id="3_63oy8"]
+[ext_resource type="Script" path="res://src/ui/potion_book/potion_book_ui.gd" id="1_xrwxj"]
+[ext_resource type="PackedScene" uid="uid://wikcwj3r3l11" path="res://src/ui/potion_book/IngredientUI.tscn" id="3_8c4nk"]
 [ext_resource type="Texture2D" uid="uid://f7iqrgglxrh2" path="res://src/ui/potion_book/potion_null.png" id="4_hdrf3"]
 
 [node name="PotionBookUI" type="Control"]
@@ -12,6 +12,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_xrwxj")
+damage_portrait_texures = null
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -39,14 +41,12 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -57.0
+offset_left = -43.6
 offset_top = -38.0
-offset_right = 56.0
+offset_right = 43.4
 offset_bottom = 15.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 16
-theme_override_constants/margin_right = 8
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/TextureRect/MarginContainer"]
 layout_mode = 2
@@ -54,107 +54,20 @@ layout_mode = 2
 [node name="IngredientContainer" type="VBoxContainer" parent="MarginContainer/TextureRect/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 0
 theme_override_constants/separation = -4
 
-[node name="Ingredient1" type="MarginContainer" parent="MarginContainer/TextureRect/MarginContainer/HBoxContainer/IngredientContainer"]
+[node name="IngredientUI" parent="MarginContainer/TextureRect/MarginContainer/HBoxContainer/IngredientContainer" instance=ExtResource("3_8c4nk")]
 layout_mode = 2
-size_flags_vertical = 3
-
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/TextureRect/MarginContainer/HBoxContainer/IngredientContainer/Ingredient1"]
-layout_mode = 2
-theme_override_constants/separation = 0
-
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/TextureRect/MarginContainer/HBoxContainer/IngredientContainer/Ingredient1/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/margin_bottom = 4
-
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/TextureRect/MarginContainer/HBoxContainer/IngredientContainer/Ingredient1/HBoxContainer/MarginContainer"]
-layout_mode = 2
-texture = ExtResource("2_5abkm")
-expand_mode = 3
-stretch_mode = 5
-
-[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/TextureRect/MarginContainer/HBoxContainer/IngredientContainer/Ingredient1/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/margin_right = -8
-
-[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/TextureRect/MarginContainer/HBoxContainer/IngredientContainer/Ingredient1/HBoxContainer/MarginContainer2"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_fonts/normal_font = ExtResource("3_63oy8")
-theme_override_font_sizes/normal_font_size = 12
-text = "0/0"
-
-[node name="Ingredient2" type="MarginContainer" parent="MarginContainer/TextureRect/MarginContainer/HBoxContainer/IngredientContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/TextureRect/MarginContainer/HBoxContainer/IngredientContainer/Ingredient2"]
-layout_mode = 2
-theme_override_constants/separation = 0
-
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/TextureRect/MarginContainer/HBoxContainer/IngredientContainer/Ingredient2/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/margin_bottom = 4
-
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/TextureRect/MarginContainer/HBoxContainer/IngredientContainer/Ingredient2/HBoxContainer/MarginContainer"]
-layout_mode = 2
-texture = ExtResource("2_5abkm")
-expand_mode = 3
-stretch_mode = 5
-
-[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/TextureRect/MarginContainer/HBoxContainer/IngredientContainer/Ingredient2/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/margin_right = -8
-
-[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/TextureRect/MarginContainer/HBoxContainer/IngredientContainer/Ingredient2/HBoxContainer/MarginContainer2"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_fonts/normal_font = ExtResource("3_63oy8")
-theme_override_font_sizes/normal_font_size = 12
-text = "0/0"
-
-[node name="Ingredient3" type="MarginContainer" parent="MarginContainer/TextureRect/MarginContainer/HBoxContainer/IngredientContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/TextureRect/MarginContainer/HBoxContainer/IngredientContainer/Ingredient3"]
-layout_mode = 2
-theme_override_constants/separation = 0
-
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/TextureRect/MarginContainer/HBoxContainer/IngredientContainer/Ingredient3/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/margin_bottom = 4
-
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/TextureRect/MarginContainer/HBoxContainer/IngredientContainer/Ingredient3/HBoxContainer/MarginContainer"]
-layout_mode = 2
-texture = ExtResource("2_5abkm")
-expand_mode = 3
-stretch_mode = 5
-
-[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/TextureRect/MarginContainer/HBoxContainer/IngredientContainer/Ingredient3/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/margin_right = -8
-
-[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/TextureRect/MarginContainer/HBoxContainer/IngredientContainer/Ingredient3/HBoxContainer/MarginContainer2"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_fonts/normal_font = ExtResource("3_63oy8")
-theme_override_font_sizes/normal_font_size = 12
-text = "0/0"
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/TextureRect/MarginContainer/HBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 6
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer/TextureRect/MarginContainer/HBoxContainer/MarginContainer"]
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 texture = ExtResource("4_hdrf3")
 expand_mode = 3
 stretch_mode = 3
