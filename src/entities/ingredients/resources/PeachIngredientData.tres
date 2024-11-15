@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="IngredientData" load_steps=5 format=3 uid="uid://cxdcgfid4q16o"]
+
+[ext_resource type="Texture2D" uid="uid://xxi8x1yfa4yd" path="res://src/entities/ingredients/assets/disabled/ingredient_disabled_010.png" id="1_jwg6a"]
+[ext_resource type="Script" path="res://src/potion_brewing/resources/ingredient_data.gd" id="1_ug0tl"]
+[ext_resource type="Texture2D" uid="uid://b3vkhum2vvklr" path="res://src/entities/ingredients/assets/hover/ingredient_hover_010.png" id="2_06nrs"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_dtfdt"]
+load_path = "res://.godot/imported/ingredient_010.png-4b38f182bee6b65742678060aa9d4957.ctex"
+
+[resource]
+script = ExtResource("1_ug0tl")
+name = "Peach"
+icon = SubResource("CompressedTexture2D_dtfdt")
+icon_hover = ExtResource("2_06nrs")
+icon_disabled = ExtResource("1_jwg6a")

@@ -11,16 +11,19 @@ class_name FurnitureBig
 		follow_component_tilemap = value
 		follow_component.tilemap = follow_component_tilemap
 
-@onready var sprite_size: Vector2 = Vector2(
-	sprite.texture.get_width(),
-	sprite.texture.get_height()
-)
-@onready var sprite_offset: Vector2 = sprite_size / 2
+var sprite_size: Vector2
+var sprite_offset: Vector2
 var sprite_tiles: Array[Vector2]
 
 
 func _ready() -> void:
 	super()
+	sprite_size = Vector2(
+		sprite.texture.get_width(),
+		sprite.texture.get_height()
+	)
+	sprite_offset = sprite_size / 2
+	
 	add_to_group("furniture_big")
 	sprite_tiles = get_tiles_for_sprite(follow_component_tilemap)
 	follow_component.valid_placement_location.connect(_hide_invalid_placement)

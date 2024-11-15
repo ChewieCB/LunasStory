@@ -4,8 +4,6 @@ class_name Ingredient
 @export_category("Components")
 @export var consumable_component: ConsumableComponent
 
-@export var data: IngredientData
-
 
 func _ready() -> void:
 	super()

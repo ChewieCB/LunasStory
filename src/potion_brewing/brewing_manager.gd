@@ -2,8 +2,8 @@ extends Node
 class_name BrewingManager
 
 signal recipe_set(recipe: PotionRecipe)
-signal ingredient_added(ingredient: IngredientData, new_count: int)
-signal wrong_ingredient(ingredient: IngredientData)
+signal ingredient_added(requirement: PotionRecipeRequirement, index: int)
+signal wrong_ingredient(data: IngredientData)
 signal potion_brewed(potion: Potion)
 signal potion_failed(potion: Potion)
 
@@ -25,8 +25,11 @@ func _ready() -> void:
 
 func _handle_ingredient(ingredient: Ingredient) -> void:
 	var data = ingredient.data
-	#if true:
-		#emit_signal("ingredient_added", ingredient.data, ic.count)
-	#else:
-		#emit_signal("wrong_ingredient", ingredient.data)
-	
+	var req = current_recipe.get_ingredient_requirement(data)
+	if req:
+		if req.current_count < req.max_count:
+			var idx = current_recipe.get_requirement_idx(req)
+			if idx != -1:
+				emit_signal("ingredient_added", req, idx)
+				return
+	emit_signal("wrong_ingredient", data)

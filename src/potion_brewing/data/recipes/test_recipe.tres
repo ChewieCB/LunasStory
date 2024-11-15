@@ -1,51 +1,35 @@
-[gd_resource type="Resource" script_class="PotionRecipe" load_steps=16 format=3 uid="uid://dk5nc7pd1atr0"]
+[gd_resource type="Resource" script_class="PotionRecipe" load_steps=12 format=3 uid="uid://dk5nc7pd1atr0"]
 
 [ext_resource type="Texture2D" uid="uid://f7iqrgglxrh2" path="res://src/ui/potion_book/potion_null.png" id="1_41r01"]
 [ext_resource type="Script" path="res://src/potion_brewing/resources/potion_ingredient_counter.gd" id="1_juain"]
 [ext_resource type="Script" path="res://src/potion_brewing/resources/potion_recipe.gd" id="2_jie36"]
 [ext_resource type="Script" path="res://src/potion_brewing/resources/potion.gd" id="2_y1txt"]
-[ext_resource type="Texture2D" uid="uid://du7bgr8ylvvnj" path="res://src/entities/ingredients/assets/ingredient_005.png" id="4_5ofv7"]
-[ext_resource type="Script" path="res://src/potion_brewing/resources/ingredient_data.gd" id="5_8s71u"]
-[ext_resource type="Texture2D" uid="uid://bqjkweoj4ssp2" path="res://src/entities/ingredients/assets/ingredient_006.png" id="6_eew6m"]
-[ext_resource type="Texture2D" uid="uid://ctu5np5if7o38" path="res://src/entities/ingredients/assets/ingredient_010.png" id="7_23k7x"]
+[ext_resource type="Resource" uid="uid://betac7jlwpgcf" path="res://src/entities/ingredients/resources/BananaIngredientData.tres" id="4_qbfd2"]
+[ext_resource type="Resource" uid="uid://b6stlocq5s0yk" path="res://src/entities/ingredients/resources/CarrotIngredientData.tres" id="5_37m71"]
+[ext_resource type="Resource" uid="uid://cxdcgfid4q16o" path="res://src/entities/ingredients/resources/PeachIngredientData.tres" id="6_ru12q"]
 
 [sub_resource type="Resource" id="Resource_bf28a"]
 script = ExtResource("2_y1txt")
 name = "Test Potion"
 icon = ExtResource("1_41r01")
 
-[sub_resource type="Resource" id="Resource_2m8d3"]
-script = ExtResource("5_8s71u")
-name = "Banana"
-icon = ExtResource("4_5ofv7")
-
 [sub_resource type="Resource" id="Resource_mm3g3"]
 script = ExtResource("1_juain")
-data = SubResource("Resource_2m8d3")
+data = ExtResource("4_qbfd2")
 initial_count = 0
 current_count = 0
 max_count = 5
 
-[sub_resource type="Resource" id="Resource_q4wed"]
-script = ExtResource("5_8s71u")
-name = "Carrot"
-icon = ExtResource("6_eew6m")
-
 [sub_resource type="Resource" id="Resource_o1o4i"]
 script = ExtResource("1_juain")
-data = SubResource("Resource_q4wed")
+data = ExtResource("5_37m71")
 initial_count = 0
 current_count = 0
 max_count = 3
 
-[sub_resource type="Resource" id="Resource_687sr"]
-script = ExtResource("5_8s71u")
-name = "Peach"
-icon = ExtResource("7_23k7x")
-
 [sub_resource type="Resource" id="Resource_1o1sv"]
 script = ExtResource("1_juain")
-data = SubResource("Resource_687sr")
+data = ExtResource("6_ru12q")
 initial_count = 0
 current_count = 0
 max_count = 3

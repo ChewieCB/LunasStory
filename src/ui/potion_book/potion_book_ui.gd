@@ -10,6 +10,7 @@ extends Control
 func _ready() -> void:
 	if brewing_manager:
 		brewing_manager.recipe_set.connect(set_potion_recipe)
+		brewing_manager.ingredient_added.connect(increase_ingredient_count)
 
 
 func set_potion_recipe(recipe: PotionRecipe) -> void:
@@ -18,6 +19,11 @@ func set_potion_recipe(recipe: PotionRecipe) -> void:
 	for i in range(recipe.requirements.size()):
 		var requirement = recipe.requirements[i]
 		set_ingredient_ui(requirement, i)
+
+
+func increase_ingredient_count(requirement: PotionRecipeRequirement, index: int) -> void:
+	requirement.current_count += 1
+	set_ingredient_ui(requirement, index)
 
 
 func set_ingredient_ui(requirement: PotionRecipeRequirement, index: int = 0) -> void:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=4 uid="uid://b5vhj0fhn8xuq"]
+[gd_scene load_steps=20 format=4 uid="uid://b5vhj0fhn8xuq"]
 
 [ext_resource type="Script" path="res://src/stages/main/main_stage.gd" id="1_a8pxn"]
 [ext_resource type="PackedScene" uid="uid://cma5x6jxj78qw" path="res://src/environment/tilemap/VoidTiles.tscn" id="1_gwaru"]
@@ -12,7 +12,10 @@
 [ext_resource type="PackedScene" uid="uid://cw1kellptc2ke" path="res://src/potion_brewing/BrewingManager.tscn" id="7_flksp"]
 [ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="8_f135c"]
 [ext_resource type="Resource" uid="uid://dk5nc7pd1atr0" path="res://src/potion_brewing/data/recipes/test_recipe.tres" id="8_fv5na"]
+[ext_resource type="Resource" uid="uid://betac7jlwpgcf" path="res://src/entities/ingredients/resources/BananaIngredientData.tres" id="8_g6v8r"]
+[ext_resource type="Resource" uid="uid://b6stlocq5s0yk" path="res://src/entities/ingredients/resources/CarrotIngredientData.tres" id="9_7tm4b"]
 [ext_resource type="PackedScene" uid="uid://dvtolvauk4son" path="res://src/ui/main_ui/luna_health/LunaHealthUI.tscn" id="9_ebxeo"]
+[ext_resource type="Resource" uid="uid://cxdcgfid4q16o" path="res://src/entities/ingredients/resources/PeachIngredientData.tres" id="10_t1u5w"]
 [ext_resource type="PackedScene" uid="uid://dm0gejh2fcolw" path="res://src/ui/potion_book/PotionBookUI.tscn" id="12_8ltgd"]
 [ext_resource type="PackedScene" uid="uid://ww8bgg1u8m71" path="res://src/ui/game_over/GameOverUI.tscn" id="12_vinen"]
 
@@ -55,8 +58,54 @@ follow_target = NodePath("../HandCursor")
 position = Vector2(-120, 0)
 
 [node name="Ingredient1" parent="." node_paths=PackedStringArray("follow_target") instance=ExtResource("5_lfwo2")]
-position = Vector2(-144, -112)
+position = Vector2(-152, -122)
 follow_target = NodePath("../HandCursor")
+data = ExtResource("8_g6v8r")
+
+[node name="Ingredient2" parent="." node_paths=PackedStringArray("follow_target") instance=ExtResource("5_lfwo2")]
+position = Vector2(-32, -88)
+follow_target = NodePath("../HandCursor")
+data = ExtResource("8_g6v8r")
+
+[node name="Ingredient3" parent="." node_paths=PackedStringArray("follow_target") instance=ExtResource("5_lfwo2")]
+position = Vector2(-24, 8)
+follow_target = NodePath("../HandCursor")
+data = ExtResource("8_g6v8r")
+
+[node name="Ingredient4" parent="." node_paths=PackedStringArray("follow_target") instance=ExtResource("5_lfwo2")]
+position = Vector2(-176, -8)
+follow_target = NodePath("../HandCursor")
+data = ExtResource("9_7tm4b")
+
+[node name="Ingredient5" parent="." node_paths=PackedStringArray("follow_target") instance=ExtResource("5_lfwo2")]
+position = Vector2(-192, -72)
+follow_target = NodePath("../HandCursor")
+data = ExtResource("9_7tm4b")
+
+[node name="Ingredient6" parent="." node_paths=PackedStringArray("follow_target") instance=ExtResource("5_lfwo2")]
+position = Vector2(-32, -40)
+follow_target = NodePath("../HandCursor")
+data = ExtResource("10_t1u5w")
+
+[node name="Ingredient7" parent="." node_paths=PackedStringArray("follow_target") instance=ExtResource("5_lfwo2")]
+position = Vector2(-72, -50)
+follow_target = NodePath("../HandCursor")
+data = ExtResource("10_t1u5w")
+
+[node name="Ingredient8" parent="." node_paths=PackedStringArray("follow_target") instance=ExtResource("5_lfwo2")]
+position = Vector2(-56, -24)
+follow_target = NodePath("../HandCursor")
+data = ExtResource("10_t1u5w")
+
+[node name="Ingredient9" parent="." node_paths=PackedStringArray("follow_target") instance=ExtResource("5_lfwo2")]
+position = Vector2(-72, 4)
+follow_target = NodePath("../HandCursor")
+data = ExtResource("10_t1u5w")
+
+[node name="Ingredient10" parent="." node_paths=PackedStringArray("follow_target") instance=ExtResource("5_lfwo2")]
+position = Vector2(-48, 16)
+follow_target = NodePath("../HandCursor")
+data = ExtResource("10_t1u5w")
 
 [node name="Tool" parent="." node_paths=PackedStringArray("follow_target") instance=ExtResource("3_7xpmx")]
 position = Vector2(-82, -94)
