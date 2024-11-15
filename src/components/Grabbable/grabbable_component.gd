@@ -17,13 +17,13 @@ func _ready() -> void:
 	disable()
 
 
-func _input(event: InputEvent) -> void:
+func _input(_event: InputEvent) -> void:
 	if is_enabled():
 		if Input.is_action_just_released("interact"):
 			state_chart.send_event("drop")
 
 
-func _on_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+func _on_input_event(_viewport: Node, _event: InputEvent, _shape_idx: int) -> void:
 	if is_enabled():
 		if Input.is_action_just_pressed("interact"):
 			state_chart.send_event("pickup")

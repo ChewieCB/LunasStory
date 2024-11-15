@@ -19,3 +19,10 @@ func set_label(current: int = 0, max: int = 0) -> String:
 	var label_str = "[center]%s/%s[/center]" % [current, max]
 	count_label.text = label_str
 	return label_str
+
+
+func set_icon_disabled(state: bool = true) -> void:
+	if state == true:
+		icon.texture = data.icon_disabled
+	else:
+		icon.texture = data.icon

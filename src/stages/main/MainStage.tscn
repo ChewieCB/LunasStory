@@ -40,14 +40,10 @@ navigation_enabled = false
 [node name="PortalSpawner" parent="." instance=ExtResource("4_ea2v8")]
 position = Vector2(232, -136)
 spawn_time = 3.0
-is_open = true
-portal_state = "Active"
 
 [node name="PortalSpawner2" parent="." instance=ExtResource("4_ea2v8")]
 position = Vector2(-320, -48)
 spawn_time = 3.0
-is_open = true
-portal_state = "Active"
 
 [node name="FurnitureBig" parent="." node_paths=PackedStringArray("follow_component_tilemap", "follow_target") instance=ExtResource("5_r4y4v")]
 position = Vector2(-128, -66)

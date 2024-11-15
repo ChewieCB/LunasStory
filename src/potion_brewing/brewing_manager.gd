@@ -4,7 +4,7 @@ class_name BrewingManager
 signal recipe_set(recipe: PotionRecipe)
 signal ingredient_added(requirement: PotionRecipeRequirement, index: int)
 signal wrong_ingredient(data: IngredientData)
-signal potion_brewed(potion: Potion)
+signal potion_completed(potion: Potion)
 signal potion_failed(potion: Potion)
 
 @export var initial_recipe: PotionRecipe
@@ -31,5 +31,7 @@ func _handle_ingredient(ingredient: Ingredient) -> void:
 			var idx = current_recipe.get_requirement_idx(req)
 			if idx != -1:
 				emit_signal("ingredient_added", req, idx)
+				if current_recipe.is_completed():
+					emit_signal("potion_completed", current_recipe.potion)
 				return
 	emit_signal("wrong_ingredient", data)

@@ -13,12 +13,11 @@ func _ready() -> void:
 	default_map_rid = entity.get_world_2d().get_navigation_map()
 	await NavigationServer2D.map_changed
 	_get_current_nav_region()
-	await create_obstacle()
+	create_obstacle()
 
 
 func create_obstacle(collision_shape: Shape2D = obstacle_collider.shape) -> void:
 	var new_obstacle := NavigationObstacle2D.new()
-	RectangleShape2D
 	var collider_class = collision_shape.get_class()
 	match collider_class:
 		"CircleShape2D":

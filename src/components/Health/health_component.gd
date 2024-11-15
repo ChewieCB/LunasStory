@@ -30,8 +30,8 @@ func _ready() -> void:
 	initialize_health()
 
 
-func damage(damage: float) -> void:
-	current_health -= damage
+func damage(_damage: float) -> void:
+	current_health -= _damage
 
 
 func heal(health: float) -> void:

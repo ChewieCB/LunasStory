@@ -11,14 +11,23 @@ func _ready() -> void:
 	if brewing_manager:
 		brewing_manager.recipe_set.connect(set_potion_recipe)
 		brewing_manager.ingredient_added.connect(increase_ingredient_count)
+		brewing_manager.potion_completed.connect(_set_potion_icon_complete)
 
 
 func set_potion_recipe(recipe: PotionRecipe) -> void:
 	clear_ingredients()
-	portrait.texture = recipe.potion.icon
+	set_potion_icon(recipe.potion.icon_in_progress)
 	for i in range(recipe.requirements.size()):
 		var requirement = recipe.requirements[i]
 		set_ingredient_ui(requirement, i)
+
+
+func set_potion_icon(_texture: Texture2D) -> void:
+	portrait.texture = _texture
+
+
+func _set_potion_icon_complete(potion: Potion) -> void:
+	set_potion_icon(potion.icon_complete)
 
 
 func increase_ingredient_count(requirement: PotionRecipeRequirement, index: int) -> void:
@@ -39,6 +48,8 @@ func set_ingredient_ui(requirement: PotionRecipeRequirement, index: int = 0) -> 
 	
 	ui.data = requirement.data
 	ui.set_label(requirement.current_count, requirement.max_count)
+	if requirement.current_count == requirement.max_count:
+		ui.set_icon_disabled(true)
 	ui.visible = true
 
 
