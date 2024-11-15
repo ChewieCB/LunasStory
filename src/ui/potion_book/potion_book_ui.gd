@@ -5,20 +5,29 @@ extends Control
 
 @onready var portrait: TextureRect = $MarginContainer/TextureRect/MarginContainer/HBoxContainer/MarginContainer/TextureRect
 @onready var ingredient_ui_container: VBoxContainer = $MarginContainer/TextureRect/MarginContainer/HBoxContainer/MarginContainer2/IngredientContainer
+@onready var anim_player: AnimationPlayer = $AnimationPlayer
+
+var current_recipe: PotionRecipe
 
 
 func _ready() -> void:
 	if brewing_manager:
 		brewing_manager.recipe_set.connect(set_potion_recipe)
 		brewing_manager.ingredient_added.connect(increase_ingredient_count)
-		brewing_manager.potion_completed.connect(_set_potion_icon_complete)
+		brewing_manager.recipe_completed.connect(succeed_recipe)
+		brewing_manager.recipe_failed.connect(fail_recipe)
 
 
 func set_potion_recipe(recipe: PotionRecipe) -> void:
+	current_recipe = recipe
 	clear_ingredients()
 	set_potion_icon(recipe.potion.icon_in_progress)
-	for i in range(recipe.requirements.size()):
-		var requirement = recipe.requirements[i]
+	set_requirements_ui(recipe.requirements)
+
+
+func set_requirements_ui(requirements: Array[PotionRecipeRequirement]) -> void:
+	for i in range(requirements.size()):
+		var requirement = requirements[i]
 		set_ingredient_ui(requirement, i)
 
 
@@ -59,3 +68,36 @@ func clear_ingredients() -> void:
 		ui_node.set_label()
 		ui_node.data = null
 		ui_node.icon.texture = null
+
+
+func succeed_recipe(recipe: PotionRecipe) -> void:
+	anim_player.play("shake_potion")
+	_set_potion_icon_complete(recipe.potion)
+
+
+func fail_recipe(recipe: PotionRecipe) -> void:
+	set_requirements_ui(recipe.requirements)
+	set_potion_icon(recipe.potion.icon_disabled)
+	anim_player.play("shake_potion")
+	await anim_player.animation_finished
+	set_potion_icon(recipe.potion.icon_in_progress)
+
+
+func _on_potion_icon_mouse_entered() -> void:
+	match portrait.texture:
+		current_recipe.potion.icon_in_progress:
+			portrait.texture = current_recipe.potion.icon_in_progress_hover
+		current_recipe.potion.icon_disabled:
+			portrait.texture = current_recipe.potion.icon_disabled_hover
+		current_recipe.potion.icon_complete:
+			portrait.texture = current_recipe.potion.icon_complete_hover
+
+
+func _on_potion_icon_mouse_exited() -> void:
+	match portrait.texture:
+		current_recipe.potion.icon_in_progress_hover:
+			portrait.texture = current_recipe.potion.icon_in_progress
+		current_recipe.potion.icon_disabled_hover:
+			portrait.texture = current_recipe.potion.icon_disabled
+		current_recipe.potion.icon_complete_hover:
+			portrait.texture = current_recipe.potion.icon_complete
