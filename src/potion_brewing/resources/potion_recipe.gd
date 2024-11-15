@@ -1,5 +1,6 @@
 extends Resource
 class_name PotionRecipe
 
+@export var name: String = ""
 @export var potion: Potion
-@export var ingredient_counts: Array[PotionIngredientCount] 
+@export var requirements: Array[PotionRecipeRequirement] 

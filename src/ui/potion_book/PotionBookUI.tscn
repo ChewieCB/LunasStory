@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://vjh5jgifvcqg" path="res://src/ui/potion_book/book_ui.png" id="1_4hfqo"]
 [ext_resource type="Script" path="res://src/ui/potion_book/potion_book_ui.gd" id="1_xrwxj"]
-[ext_resource type="PackedScene" uid="uid://wikcwj3r3l11" path="res://src/ui/potion_book/IngredientUI.tscn" id="3_8c4nk"]
+[ext_resource type="PackedScene" uid="uid://wikcwj3r3l11" path="res://src/ui/potion_book/IngredientUI.tscn" id="2_w34hi"]
 [ext_resource type="Texture2D" uid="uid://f7iqrgglxrh2" path="res://src/ui/potion_book/potion_null.png" id="4_hdrf3"]
 
 [node name="PotionBookUI" type="Control"]
@@ -13,6 +13,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_xrwxj")
+ingredient_ui = ExtResource("2_w34hi")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -40,9 +41,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -43.6
+offset_left = -41.6
 offset_top = -38.0
-offset_right = 43.4
+offset_right = 39.4
 offset_bottom = 15.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -50,13 +51,23 @@ grow_vertical = 2
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/TextureRect/MarginContainer"]
 layout_mode = 2
 
-[node name="IngredientContainer" type="VBoxContainer" parent="MarginContainer/TextureRect/MarginContainer/HBoxContainer"]
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/TextureRect/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 2
+
+[node name="IngredientContainer" type="VBoxContainer" parent="MarginContainer/TextureRect/MarginContainer/HBoxContainer/MarginContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
 theme_override_constants/separation = -4
 
-[node name="IngredientUI" parent="MarginContainer/TextureRect/MarginContainer/HBoxContainer/IngredientContainer" instance=ExtResource("3_8c4nk")]
+[node name="IngredientUI" parent="MarginContainer/TextureRect/MarginContainer/HBoxContainer/MarginContainer2/IngredientContainer" instance=ExtResource("2_w34hi")]
+layout_mode = 2
+
+[node name="IngredientUI2" parent="MarginContainer/TextureRect/MarginContainer/HBoxContainer/MarginContainer2/IngredientContainer" instance=ExtResource("2_w34hi")]
+layout_mode = 2
+
+[node name="IngredientUI3" parent="MarginContainer/TextureRect/MarginContainer/HBoxContainer/MarginContainer2/IngredientContainer" instance=ExtResource("2_w34hi")]
 layout_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/TextureRect/MarginContainer/HBoxContainer"]
