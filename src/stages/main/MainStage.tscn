@@ -1,23 +1,47 @@
-[gd_scene load_steps=20 format=4 uid="uid://b5vhj0fhn8xuq"]
+[gd_scene load_steps=25 format=4 uid="uid://b5vhj0fhn8xuq"]
 
 [ext_resource type="Script" path="res://src/stages/main/main_stage.gd" id="1_a8pxn"]
 [ext_resource type="PackedScene" uid="uid://cma5x6jxj78qw" path="res://src/environment/tilemap/VoidTiles.tscn" id="1_gwaru"]
 [ext_resource type="PackedScene" uid="uid://bv4k5a00mi5ry" path="res://src/entities/hand_cursor/HandCursor.tscn" id="1_hggav"]
 [ext_resource type="PackedScene" uid="uid://cshlren2oiu3a" path="res://src/environment/tilemap/StructureTiles.tscn" id="2_j5h1a"]
+[ext_resource type="PackedScene" uid="uid://bpbbaicjuy6js" path="res://src/actors/wave_manager/WaveManagertscn.tscn" id="2_jugkp"]
 [ext_resource type="PackedScene" uid="uid://b3vxay7vo5fod" path="res://src/entities/tools/Tool.tscn" id="3_7xpmx"]
+[ext_resource type="Script" path="res://src/actors/wave_manager/wave_resource.gd" id="3_r4ehp"]
 [ext_resource type="PackedScene" uid="uid://uot6d4qertbc" path="res://src/entities/cauldron/Cauldron.tscn" id="4_dnt3y"]
 [ext_resource type="PackedScene" uid="uid://dcxugwx7ivfx" path="res://src/entities/portal_spawner/PortalSpawner.tscn" id="4_ea2v8"]
+[ext_resource type="Script" path="res://src/actors/wave_manager/enemy_spawn_resource.gd" id="4_imdxk"]
+[ext_resource type="PackedScene" uid="uid://clhm87crkcsl6" path="res://src/actors/enemies/base_enemy/BaseEnemy.tscn" id="5_jo4kr"]
 [ext_resource type="PackedScene" uid="uid://bux1j4jbk8st2" path="res://src/entities/ingredients/Ingredient.tscn" id="5_lfwo2"]
 [ext_resource type="PackedScene" uid="uid://bwhulkm5ypjw2" path="res://src/entities/furniture/FurnitureBig.tscn" id="5_r4y4v"]
 [ext_resource type="PackedScene" uid="uid://cw1kellptc2ke" path="res://src/potion_brewing/BrewingManager.tscn" id="7_flksp"]
 [ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="8_f135c"]
 [ext_resource type="Resource" uid="uid://dk5nc7pd1atr0" path="res://src/potion_brewing/data/recipes/test_recipe.tres" id="8_fv5na"]
 [ext_resource type="Resource" uid="uid://betac7jlwpgcf" path="res://src/entities/ingredients/resources/BananaIngredientData.tres" id="8_g6v8r"]
-[ext_resource type="Resource" uid="uid://b6stlocq5s0yk" path="res://src/entities/ingredients/resources/CarrotIngredientData.tres" id="9_7tm4b"]
 [ext_resource type="PackedScene" uid="uid://dvtolvauk4son" path="res://src/ui/main_ui/luna_health/LunaHealthUI.tscn" id="9_ebxeo"]
-[ext_resource type="Resource" uid="uid://cxdcgfid4q16o" path="res://src/entities/ingredients/resources/PeachIngredientData.tres" id="10_t1u5w"]
 [ext_resource type="PackedScene" uid="uid://dm0gejh2fcolw" path="res://src/ui/potion_book/PotionBookUI.tscn" id="12_8ltgd"]
 [ext_resource type="PackedScene" uid="uid://ww8bgg1u8m71" path="res://src/ui/game_over/GameOverUI.tscn" id="12_vinen"]
+
+[sub_resource type="Resource" id="Resource_k756b"]
+script = ExtResource("4_imdxk")
+enemy = ExtResource("5_jo4kr")
+spawn_chance = 1.0
+spawn_cost = 1.0
+
+[sub_resource type="Resource" id="Resource_7ysdy"]
+script = ExtResource("3_r4ehp")
+wave_start_text = ""
+spawns = Array[ExtResource("4_imdxk")]([SubResource("Resource_k756b")])
+num_portals = 2
+portal_max_spawns = 3
+spawn_delay = 1.0
+
+[sub_resource type="Resource" id="Resource_pdnk6"]
+script = ExtResource("3_r4ehp")
+wave_start_text = ""
+spawns = Array[ExtResource("4_imdxk")]([SubResource("Resource_k756b")])
+num_portals = 3
+portal_max_spawns = 5
+spawn_delay = 0.8
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_ta56x"]
 vertices = PackedVector2Array(146, -162, 270, -190, 286, -190, 286, -174, 146, -94, 350, -174, 350, -94, 366, -94, 366, -50, 194, -82, 114, -162, 114, -178, 146, -190, 270, -222, -18, -110, -2, -110, -2, -30, 66, -30, 66, -46, 82, -46, 78, -34, 82, -62, 98, -62, 94, -50, 258, -50, 258, -66, 194, -66, 110, -82, 110, -50, 94, -34, -114, -110, -30, -110, -2, -18, -2, 30, -130, 30, -158, 14, -190, -34, -190, -94, -130, 62, -158, 62, -190, 14, -290, -34, -290, -2, -334, -2, -334, -18, -366, -18, -366, -50, -350, -62, -302, -78, -274, -46, -382, -50, -382, -62, -350, -78, -302, -110, -290, -110, -290, -94, -274, -94, -206, -46, -206, -94, -190, -142, -114, -142, 146, -222, -30, -190, -18, -178, 78, -18, 98, -94)
@@ -37,13 +61,30 @@ navigation_enabled = false
 tile_map_data = PackedByteArray("AAAAAAIAAAADAAQAAAAAAAEAAAADAAMAAAAAAAAAAAADAAMAAAAAAP7/AAACAAEAAAAAAP3/AAAEAAMAAAAAAPz/AAADAAMAAAAAAPv/AAADAAMAAAAAAPr/AAADAAMAAAAAAPn/AAADAAMAAAAAAPj/AAADAAIAAAD//wIAAAACAAQAAAD//wEAAAACAAEAAAD//wAAAAACAAEAAAD/////AAACAAEAAAD///7/AAACAAEAAAD///3/AAACAAEAAAD///z/AAACAAEAAAD///v/AAACAAEAAAD///r/AAACAAEAAAD///n/AAACAAEAAAD///j/AAAEAAMAAAD+/wIAAAACAAQAAAD+/wEAAAACAAEAAAD+/wAAAAACAAEAAAD+////AAACAAEAAAD+//7/AAACAAEAAAD+//3/AAACAAEAAAD+//z/AAACAAEAAAD+//v/AAACAAEAAAD+//r/AAACAAEAAAD+//n/AAACAAEAAAD+//j/AAACAAEAAAD9/wIAAAACAAQAAAD9/wEAAAACAAEAAAD9/wAAAAACAAEAAAD9////AAACAAEAAAD9//7/AAACAAEAAAD9//3/AAACAAEAAAD9//z/AAACAAEAAAD9//v/AAACAAEAAAD9//r/AAACAAEAAAD9//n/AAACAAEAAAD9//j/AAAFAAMAAAD8/wIAAAACAAQAAAD8/wEAAAACAAEAAAD8/wAAAAACAAEAAAD8////AAACAAEAAAD8//7/AAACAAEAAAD8//3/AAACAAEAAAD8//z/AAACAAEAAAD8//v/AAACAAEAAAD8//r/AAACAAEAAAD8//n/AAACAAEAAAD8//j/AAACAAIAAAD7/wIAAAACAAQAAAD7/wEAAAACAAEAAAD7/wAAAAACAAEAAAD7////AAACAAEAAAD7//7/AAACAAEAAAD7//3/AAACAAEAAAD7//z/AAACAAEAAAD7//v/AAACAAEAAAD7//r/AAACAAEAAAD7//n/AAACAAEAAAD7//j/AAACAAIAAAD6/wIAAAACAAQAAAD6/wEAAAACAAEAAAD6/wAAAAACAAEAAAD6////AAACAAEAAAD6//7/AAACAAEAAAD6//3/AAACAAEAAAD6//z/AAACAAEAAAD6//v/AAACAAEAAAD6//r/AAACAAEAAAD6//n/AAACAAEAAAD6//j/AAACAAIAAAD5/wIAAAACAAQAAAD5/wEAAAACAAEAAAD5/wAAAAACAAEAAAD5////AAACAAEAAAD5//7/AAACAAEAAAD5//3/AAACAAEAAAD5//z/AAACAAEAAAD5//v/AAACAAEAAAD5//r/AAACAAEAAAD5//n/AAACAAEAAAD5//j/AAAEAAMAAAD5//f/AAADAAMAAAD5//b/AAADAAIAAAD4/wQAAAADAAQAAAD4/wMAAAADAAMAAAD4/wEAAAACAAEAAAD4/wAAAAACAAEAAAD4////AAACAAEAAAD4//7/AAACAAEAAAD4//3/AAACAAEAAAD4//z/AAACAAEAAAD4//v/AAACAAEAAAD4//r/AAACAAEAAAD4//n/AAACAAEAAAD4//j/AAACAAEAAAD4//f/AAACAAEAAAD4//b/AAACAAIAAAD3/wQAAAACAAQAAAD3/wMAAAACAAEAAAD3/wIAAAACAAEAAAD3/wEAAAACAAEAAAD3/wAAAAACAAEAAAD3////AAACAAEAAAD3//7/AAACAAEAAAD3//3/AAACAAEAAAD3//z/AAACAAEAAAD3//v/AAACAAEAAAD3//r/AAACAAEAAAD3//n/AAACAAEAAAD3//j/AAACAAEAAAD3//f/AAACAAEAAAD3//b/AAACAAIAAAD2/wQAAAACAAQAAAD2/wMAAAACAAEAAAD2/wIAAAACAAEAAAD2/wEAAAACAAEAAAD2/wAAAAACAAEAAAD2////AAACAAEAAAD2//7/AAACAAEAAAD2//3/AAACAAEAAAD2//z/AAACAAEAAAD2//v/AAACAAEAAAD2//r/AAACAAEAAAD2//n/AAACAAEAAAD2//j/AAACAAEAAAD2//f/AAACAAEAAAD2//b/AAACAAIAAAD1/wQAAAABAAQAAAD1/wMAAAABAAMAAAD1/wIAAAABAAMAAAD1/wEAAAAFAAIAAAD1/wAAAAACAAEAAAD1////AAACAAEAAAD1//7/AAACAAEAAAD1//3/AAACAAEAAAD1//z/AAACAAEAAAD1//v/AAACAAEAAAD1//r/AAACAAEAAAD1//n/AAACAAEAAAD1//j/AAACAAEAAAD1//f/AAACAAEAAAD1//b/AAACAAIAAAD0/wEAAAACAAQAAAD0/wAAAAACAAEAAAD0////AAACAAEAAAD0//7/AAACAAEAAAD0//3/AAACAAEAAAD0//z/AAACAAEAAAD0//v/AAACAAEAAAD0//r/AAACAAEAAAD0//n/AAACAAEAAAD0//j/AAACAAEAAAD0//f/AAACAAEAAAD0//b/AAACAAIAAADz/wEAAAABAAQAAADz/wAAAAABAAMAAADz////AAABAAMAAADz//7/AAAFAAIAAADz//3/AAACAAEAAADz//z/AAACAAEAAADz//v/AAACAAEAAADz//r/AAACAAEAAADz//n/AAAFAAMAAADz//j/AAABAAMAAADz//f/AAABAAMAAADz//b/AAABAAIAAADy//7/AAACAAQAAADy//3/AAACAAEAAADy//z/AAAFAAMAAADy//v/AAABAAMAAADy//r/AAABAAMAAADy//n/AAABAAIAAADx//7/AAACAAQAAADx//3/AAACAAEAAADx//z/AAACAAIAAADw//7/AAACAAQAAADw//3/AAACAAEAAADw//z/AAACAAIAAADv//7/AAACAAQAAADv//3/AAACAAEAAADv//z/AAAEAAMAAADv//v/AAADAAMAAADv//r/AAADAAMAAADv//n/AAADAAIAAADu//z/AAACAAEAAADu//v/AAACAAEAAADt//z/AAACAAEAAADt//v/AAACAAEAAADs//z/AAACAAEAAADs//v/AAACAAEAAADr//z/AAACAAEAAADr//v/AAACAAEAAADq//z/AAACAAEAAADq//v/AAACAAEAAADp//z/AAACAAEAAADp//v/AAAFAAMAAADo//z/AAACAAEAAADo//v/AAACAAIAAADn//z/AAABAAMAAADn//v/AAABAAIAAADu//3/AAACAAEAAADt//7/AAACAAEAAADt//3/AAACAAEAAADs//7/AAACAAEAAADs//3/AAACAAEAAADr//7/AAACAAEAAADr//3/AAACAAEAAADq//7/AAACAAEAAADq//3/AAACAAEAAADp//7/AAACAAEAAADp//3/AAACAAEAAADo//3/AAAFAAIAAADn//3/AAABAAQAAADu/wAAAAADAAQAAADu////AAADAAMAAADt/wAAAAACAAQAAADt////AAACAAEAAADs/wAAAAACAAQAAADs////AAACAAEAAADr/wAAAAACAAQAAADr////AAACAAEAAADq/wAAAAABAAQAAADq////AAAFAAIAAADp////AAACAAQAAADo////AAABAAQAAADo//7/AAABAAMAAADu//r/AAACAAEAAADu//n/AAAEAAMAAADt//r/AAACAAEAAADt//n/AAACAAEAAADs//r/AAAFAAMAAADs//n/AAABAAMAAADr//r/AAACAAIAAADq//r/AAACAAIAAADp//r/AAABAAIAAADu//j/AAADAAIAAADt//j/AAACAAIAAADs//j/AAABAAIAAAAEAP//AAACAAQAAAADAP//AAACAAQAAAACAP//AAACAAQAAAABAP//AAACAAQAAAAEAP7/AAACAAEAAAADAP7/AAACAAEAAAACAP7/AAACAAEAAAABAP7/AAACAAEAAAADAP3/AAAFAAMAAAACAP3/AAACAAIAAAABAP3/AAACAAIAAAAFAP7/AAAEAAIAAAAFAP3/AAACAAEAAAAFAPz/AAACAAEAAAAEAP3/AAACAAEAAAAEAPz/AAAFAAMAAAADAPz/AAABAAIAAAAGAPz/AAACAAEAAAAGAPv/AAACAAEAAAAFAPv/AAAFAAMAAAAJAPv/AAACAAQAAAAJAPr/AAACAAEAAAAJAPn/AAACAAEAAAAIAPv/AAACAAQAAAAIAPr/AAACAAEAAAAIAPn/AAAFAAMAAAAHAPr/AAACAAEAAAAHAPn/AAACAAIAAAAGAPr/AAACAAEAAAAGAPn/AAACAAIAAAALAPr/AAACAAEAAAALAPn/AAACAAEAAAALAPj/AAACAAEAAAALAPf/AAACAAEAAAAKAPr/AAACAAEAAAAKAPn/AAACAAEAAAAKAPj/AAACAAEAAAAKAPf/AAACAAEAAAAJAPj/AAACAAEAAAAJAPf/AAACAAEAAAAIAPj/AAABAAMAAAAIAPf/AAABAAMAAAAGAP3/AAAEAAIAAAAEAPv/AAABAAIAAAAFAPr/AAABAAMAAAAFAPn/AAABAAIAAAAHAPz/AAADAAMAAAAHAP3/AAADAAQAAAAGAP7/AAADAAQAAAAFAP//AAADAAQAAAAKAPv/AAACAAQAAAASAPj/AAACAAEAAAASAPf/AAACAAEAAAASAPb/AAACAAEAAAASAPX/AAACAAEAAAASAPT/AAAEAAMAAAASAPP/AAADAAIAAAARAPj/AAACAAEAAAARAPf/AAACAAEAAAARAPb/AAACAAEAAAARAPX/AAACAAEAAAARAPT/AAACAAEAAAARAPP/AAAEAAMAAAAQAPj/AAACAAEAAAAQAPf/AAACAAEAAAAQAPb/AAACAAEAAAAQAPX/AAACAAEAAAAQAPT/AAACAAEAAAAQAPP/AAACAAEAAAAPAPj/AAACAAEAAAAPAPf/AAACAAEAAAAPAPb/AAACAAEAAAAPAPX/AAACAAEAAAAPAPT/AAACAAEAAAAPAPP/AAACAAEAAAAOAPj/AAACAAEAAAAOAPf/AAACAAEAAAAOAPb/AAACAAEAAAAOAPX/AAACAAEAAAAOAPT/AAACAAEAAAAOAPP/AAACAAEAAAANAPj/AAACAAEAAAANAPf/AAACAAEAAAANAPb/AAACAAEAAAANAPX/AAACAAEAAAANAPT/AAACAAEAAAANAPP/AAACAAEAAAAMAPj/AAACAAEAAAAMAPf/AAACAAEAAAAMAPb/AAACAAEAAAAMAPX/AAACAAEAAAAMAPT/AAACAAEAAAAMAPP/AAACAAEAAAALAPb/AAACAAEAAAALAPX/AAACAAEAAAALAPT/AAACAAEAAAALAPP/AAACAAEAAAAKAPb/AAACAAEAAAAKAPX/AAACAAEAAAAKAPT/AAACAAEAAAAKAPP/AAACAAEAAAAJAPb/AAACAAEAAAAJAPX/AAACAAEAAAAJAPT/AAACAAEAAAAJAPP/AAACAAEAAAARAPv/AAACAAEAAAARAPr/AAACAAEAAAARAPn/AAACAAEAAAAQAPv/AAACAAEAAAAQAPr/AAACAAEAAAAQAPn/AAACAAEAAAAPAPv/AAACAAEAAAAPAPr/AAACAAEAAAAPAPn/AAACAAEAAAAOAPv/AAACAAEAAAAOAPr/AAACAAEAAAAOAPn/AAACAAEAAAANAPv/AAACAAEAAAANAPr/AAACAAEAAAANAPn/AAACAAEAAAAMAPv/AAACAAEAAAAMAPr/AAACAAEAAAAMAPn/AAACAAEAAAALAPv/AAAFAAIAAAAIAPb/AAAFAAIAAAAIAPX/AAACAAEAAAAIAPT/AAACAAEAAAAIAPP/AAAFAAMAAAAHAPb/AAACAAQAAAAHAPX/AAACAAEAAAAHAPT/AAACAAEAAAAHAPP/AAACAAIAAAAGAPb/AAABAAQAAAAGAPX/AAAFAAIAAAAGAPT/AAACAAEAAAAGAPP/AAACAAIAAAARAPL/AAADAAMAAAARAPH/AAADAAIAAAAQAPL/AAACAAEAAAAQAPH/AAACAAIAAAAPAPL/AAACAAEAAAAPAPH/AAACAAIAAAAOAPL/AAACAAEAAAAOAPH/AAACAAIAAAANAPL/AAACAAEAAAANAPH/AAACAAIAAAAMAPL/AAACAAEAAAAMAPH/AAACAAIAAAALAPL/AAACAAEAAAALAPH/AAACAAIAAAAKAPL/AAACAAEAAAAKAPH/AAACAAIAAAAJAPL/AAACAAEAAAAJAPH/AAACAAIAAAAIAPL/AAABAAMAAAAIAPH/AAABAAIAAAAWAPn/AAAEAAMAAAAWAPj/AAADAAMAAAAWAPb/AAAEAAMAAAAWAPX/AAADAAMAAAAWAPT/AAADAAIAAAAVAPn/AAACAAEAAAAVAPj/AAACAAEAAAAVAPf/AAACAAEAAAAVAPb/AAACAAEAAAAVAPX/AAACAAEAAAAVAPT/AAACAAIAAAAUAPn/AAACAAEAAAAUAPj/AAACAAEAAAAUAPf/AAACAAEAAAAUAPb/AAACAAEAAAAUAPX/AAACAAEAAAAUAPT/AAACAAIAAAATAPn/AAACAAEAAAATAPj/AAACAAEAAAATAPf/AAACAAEAAAATAPb/AAACAAEAAAATAPX/AAACAAEAAAATAPT/AAACAAIAAAASAPn/AAACAAEAAAAXAP3/AAADAAQAAAAXAPz/AAADAAMAAAAXAPv/AAADAAMAAAAXAPr/AAADAAMAAAAXAPn/AAADAAIAAAAWAP3/AAACAAQAAAAWAPz/AAACAAEAAAAWAPv/AAACAAEAAAAWAPr/AAACAAEAAAAVAP3/AAACAAQAAAAVAPz/AAACAAEAAAAVAPv/AAACAAEAAAAVAPr/AAACAAEAAAAUAP3/AAACAAQAAAAUAPz/AAACAAEAAAAUAPv/AAACAAEAAAAUAPr/AAACAAEAAAATAP3/AAACAAQAAAATAPz/AAACAAEAAAATAPv/AAACAAEAAAATAPr/AAACAAEAAAASAP3/AAACAAQAAAASAPz/AAACAAEAAAASAPv/AAACAAEAAAASAPr/AAACAAEAAAARAP3/AAACAAQAAAARAPz/AAACAAEAAAAQAPz/AAACAAEAAAAPAPz/AAAFAAIAAAAOAPz/AAACAAQAAAANAPz/AAACAAQAAAAMAPz/AAACAAQAAAALAPz/AAABAAQAAAAQAAEAAAADAAQAAAAQAAAAAAADAAMAAAAQAP//AAADAAMAAAAQAP7/AAADAAMAAAAPAAEAAAABAAQAAAAPAAAAAAABAAMAAAAPAP//AAABAAMAAAAPAP7/AAABAAMAAAAPAP3/AAABAAMAAAAbAPf/AAADAAQAAAAbAPb/AAADAAIAAAAaAPf/AAACAAQAAAAaAPb/AAACAAIAAAAZAPf/AAACAAQAAAAZAPb/AAACAAIAAAAYAPf/AAACAAQAAAAYAPb/AAACAAIAAAAXAPf/AAACAAQAAAAXAPb/AAACAAIAAAAFAPX/AAACAAQAAAAEAPX/AAACAAQAAAADAPX/AAACAAQAAAACAPX/AAACAAQAAAD///f/AAADAAMAAAD///b/AAADAAMAAAD+//X/AAACAAEAAAD+//b/AAACAAEAAAD+//f/AAACAAEAAAADAPT/AAACAAEAAAACAPT/AAACAAEAAAABAPT/AAACAAEAAAABAPX/AAACAAQAAAAAAPX/AAACAAQAAAAAAPT/AAACAAEAAAD///T/AAACAAEAAAD+//T/AAACAAEAAAAFAPT/AAACAAEAAAAEAPT/AAACAAEAAAD9//f/AAABAAMAAAD9//b/AAABAAMAAAD9//X/AAABAAMAAAD9//T/AAABAAMAAAD9//P/AAABAAIAAAD+//P/AAACAAIAAAD///P/AAACAAIAAAAAAPP/AAACAAIAAAABAPP/AAACAAIAAAACAPP/AAACAAIAAAADAPP/AAACAAIAAAAEAPP/AAACAAIAAAAFAPP/AAACAAIAAADu//7/AAAEAAIAAAD4/wIAAAAEAAIAAAD///X/AAAEAAIAAAAAAP//AAAEAAIAAAAHAPv/AAAEAAIAAAAQAP3/AAAEAAIAAAAWAPf/AAAEAAIAAAA=")
 navigation_enabled = false
 
-[node name="PortalSpawner" parent="." instance=ExtResource("4_ea2v8")]
-position = Vector2(232, -136)
-spawn_time = 3.0
+[node name="WaveManager" parent="." node_paths=PackedStringArray("portal_parent") instance=ExtResource("2_jugkp")]
+waves = Array[ExtResource("3_r4ehp")]([SubResource("Resource_7ysdy"), SubResource("Resource_pdnk6")])
+portal_parent = NodePath("../PortalSpawns")
+portal_scene = ExtResource("4_ea2v8")
 
-[node name="PortalSpawner2" parent="." instance=ExtResource("4_ea2v8")]
+[node name="PortalSpawns" type="Node2D" parent="."]
+
+[node name="Spawn1" type="Marker2D" parent="PortalSpawns"]
 position = Vector2(-320, -48)
-spawn_time = 3.0
+
+[node name="Spawn2" type="Marker2D" parent="PortalSpawns"]
+position = Vector2(176, -192)
+
+[node name="Spawn3" type="Marker2D" parent="PortalSpawns"]
+position = Vector2(320, -144)
+
+[node name="Spawn4" type="Marker2D" parent="PortalSpawns"]
+position = Vector2(224, -96)
+
+[node name="Spawn5" type="Marker2D" parent="PortalSpawns"]
+position = Vector2(336, -66)
+
+[node name="Spawn6" type="Marker2D" parent="PortalSpawns"]
+position = Vector2(240, -144)
 
 [node name="FurnitureBig" parent="." node_paths=PackedStringArray("follow_component_tilemap", "follow_target") instance=ExtResource("5_r4y4v")]
 position = Vector2(-128, -66)
@@ -57,51 +98,6 @@ position = Vector2(-120, 0)
 position = Vector2(-152, -122)
 follow_target = NodePath("../HandCursor")
 data = ExtResource("8_g6v8r")
-
-[node name="Ingredient2" parent="." node_paths=PackedStringArray("follow_target") instance=ExtResource("5_lfwo2")]
-position = Vector2(-32, -88)
-follow_target = NodePath("../HandCursor")
-data = ExtResource("8_g6v8r")
-
-[node name="Ingredient3" parent="." node_paths=PackedStringArray("follow_target") instance=ExtResource("5_lfwo2")]
-position = Vector2(-24, 8)
-follow_target = NodePath("../HandCursor")
-data = ExtResource("8_g6v8r")
-
-[node name="Ingredient4" parent="." node_paths=PackedStringArray("follow_target") instance=ExtResource("5_lfwo2")]
-position = Vector2(-176, -8)
-follow_target = NodePath("../HandCursor")
-data = ExtResource("9_7tm4b")
-
-[node name="Ingredient5" parent="." node_paths=PackedStringArray("follow_target") instance=ExtResource("5_lfwo2")]
-position = Vector2(-192, -72)
-follow_target = NodePath("../HandCursor")
-data = ExtResource("9_7tm4b")
-
-[node name="Ingredient6" parent="." node_paths=PackedStringArray("follow_target") instance=ExtResource("5_lfwo2")]
-position = Vector2(-32, -40)
-follow_target = NodePath("../HandCursor")
-data = ExtResource("10_t1u5w")
-
-[node name="Ingredient7" parent="." node_paths=PackedStringArray("follow_target") instance=ExtResource("5_lfwo2")]
-position = Vector2(-72, -50)
-follow_target = NodePath("../HandCursor")
-data = ExtResource("10_t1u5w")
-
-[node name="Ingredient8" parent="." node_paths=PackedStringArray("follow_target") instance=ExtResource("5_lfwo2")]
-position = Vector2(-56, -24)
-follow_target = NodePath("../HandCursor")
-data = ExtResource("10_t1u5w")
-
-[node name="Ingredient9" parent="." node_paths=PackedStringArray("follow_target") instance=ExtResource("5_lfwo2")]
-position = Vector2(-72, 4)
-follow_target = NodePath("../HandCursor")
-data = ExtResource("10_t1u5w")
-
-[node name="Ingredient10" parent="." node_paths=PackedStringArray("follow_target") instance=ExtResource("5_lfwo2")]
-position = Vector2(-48, 16)
-follow_target = NodePath("../HandCursor")
-data = ExtResource("10_t1u5w")
 
 [node name="Tool" parent="." node_paths=PackedStringArray("follow_target") instance=ExtResource("3_7xpmx")]
 position = Vector2(-82, -94)
@@ -159,7 +155,6 @@ grow_vertical = 1
 brewing_manager = NodePath("../../../BrewingManager")
 
 [node name="GameOverUI" parent="UI" node_paths=PackedStringArray("health_component") instance=ExtResource("12_vinen")]
-visible = false
 health_component = NodePath("../../Cauldron/HealthComponent")
 
 [node name="DebugUI" type="CanvasLayer" parent="."]
@@ -177,16 +172,17 @@ size_flags_vertical = 3
 mouse_filter = 2
 
 [node name="StateChartDebugger" parent="DebugUI/Control" instance=ExtResource("8_f135c")]
-custom_minimum_size = Vector2(200, 250)
+custom_minimum_size = Vector2(150, 250)
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_bottom = 0.0
-offset_left = -18.0
-offset_bottom = 50.0
+offset_left = -304.0
+offset_top = 112.0
+offset_right = -4.0
+offset_bottom = 362.0
 grow_horizontal = 0
 grow_vertical = 1
-initial_node_to_watch = NodePath("../../../PortalSpawner/StateChart")
 
 [node name="BrewingManager" parent="." instance=ExtResource("7_flksp")]
 initial_recipe = ExtResource("8_fv5na")

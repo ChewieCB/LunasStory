@@ -5,6 +5,7 @@ class_name PortalSpawner
 signal portal_opened
 signal portal_closed
 signal agent_spawned(agent: AIAgent, portal: PortalSpawner)
+signal spawning_finished(portal: PortalSpawner)
 
 @export_category("Nodes")
 @export var anim_sprite: AnimatedSprite2D
@@ -55,7 +56,7 @@ func _ready() -> void:
 
 func spawn_agent(agent_type: PackedScene = spawn_type) -> AIAgent:
 	var new_agent: AIAgent = agent_type.instantiate()
-	new_agent.global_position = self.global_position
+	#new_agent.global_position = self.global_position
 	
 	get_parent().add_child(new_agent)
 	
@@ -81,12 +82,16 @@ func close_portal() -> void:
 	state_chart.send_event("close_portal")
 
 
-func activate() -> void:
+func activate() -> bool:
 	state_chart.send_event("activate")
+	await anim_sprite.animation_finished
+	return true
 
 
-func deactivate() -> void:
+func deactivate() -> bool:
 	state_chart.send_event("deactivate")
+	await anim_sprite.animation_finished
+	return true
 
 
 func _on_dormant_state_entered() -> void:
@@ -149,7 +154,9 @@ func _on_spawner_spawning_state_entered() -> void:
 func _on_spawner_disabled_state_entered() -> void:
 	spawn_timer.stop()
 	current_spawns = 0
+	emit_signal("spawning_finished", self)
 
 
 func _on_spawn_timer_timeout() -> void:
 	state_chart.send_event("start_spawn")
+	state_chart.send_event("deactivate")

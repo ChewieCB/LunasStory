@@ -122,9 +122,7 @@ spawn_type = ExtResource("2_15vrf")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_1s6ir")
-animation = &"active"
 autoplay = "default"
-frame_progress = 0.825453
 offset = Vector2(0, -2)
 
 [node name="Area2D" type="Area2D" parent="."]
@@ -273,6 +271,7 @@ wait_time = 2.0
 one_shot = true
 
 [connection signal="state_entered" from="StateChart/Root/Status/Dormant" to="." method="_on_dormant_state_entered"]
+[connection signal="event_received" from="StateChart/Root/Status/Active" to="." method="_on_active_event_received"]
 [connection signal="state_entered" from="StateChart/Root/Status/Active" to="." method="_on_active_state_entered"]
 [connection signal="state_entered" from="StateChart/Root/Status/Extinct" to="." method="_on_extinct_state_entered"]
 [connection signal="state_entered" from="StateChart/Root/Aperture/Closed" to="." method="_on_closed_state_entered"]
