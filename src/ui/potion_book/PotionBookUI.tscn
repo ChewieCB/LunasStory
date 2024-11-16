@@ -1,0 +1,136 @@
+[gd_scene load_steps=8 format=3 uid="uid://dm0gejh2fcolw"]
+
+[ext_resource type="Texture2D" uid="uid://vjh5jgifvcqg" path="res://src/ui/potion_book/book_ui.png" id="1_4hfqo"]
+[ext_resource type="Script" path="res://src/ui/potion_book/potion_book_ui.gd" id="1_xrwxj"]
+[ext_resource type="PackedScene" uid="uid://wikcwj3r3l11" path="res://src/ui/potion_book/IngredientUI.tscn" id="2_w34hi"]
+[ext_resource type="Texture2D" uid="uid://f7iqrgglxrh2" path="res://src/ui/potion_book/potion_null.png" id="4_hdrf3"]
+
+[sub_resource type="Animation" id="Animation_kdu2k"]
+resource_name = "shake_potion"
+length = 0.2
+step = 0.025
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MarginContainer/TextureRect/MarginContainer/HBoxContainer/MarginContainer:theme_override_constants/margin_left")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.025, 0.05, 0.075, 0.1, 0.125, 0.15, 0.175, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [null, -5, 0, 5, null, -5, null, 5, null]
+}
+
+[sub_resource type="Animation" id="Animation_5r8yq"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MarginContainer/TextureRect/MarginContainer/HBoxContainer/MarginContainer:theme_override_constants/margin_left")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_lw58p"]
+_data = {
+"RESET": SubResource("Animation_5r8yq"),
+"shake_potion": SubResource("Animation_kdu2k")
+}
+
+[node name="PotionBookUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_xrwxj")
+ingredient_ui = ExtResource("2_w34hi")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -86.0
+offset_top = -43.0
+offset_right = 51.2
+offset_bottom = 55.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("1_4hfqo")
+expand_mode = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/TextureRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -41.6
+offset_top = -38.0
+offset_right = 39.4
+offset_bottom = 15.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/TextureRect/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/TextureRect/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 2
+
+[node name="IngredientContainer" type="VBoxContainer" parent="MarginContainer/TextureRect/MarginContainer/HBoxContainer/MarginContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+theme_override_constants/separation = -4
+
+[node name="IngredientUI" parent="MarginContainer/TextureRect/MarginContainer/HBoxContainer/MarginContainer2/IngredientContainer" instance=ExtResource("2_w34hi")]
+layout_mode = 2
+
+[node name="IngredientUI2" parent="MarginContainer/TextureRect/MarginContainer/HBoxContainer/MarginContainer2/IngredientContainer" instance=ExtResource("2_w34hi")]
+layout_mode = 2
+
+[node name="IngredientUI3" parent="MarginContainer/TextureRect/MarginContainer/HBoxContainer/MarginContainer2/IngredientContainer" instance=ExtResource("2_w34hi")]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/TextureRect/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+mouse_filter = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/TextureRect/MarginContainer/HBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 0
+texture = ExtResource("4_hdrf3")
+expand_mode = 3
+stretch_mode = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_lw58p")
+}
+
+[connection signal="mouse_entered" from="MarginContainer/TextureRect/MarginContainer/HBoxContainer/MarginContainer/TextureRect" to="." method="_on_potion_icon_mouse_entered"]
+[connection signal="mouse_exited" from="MarginContainer/TextureRect/MarginContainer/HBoxContainer/MarginContainer/TextureRect" to="." method="_on_potion_icon_mouse_exited"]

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="IngredientData" load_steps=5 format=3 uid="uid://betac7jlwpgcf"]
+
+[ext_resource type="Script" path="res://src/potion_brewing/resources/ingredient_data.gd" id="1_4pbuw"]
+[ext_resource type="Texture2D" uid="uid://dsk8f1tieipqq" path="res://src/entities/ingredients/assets/disabled/ingredient_disabled_005.png" id="1_gq4im"]
+[ext_resource type="Texture2D" uid="uid://mmcdecatk2p1" path="res://src/entities/ingredients/assets/hover/ingredient_hover_005.png" id="2_nfq15"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_6764s"]
+load_path = "res://.godot/imported/ingredient_005.png-2c296f23ab661b2247983225d37f177b.ctex"
+
+[resource]
+script = ExtResource("1_4pbuw")
+name = "Banana"
+icon = SubResource("CompressedTexture2D_6764s")
+icon_hover = ExtResource("2_nfq15")
+icon_disabled = ExtResource("1_gq4im")

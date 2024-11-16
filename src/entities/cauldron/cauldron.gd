@@ -1,6 +1,8 @@
 extends InteractibleObject
 class_name Cauldron
 
+signal ingredient_consumed(ingredient: Ingredient)
+
 @export_category("Components")
 @export var dynamic_nav_obstacle: DynamicNavObstacleComponent
 @export var particles_component: ParticlesComponent
@@ -22,6 +24,7 @@ func _consume_ingredient(ingredient: Ingredient) -> void:
 		particles.queue_free()
 	)
 	particles.emitting = true
+	emit_signal("ingredient_consumed", ingredient)
 
 
 func _on_pickup(entity: Node2D) -> void:

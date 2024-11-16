@@ -1,14 +1,22 @@
-[gd_scene load_steps=13 format=3 uid="uid://bwhulkm5ypjw2"]
+[gd_scene load_steps=16 format=3 uid="uid://bwhulkm5ypjw2"]
 
 [ext_resource type="Script" path="res://src/entities/furniture/furniture_big.gd" id="1_ag406"]
-[ext_resource type="Texture2D" uid="uid://dfghcnj0dnxal" path="res://src/entities/furniture/assets/furniture_32x32_1.png" id="2_v5ujm"]
-[ext_resource type="Texture2D" uid="uid://vtw7mcvpnjr5" path="res://src/entities/furniture/assets/furniture_32x32_highlight_1.png" id="3_1rkt7"]
+[ext_resource type="Texture2D" uid="uid://dfghcnj0dnxal" path="res://src/entities/furniture/assets/normal/furniture_32x32_1.png" id="2_l2jcn"]
+[ext_resource type="Texture2D" path="res://src/entities/furniture/assets/furniture_32x32_1.png" id="2_v5ujm"]
+[ext_resource type="Texture2D" uid="uid://vtw7mcvpnjr5" path="res://src/entities/furniture/assets/hover/furniture_32x32_highlight_1.png" id="3_3hhr4"]
 [ext_resource type="PackedScene" uid="uid://l82e7lamaemc" path="res://src/components/Selectable/SelectableComponent.tscn" id="3_wyaeg"]
 [ext_resource type="PackedScene" uid="uid://cojyfxu5j1idb" path="res://src/components/Grabbable/GrabbableComponent.tscn" id="3_y2bme"]
+[ext_resource type="Script" path="res://src/potion_brewing/resources/ingredient_data.gd" id="4_1a4y5"]
 [ext_resource type="PackedScene" uid="uid://b6irvllg6u58o" path="res://src/components/MouseFollow/MouseFollowComponent.tscn" id="4_6wpy1"]
 [ext_resource type="PackedScene" uid="uid://pfmp13n5e2is" path="res://src/components/Hitbox/HitboxComponent.tscn" id="5_kbkav"]
 [ext_resource type="PackedScene" uid="uid://twux0snbpc37" path="res://src/components/Particles/ParticlesComponent.tscn" id="6_tuxp4"]
 [ext_resource type="PackedScene" uid="uid://b1idbltbgx3a4" path="res://src/components/NavObstacle/DynamicNavObstacle.tscn" id="9_b12nm"]
+
+[sub_resource type="Resource" id="Resource_fu0ev"]
+script = ExtResource("4_1a4y5")
+name = "BookCase"
+icon = ExtResource("2_l2jcn")
+icon_hover = ExtResource("3_3hhr4")
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_xexl2"]
 radius = 22.0
@@ -19,7 +27,7 @@ size = Vector2(32, 32)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_eawpa"]
 size = Vector2(32, 32)
 
-[node name="FurnitureBig" type="Node2D" node_paths=PackedStringArray("dynamic_nav_obstacle", "particles_component", "hitbox_component", "selectable_component", "grabbable_component", "follow_component", "sprite")]
+[node name="FurnitureBig" type="Node2D" node_paths=PackedStringArray("dynamic_nav_obstacle", "particles_component", "hitbox_component", "selectable_component", "grabbable_component", "follow_component")]
 script = ExtResource("1_ag406")
 dynamic_nav_obstacle = NodePath("DynamicNavObstacleComponent")
 particles_component = NodePath("ParticlesComponent")
@@ -27,9 +35,7 @@ hitbox_component = NodePath("HitboxComponent")
 selectable_component = NodePath("SelectableComponent")
 grabbable_component = NodePath("GrabbableComponent")
 follow_component = NodePath("FollowComponent")
-sprite = NodePath("Sprite2D")
-object_texture = ExtResource("2_v5ujm")
-hover_texture = ExtResource("3_1rkt7")
+data = SubResource("Resource_fu0ev")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_v5ujm")

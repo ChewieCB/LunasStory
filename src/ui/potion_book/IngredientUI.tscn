@@ -1,0 +1,63 @@
+[gd_scene load_steps=4 format=3 uid="uid://wikcwj3r3l11"]
+
+[ext_resource type="Script" path="res://src/ui/potion_book/ingredient_ui.gd" id="1_bro52"]
+[ext_resource type="Texture2D" uid="uid://yxjbv4v6ghli" path="res://src/entities/ingredients/assets/normal/ingredient_000.png" id="1_id23y"]
+[ext_resource type="FontFile" uid="uid://c6nimynn33gk7" path="res://assets/fonts/Big Boy.ttf" id="2_esla7"]
+
+[node name="IngredientUI" type="MarginContainer"]
+custom_minimum_size = Vector2(38, 19)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -21.5
+offset_top = -9.5
+offset_right = 21.5
+offset_bottom = 9.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/margin_left = -2
+script = ExtResource("1_bro52")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_right = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_constants/margin_left = -4
+theme_override_constants/margin_right = -4
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+texture = ExtResource("1_id23y")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(24, 12)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+theme_override_constants/margin_bottom = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/HBoxContainer/MarginContainer2"]
+clip_contents = false
+layout_mode = 2
+theme_override_colors/default_color = Color(0.337255, 0.207843, 0.2, 1)
+theme_override_fonts/normal_font = ExtResource("2_esla7")
+theme_override_font_sizes/normal_font_size = 12
+bbcode_enabled = true
+text = "[center]0/0[/center]"
+fit_content = true
+scroll_active = false

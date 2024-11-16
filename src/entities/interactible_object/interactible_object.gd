@@ -12,20 +12,13 @@ signal object_removed(object: InteractibleObject)
 @export var follow_component: FollowComponent
 @export var follow_target: Node2D
 
-@export_category("Sprites")
-@export var sprite: Sprite2D
-@export var object_texture: Texture
-@export var hover_texture: Texture
-@export var disabled_texture: Texture
-@export var randomize_texture: bool = false
-@export var texture_index: int = 1
+@export var data: IngredientData
+
+@onready var sprite := $Sprite2D
 
 
 func _ready() -> void:
-	sprite.texture = object_texture
-	if randomize_texture:
-		texture_index = randi_range(1, 50)
-		sprite.frame = texture_index
+	sprite.texture = data.icon
 	
 	# TODO - further decouple these components if possible
 	if follow_component:
@@ -48,10 +41,11 @@ func _notification(what):
 
 
 func toggle_hover_texture(state: bool):
-	if state == true:
-		sprite.texture = hover_texture
-	else:
-		sprite.texture = object_texture
+	if data:
+		if state == true:
+			sprite.texture = data.icon_hover
+		else:
+			sprite.texture = data.icon
 
 
 func _handle_item(state: bool) -> void:
@@ -91,5 +85,5 @@ func _on_died() -> void:
 	if hitbox_component:
 		hitbox_component.disable()
 	
-	if disabled_texture:
-		sprite.texture = disabled_texture
+	if data.icon_disabled:
+		sprite.texture = data.icon_disabled

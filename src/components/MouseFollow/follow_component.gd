@@ -43,7 +43,7 @@ func _ready():
 	self.was_disabled.connect(_on_disabled)
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if is_enabled():
 		follow_global_position = get_target_global_position()
 
@@ -54,7 +54,7 @@ func get_target_global_position() -> Vector2:
 	return entity.global_position
 
 
-func get_nearest_valid_placement_cell(cell_coords: Vector2, invalid_tiles: Array[Vector2]) -> Vector2:
+func get_nearest_valid_placement_cell(cell_coords: Vector2, _invalid_tiles: Array[Vector2]) -> Vector2:
 	var closest_valid_cells: Array[Vector2i] = valid_floor_tiles
 	closest_valid_cells.sort_custom(
 		func(a: Vector2i, b: Vector2i):
@@ -75,21 +75,21 @@ func get_nearest_valid_placement_cell(cell_coords: Vector2, invalid_tiles: Array
 func _get_invalid_placment_tiles(cell_coords: Vector2) -> Array[Vector2]:
 	var tile_size: Vector2 = tilemap.tile_set.tile_size
 	var tiles_to_check: Array[Vector2] = entity.sprite_tiles
-	var invalid_tiles: Array[Vector2] = []
+	var _invalid_tiles: Array[Vector2] = []
 	
 	for tile in tiles_to_check:
 		var cell := Vector2(tile.x / tile_size.x, tile.y / tile_size.y)
 		var cell_pos: Vector2 = cell_coords + cell
 		var cell_data: TileData = tilemap.get_cell_tile_data(cell_pos)
 		if not cell_data:
-			invalid_tiles.append(cell_pos)
+			_invalid_tiles.append(cell_pos)
 			continue
 		# 0: Walls, 1: Floor
 		var cell_type: int = cell_data.terrain
 		if cell_type != 1:
-			invalid_tiles.append(cell_pos)
+			_invalid_tiles.append(cell_pos)
 			continue
-	return invalid_tiles
+	return _invalid_tiles
 
 
 func _move_entity_within_grid(global_pos: Vector2) -> void:

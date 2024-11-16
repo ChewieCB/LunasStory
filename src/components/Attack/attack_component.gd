@@ -70,7 +70,6 @@ func is_in_cooldown(_attack: AttackResource) -> bool:
 func is_attack_in_range(target_node: Node2D, attack: AttackResource) -> bool:
 	if not attack or not generic_cooldown_timer.is_stopped():
 		return false
-	var test0 = entity.global_position.distance_to(target_node.global_position)
 	return entity.global_position.distance_to(target_node.global_position) <= attack.attack_range
 
 

@@ -31,14 +31,14 @@ func _ready() -> void:
 	global_position = get_global_mouse_position()
 
 
-func _input(event: InputEvent) -> void:
+func _input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("interact"):
 		visual_component.current_cursor = visual_component.HandPosture.PINCH
 	elif Input.is_action_just_released("interact"):
 		visual_component.current_cursor = visual_component.HandPosture.OPEN
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	global_position = get_global_mouse_position()
 	visual_component.global_position = global_position
 

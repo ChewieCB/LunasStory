@@ -1,8 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://bux1j4jbk8st2"]
+[gd_scene load_steps=10 format=3 uid="uid://bux1j4jbk8st2"]
 
-[ext_resource type="Script" path="res://src/stages/main/hoverable_test.gd" id="1_ipyti"]
-[ext_resource type="Texture2D" uid="uid://btqmy1b6dgx7t" path="res://assets/ingredients_normal.png" id="2_kae0q"]
-[ext_resource type="Texture2D" uid="uid://g5xct0m0bkwl" path="res://assets/ingredients_hover.png" id="3_h7b6g"]
+[ext_resource type="Script" path="res://src/entities/ingredients/ingredient.gd" id="1_ipyti"]
+[ext_resource type="Texture2D" uid="uid://yxjbv4v6ghli" path="res://src/entities/ingredients/assets/normal/ingredient_000.png" id="2_jk5ra"]
 [ext_resource type="PackedScene" uid="uid://l82e7lamaemc" path="res://src/components/Selectable/SelectableComponent.tscn" id="4_727f8"]
 [ext_resource type="PackedScene" uid="uid://b6irvllg6u58o" path="res://src/components/MouseFollow/MouseFollowComponent.tscn" id="5_unb27"]
 [ext_resource type="PackedScene" uid="uid://cojyfxu5j1idb" path="res://src/components/Grabbable/GrabbableComponent.tscn" id="6_etj2y"]
@@ -15,21 +14,16 @@ radius = 8.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_gvquo"]
 radius = 16.0
 
-[node name="Ingredient1" type="Node2D" node_paths=PackedStringArray("consumable_component", "hitbox_component", "selectable_component", "grabbable_component", "follow_component", "sprite")]
+[node name="Ingredient" type="Node2D" node_paths=PackedStringArray("consumable_component", "hitbox_component", "selectable_component", "grabbable_component", "follow_component")]
 script = ExtResource("1_ipyti")
 consumable_component = NodePath("ConsumableComponent")
 hitbox_component = NodePath("HitboxComponent")
 selectable_component = NodePath("SelectableComponent")
 grabbable_component = NodePath("GrabbableComponent")
 follow_component = NodePath("MouseFollowComponent")
-sprite = NodePath("Sprite2D")
-object_texture = ExtResource("2_kae0q")
-hover_texture = ExtResource("3_h7b6g")
-randomize_texture = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-hframes = 5
-vframes = 10
+texture = ExtResource("2_jk5ra")
 
 [node name="SelectableComponent" parent="." node_paths=PackedStringArray("sprite", "area_2d") instance=ExtResource("4_727f8")]
 sprite = NodePath("../Sprite2D")

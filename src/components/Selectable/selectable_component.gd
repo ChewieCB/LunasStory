@@ -23,11 +23,11 @@ func query_hover() -> void:
 				_on_area_entered(area)
 
 
-func _on_area_entered(area: Area2D) -> void:
+func _on_area_entered(_area: Area2D) -> void:
 	if is_enabled():
 		emit_signal("hover", entity, true)
 
 
-func _on_area_exited(area: Area2D) -> void:
+func _on_area_exited(_area: Area2D) -> void:
 	if is_enabled():
 		emit_signal("hover", entity, false)
