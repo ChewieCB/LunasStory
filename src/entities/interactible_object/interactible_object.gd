@@ -18,6 +18,7 @@ signal object_removed(object: InteractibleObject)
 
 
 func _ready() -> void:
+	add_to_group("interactible")
 	sprite.texture = data.icon
 	
 	# TODO - further decouple these components if possible

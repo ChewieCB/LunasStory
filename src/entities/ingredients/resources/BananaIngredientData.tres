@@ -5,7 +5,6 @@
 [ext_resource type="Texture2D" uid="uid://mmcdecatk2p1" path="res://src/entities/ingredients/assets/hover/ingredient_hover_005.png" id="2_nfq15"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_6764s"]
-load_path = "res://.godot/imported/ingredient_005.png-2c296f23ab661b2247983225d37f177b.ctex"
 
 [resource]
 script = ExtResource("1_4pbuw")
