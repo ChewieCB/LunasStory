@@ -40,16 +40,6 @@ func get_valid_placements() -> Array:
 	var floor_tiles = _get_floor_tiles()
 	# If there's an object with collision on a floor tile, don't spawn on that tile
 	var blockers = get_tree().get_nodes_in_group("interactible")
-	var surrounding_tiles = [
-		Vector2i(1, 0),
-		Vector2i(1, -1),
-		Vector2i(0, -1),
-		Vector2i(-1, -1),
-		Vector2i(-1, 0),
-		Vector2i(-1, 1),
-		Vector2i(0, 1),
-		Vector2i(1, 1),
-	]
 	var blocker_tiles = []
 	for node in blockers:
 		if node is FurnitureBig:
@@ -59,10 +49,8 @@ func get_valid_placements() -> Array:
 				)
 				blocker_tiles.append(cell)
 		else:
-			blocker_tiles.append(node.position)
-			var map_pos = tilemap.local_to_map(node.position)
-			for offset in surrounding_tiles:
-				blocker_tiles.append(tilemap.map_to_local(map_pos + offset))
+			for tile in get_surrounding_tiles(node.position):
+				blocker_tiles.append(tile)
 	
 	var valid_tiles = floor_tiles.filter(
 		func(x):
@@ -73,6 +61,26 @@ func get_valid_placements() -> Array:
 	
 	return valid_tiles
 
+
+func get_surrounding_tiles(pos: Vector2) -> Array:
+	var output = []
+	var surrounding_tiles = [
+		Vector2i(1, 0),
+		Vector2i(1, -1),
+		Vector2i(0, -1),
+		Vector2i(-1, -1),
+		Vector2i(-1, 0),
+		Vector2i(-1, 1),
+		Vector2i(0, 1),
+		Vector2i(1, 1),
+	]
+	
+	output.append(pos)
+	var map_pos = tilemap.local_to_map(pos)
+	for offset in surrounding_tiles:
+		output.append(tilemap.map_to_local(map_pos + offset))
+	
+	return output
 
 
 func _get_floor_tiles() -> Array:
