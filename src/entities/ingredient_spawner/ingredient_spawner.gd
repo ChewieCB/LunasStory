@@ -53,6 +53,7 @@ func get_valid_placement() -> Array:
 			return x not in blocker_tiles
 	)
 	# TODO - treat only open portals as blockers
+	# TODO - add exclusion radius component to block spawning too close
 	
 	return valid_tiles
 	
