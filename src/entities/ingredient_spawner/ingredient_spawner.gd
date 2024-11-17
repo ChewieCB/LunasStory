@@ -2,17 +2,21 @@ extends Node2D
 
 @export var tilemap: TileMapLayer
 @export var portal_spawn_parent: Node2D
+@export var ingredient_scene: PackedScene
+@export var ingredients: Array[IngredientData]
 
 var active_ingredient_pool = []
 
 
 # Called when the node enters the scene tree for the first time.
-#func _ready() -> void:
-	#get_valid_placement()
+func _ready() -> void:
+	for i in randi_range(0, 10):
+		await get_tree().create_timer(0.5).timeout
+		spawn_ingredient(ingredients.pick_random())
 
 
 func _draw() -> void:
-	for point in get_valid_placement():
+	for point in get_valid_placements():
 		draw_circle(point, 2.0, Color.RED)
 
 
@@ -20,7 +24,19 @@ func _process(_delta) -> void:
 	queue_redraw()
 
 
-func get_valid_placement() -> Array:
+func spawn_ingredient(ingredient_data: IngredientData) -> Vector2:
+	var ingredient = ingredient_scene.instantiate()
+	var valid_positions = get_valid_placements()
+	valid_positions.shuffle()
+	var spawn_pos = valid_positions.pop_front()
+	ingredient.position = spawn_pos
+	ingredient.data = ingredient_data
+	add_child(ingredient)
+	
+	return spawn_pos
+
+
+func get_valid_placements() -> Array:
 	var floor_tiles = _get_floor_tiles()
 	# If there's an object with collision on a floor tile, don't spawn on that tile
 	var blockers = get_tree().get_nodes_in_group("interactible")
@@ -56,7 +72,7 @@ func get_valid_placement() -> Array:
 	# TODO - add exclusion radius component to block spawning too close
 	
 	return valid_tiles
-	
+
 
 
 func _get_floor_tiles() -> Array:
