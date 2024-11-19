@@ -1,15 +1,13 @@
 [gd_resource type="Resource" script_class="IngredientData" load_steps=5 format=3 uid="uid://b6stlocq5s0yk"]
 
+[ext_resource type="Texture2D" uid="uid://bqjkweoj4ssp2" path="res://src/entities/ingredients/assets/normal/ingredient_006.png" id="1_dlh5u"]
 [ext_resource type="Texture2D" uid="uid://q7isk40fb1di" path="res://src/entities/ingredients/assets/disabled/ingredient_disabled_006.png" id="1_hwivv"]
 [ext_resource type="Script" path="res://src/potion_brewing/resources/ingredient_data.gd" id="1_xvj51"]
 [ext_resource type="Texture2D" uid="uid://dcrof5vjhyfxg" path="res://src/entities/ingredients/assets/hover/ingredient_hover_006.png" id="2_jjjq5"]
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_nyorq"]
-load_path = "res://.godot/imported/ingredient_006.png-e7edbf2a41869df4921d8b95b173ae81.ctex"
-
 [resource]
 script = ExtResource("1_xvj51")
 name = "Carrot"
-icon = SubResource("CompressedTexture2D_nyorq")
+icon = ExtResource("1_dlh5u")
 icon_hover = ExtResource("2_jjjq5")
 icon_disabled = ExtResource("1_hwivv")

@@ -143,7 +143,6 @@ shape = SubResource("CircleShape2D_woegi")
 
 [node name="StateChart" type="Node" parent="."]
 script = ExtResource("16_htu2k")
-track_in_editor = true
 
 [node name="Root" type="Node" parent="StateChart"]
 script = ExtResource("17_6s33n")
