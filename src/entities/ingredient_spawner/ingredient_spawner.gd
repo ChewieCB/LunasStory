@@ -1,7 +1,10 @@
 extends Node2D
 
+@export_category("Nodes")
 @export var tilemap: TileMapLayer
 @export var portal_spawn_parent: Node2D
+@export var hand_cursor: HandCursor
+@export_category("Spawning")
 @export var ingredient_scene: PackedScene
 @export var ingredients: Array[IngredientData]
 @export var spawn_delay: float = 1.5
@@ -32,6 +35,7 @@ func spawn_ingredient(ingredient_data: IngredientData) -> Vector2:
 	var spawn_pos = valid_positions.pop_front()
 	ingredient.position = spawn_pos
 	ingredient.data = ingredient_data
+	ingredient.follow_target = hand_cursor
 	add_child(ingredient)
 	
 	return spawn_pos

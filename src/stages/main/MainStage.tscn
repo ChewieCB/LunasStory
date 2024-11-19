@@ -52,8 +52,9 @@ position = Vector2(-128, -66)
 follow_component_tilemap = NodePath("../StructureTiles")
 follow_target = NodePath("../HandCursor")
 
-[node name="IngredientSpawner" parent="." node_paths=PackedStringArray("tilemap") instance=ExtResource("19_rxf6j")]
+[node name="IngredientSpawner" parent="." node_paths=PackedStringArray("tilemap", "hand_cursor") instance=ExtResource("19_rxf6j")]
 tilemap = NodePath("../StructureTiles")
+hand_cursor = NodePath("../HandCursor")
 ingredient_scene = ExtResource("8_awlm4")
 ingredients = Array[ExtResource("9_g8enr")]([ExtResource("10_okjqm"), ExtResource("11_044di"), ExtResource("12_amvh7")])
 
