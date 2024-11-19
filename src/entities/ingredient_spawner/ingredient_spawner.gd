@@ -4,15 +4,16 @@ extends Node2D
 @export var portal_spawn_parent: Node2D
 @export var ingredient_scene: PackedScene
 @export var ingredients: Array[IngredientData]
+@export var spawn_delay: float = 1.5
+
+@onready var spawn_timer: Timer = $SpawnTimer
 
 var active_ingredient_pool = []
 
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	for i in randi_range(0, 10):
-		await get_tree().create_timer(0.5).timeout
-		spawn_ingredient(ingredients.pick_random())
+	start_spawn_timer()
+	# TODO - replace with signal to wave spawner start
 
 
 func _draw() -> void:
@@ -97,3 +98,12 @@ func _get_floor_tiles() -> Array:
 
 func set_ingredient_pool(ingredients: Array[IngredientData]) -> void:
 	active_ingredient_pool = ingredients
+
+
+func start_spawn_timer() -> void:
+	spawn_timer.start(spawn_delay)
+
+
+func _on_spawn_timer_timeout() -> void:
+	spawn_ingredient(ingredients.pick_random())
+	start_spawn_timer()
