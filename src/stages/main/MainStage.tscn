@@ -57,6 +57,7 @@ tilemap = NodePath("../StructureTiles")
 hand_cursor = NodePath("../HandCursor")
 ingredient_scene = ExtResource("8_awlm4")
 ingredients = Array[ExtResource("9_g8enr")]([ExtResource("10_okjqm"), ExtResource("11_044di"), ExtResource("12_amvh7")])
+max_spawned = 8
 
 [node name="Cauldron" parent="." instance=ExtResource("4_dnt3y")]
 position = Vector2(-120, 8)

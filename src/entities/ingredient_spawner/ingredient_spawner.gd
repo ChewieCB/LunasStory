@@ -8,6 +8,9 @@ extends Node2D
 @export var ingredient_scene: PackedScene
 @export var ingredients: Array[IngredientData]
 @export var spawn_delay: float = 1.5
+@export var max_spawned: int = 10
+@export_category("Debug")
+@export var show_valid_placements: bool = false
 
 @onready var spawn_timer: Timer = $SpawnTimer
 
@@ -20,8 +23,9 @@ func _ready() -> void:
 
 
 func _draw() -> void:
-	for point in get_valid_placements():
-		draw_circle(point, 2.0, Color.RED)
+	if show_valid_placements:
+		for point in get_valid_placements():
+			draw_circle(point, 2.0, Color.RED)
 
 
 func _process(_delta) -> void:
@@ -109,5 +113,6 @@ func start_spawn_timer() -> void:
 
 
 func _on_spawn_timer_timeout() -> void:
-	spawn_ingredient(ingredients.pick_random())
+	if get_child_count() <= max_spawned:
+		spawn_ingredient(ingredients.pick_random())
 	start_spawn_timer()
