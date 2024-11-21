@@ -71,7 +71,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("11_akcs4")
 }],
-"loop": true,
+"loop": false,
 "name": &"default",
 "speed": 5.0
 }, {
@@ -122,9 +122,8 @@ spawn_type = ExtResource("2_15vrf")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_1s6ir")
-animation = &"active"
+animation = &"close"
 autoplay = "default"
-frame_progress = 0.825453
 offset = Vector2(0, -2)
 
 [node name="Area2D" type="Area2D" parent="."]
@@ -149,51 +148,45 @@ script = ExtResource("17_6s33n")
 
 [node name="Status" type="Node" parent="StateChart/Root"]
 script = ExtResource("17_obdtw")
-initial_state = NodePath("Dormant")
+initial_state = NodePath("Disabled")
 
-[node name="Dormant" type="Node" parent="StateChart/Root/Status"]
+[node name="Idle" type="Node" parent="StateChart/Root/Status"]
 script = ExtResource("18_dgc1s")
 
-[node name="toActive" type="Node" parent="StateChart/Root/Status/Dormant"]
+[node name="toActive" type="Node" parent="StateChart/Root/Status/Idle"]
 script = ExtResource("19_7q7c7")
 to = NodePath("../../Active")
-event = &"activate"
+event = &"start_spawn"
 delay_in_seconds = "0.0"
 
-[node name="toExtinct" type="Node" parent="StateChart/Root/Status/Dormant"]
+[node name="toDisabled" type="Node" parent="StateChart/Root/Status/Idle"]
 script = ExtResource("19_7q7c7")
-to = NodePath("../../Extinct")
-event = &"destroy"
+to = NodePath("../../Disabled")
+event = &"disable"
 delay_in_seconds = "0.0"
 
 [node name="Active" type="Node" parent="StateChart/Root/Status"]
 script = ExtResource("18_dgc1s")
 
-[node name="toExtinct" type="Node" parent="StateChart/Root/Status/Active"]
+[node name="toDisabled" type="Node" parent="StateChart/Root/Status/Active"]
 script = ExtResource("19_7q7c7")
-to = NodePath("../../Extinct")
-event = &"destroy"
+to = NodePath("../../Disabled")
+event = &"disable"
 delay_in_seconds = "0.0"
 
-[node name="toDormant" type="Node" parent="StateChart/Root/Status/Active"]
+[node name="toIdle" type="Node" parent="StateChart/Root/Status/Active"]
 script = ExtResource("19_7q7c7")
-to = NodePath("../../Dormant")
-event = &"deactivate"
+to = NodePath("../../Idle")
+event = &"finish_spawn"
 delay_in_seconds = "0.0"
 
-[node name="Extinct" type="Node" parent="StateChart/Root/Status"]
+[node name="Disabled" type="Node" parent="StateChart/Root/Status"]
 script = ExtResource("18_dgc1s")
 
-[node name="toDormant" type="Node" parent="StateChart/Root/Status/Extinct"]
+[node name="toIdle" type="Node" parent="StateChart/Root/Status/Disabled"]
 script = ExtResource("19_7q7c7")
-to = NodePath("../../Dormant")
-event = &"revive_dormant"
-delay_in_seconds = "0.0"
-
-[node name="toActive" type="Node" parent="StateChart/Root/Status/Extinct"]
-script = ExtResource("19_7q7c7")
-to = NodePath("../../Active")
-event = &"revive_active"
+to = NodePath("../../Idle")
+event = &"enable"
 delay_in_seconds = "0.0"
 
 [node name="Aperture" type="Node" parent="StateChart/Root"]
@@ -218,67 +211,15 @@ to = NodePath("../../Closed")
 event = &"close_portal"
 delay_in_seconds = "0.0"
 
-[node name="Spawner" type="Node" parent="StateChart/Root"]
-script = ExtResource("17_obdtw")
-initial_state = NodePath("Idle")
-
-[node name="Idle" type="Node" parent="StateChart/Root/Spawner"]
-script = ExtResource("18_dgc1s")
-
-[node name="toSpawning" type="Node" parent="StateChart/Root/Spawner/Idle"]
-script = ExtResource("19_7q7c7")
-to = NodePath("../../Spawning")
-event = &"start_spawn"
-delay_in_seconds = "0.0"
-
-[node name="toDisabled" type="Node" parent="StateChart/Root/Spawner/Idle"]
-script = ExtResource("19_7q7c7")
-to = NodePath("../../Disabled")
-event = &"disable_spawn"
-delay_in_seconds = "0.0"
-
-[node name="Spawning" type="Node" parent="StateChart/Root/Spawner"]
-script = ExtResource("18_dgc1s")
-
-[node name="toIdle" type="Node" parent="StateChart/Root/Spawner/Spawning"]
-script = ExtResource("19_7q7c7")
-to = NodePath("../../Idle")
-event = &"finish_spawn"
-delay_in_seconds = "0.0"
-
-[node name="toDisabled" type="Node" parent="StateChart/Root/Spawner/Spawning"]
-script = ExtResource("19_7q7c7")
-to = NodePath("../../Disabled")
-event = &"disable_spawn"
-delay_in_seconds = "0.0"
-
-[node name="Disabled" type="Node" parent="StateChart/Root/Spawner"]
-script = ExtResource("18_dgc1s")
-
-[node name="toIdle" type="Node" parent="StateChart/Root/Spawner/Disabled"]
-script = ExtResource("19_7q7c7")
-to = NodePath("../../Idle")
-event = &"finish_spawn"
-delay_in_seconds = "0.0"
-
-[node name="toSpawning" type="Node" parent="StateChart/Root/Spawner/Disabled"]
-script = ExtResource("19_7q7c7")
-to = NodePath("../../Spawning")
-event = &"start_spawn"
-delay_in_seconds = "0.0"
-
 [node name="SpawnTimer" type="Timer" parent="."]
 wait_time = 2.0
 one_shot = true
 
-[connection signal="state_entered" from="StateChart/Root/Status/Dormant" to="." method="_on_dormant_state_entered"]
-[connection signal="state_entered" from="StateChart/Root/Status/Active" to="." method="_on_active_state_entered"]
-[connection signal="state_entered" from="StateChart/Root/Status/Extinct" to="." method="_on_extinct_state_entered"]
+[connection signal="state_entered" from="StateChart/Root/Status/Idle" to="." method="_on_status_idle_state_entered"]
+[connection signal="state_entered" from="StateChart/Root/Status/Active" to="." method="_on_status_active_state_entered"]
+[connection signal="state_entered" from="StateChart/Root/Status/Disabled" to="." method="_on_status_disabled_state_entered"]
 [connection signal="state_entered" from="StateChart/Root/Aperture/Closed" to="." method="_on_closed_state_entered"]
 [connection signal="state_entered" from="StateChart/Root/Aperture/Open" to="." method="_on_open_state_entered"]
-[connection signal="state_entered" from="StateChart/Root/Spawner/Idle" to="." method="_on_spawner_idle_state_entered"]
-[connection signal="state_entered" from="StateChart/Root/Spawner/Spawning" to="." method="_on_spawner_spawning_state_entered"]
-[connection signal="state_entered" from="StateChart/Root/Spawner/Disabled" to="." method="_on_spawner_disabled_state_entered"]
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]
 
 [editable path="HitboxComponent"]

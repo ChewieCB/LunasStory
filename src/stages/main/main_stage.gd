@@ -5,9 +5,10 @@ extends Node2D
 var is_debugger_attached: bool = false
 
 
-func _ready() -> void:
-	for portal in get_tree().get_nodes_in_group("spawner"):
-		portal.agent_spawned.connect(_on_agent_spawn)
+#func _ready() -> void:
+	#for portal in get_tree().get_nodes_in_group("spawner"):
+		#portal.agent_spawned.connect(_on_agent_spawn)
+	
 
 
 func _input(event: InputEvent) -> void:
