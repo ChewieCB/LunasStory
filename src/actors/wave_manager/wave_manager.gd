@@ -25,29 +25,20 @@ func start_wave(wave: Wave = next_wave()) -> void:
 	if current_wave:
 		end_wave(current_wave)
 	
-	active_portals = spawn_portals(wave.num_portals, wave.portal_max_spawns, wave.spawn_delay)
-	#get_parent().state_debugger.debug_node(active_portals.front().state_chart)
-	activate_portals(active_portals)
-	
-	current_wave = wave
+	if wave:
+		active_portals = spawn_portals(wave.num_portals, wave.portal_max_spawns, wave.spawn_delay)
+		#get_parent().state_debugger.debug_node(active_portals.front().state_chart)
+		await get_tree().create_timer(1.5).timeout
+		activate_portals(active_portals)
+		
+		current_wave = wave
 
 
 func end_wave(wave: Wave) -> void:
-	deactivate_portals(active_portals)
-	await get_tree().create_timer(0.5).timeout
 	clear_portals(active_portals)
 	current_wave = null
 	await get_tree().create_timer(1.5).timeout
 	start_wave()
-
-
-func clear_portals(portals: Array) -> void:
-	deactivate_portals(portals)
-	for portal in portals:
-		portal.get_parent().remove_child(portal)
-		portal.queue_free()
-	
-	valid_portal_spawns = portal_parent.get_children()
 
 
 func spawn_portals(count: int, max_spawns: int, spawn_time: float) -> Array:
@@ -57,10 +48,8 @@ func spawn_portals(count: int, max_spawns: int, spawn_time: float) -> Array:
 		var _portal = portal_scene.instantiate()
 		_portal.max_spawns = max_spawns
 		_portal.spawn_time = spawn_time
-		_portal.is_open = true
-		_portal.portal_state = "Active"
 		
-		var portal_spawn = get_portal_spawn()
+		var portal_spawn = _get_portal_spawn()
 		if not portal_spawn:
 			return portals
 		portal_spawn.add_child(_portal)
@@ -73,7 +62,27 @@ func spawn_portals(count: int, max_spawns: int, spawn_time: float) -> Array:
 	return portals
 
 
-func get_portal_spawn() -> Marker2D:
+func activate_portals(portals: Array) -> void:
+	for portal in portals:
+		_activate_portal(portal)
+
+
+func deactivate_portals(portals: Array) -> void:
+	for portal in portals:
+		_deactivate_portal(portal)
+		await portal.portal_closed
+
+
+func clear_portals(portals: Array) -> void:
+	deactivate_portals(portals)
+	valid_portal_spawns = portal_parent.get_children()
+
+
+func _free_portal(portal: PortalSpawner) -> void:
+	portal.queue_free()
+
+
+func _get_portal_spawn() -> Marker2D:
 	var spawns = valid_portal_spawns
 	if last_portal_spawn:
 		spawns.sort_custom(
@@ -90,36 +99,24 @@ func get_portal_spawn() -> Marker2D:
 	return new_spawn
 
 
-func activate_portals(portals: Array) -> bool:
-	for portal in portals:
-		await _activate_portal(portal)
-	return true
-
-
-func deactivate_portals(portals: Array) -> bool:
-	for portal in portals:
-		await _deactivate_portal(portal)
-	return true
-
-
-func _activate_portal(portal: PortalSpawner) -> bool:
+func _activate_portal(portal: PortalSpawner) -> void:
 	if not portal.is_node_ready():
 		await portal.ready
 	portal.open_portal()
-	return await portal.activate()
+	await portal.portal_opened
+	portal.activate()
 
 
-func _deactivate_portal(portal: PortalSpawner) -> bool:
+func _deactivate_portal(portal: PortalSpawner) -> void:
 	if not portal.is_node_ready():
 		await portal.ready
+	portal.deactivate()
 	portal.close_portal()
-	return await  portal.deactivate()
 
 
 func _on_portal_finished(portal: PortalSpawner) -> void:
 	valid_portal_spawns.erase(portal)
-	#if valid_portal_spawns == []:
-		#end_wave(current_wave)
+	_free_portal(portal)
 
 
 func _on_enemy_spawned(enemy: AIAgent, _portal: PortalSpawner) -> void:
