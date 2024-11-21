@@ -48,7 +48,9 @@ func spawn_ingredient(ingredient_data: IngredientData) -> Vector2:
 func get_valid_placements() -> Array:
 	var floor_tiles = _get_floor_tiles()
 	# If there's an object with collision on a floor tile, don't spawn on that tile
-	var blockers = get_tree().get_nodes_in_group("interactible")
+	var objects = get_tree().get_nodes_in_group("interactible")
+	var portals = get_tree().get_nodes_in_group("spawner")
+	var blockers = objects + portals
 	var blocker_tiles = []
 	for node in blockers:
 		if node is FurnitureBig:
@@ -58,14 +60,14 @@ func get_valid_placements() -> Array:
 				)
 				blocker_tiles.append(cell)
 		else:
-			for tile in get_surrounding_tiles(node.position):
+			for tile in get_surrounding_tiles(node.global_position):
 				blocker_tiles.append(tile)
 	
 	var valid_tiles = floor_tiles.filter(
 		func(x):
 			return x not in blocker_tiles
 	)
-	# TODO - treat only open portals as blockers
+	
 	# TODO - add exclusion radius component to block spawning too close
 	
 	return valid_tiles
