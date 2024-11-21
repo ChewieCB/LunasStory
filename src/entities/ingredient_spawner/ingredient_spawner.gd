@@ -1,4 +1,5 @@
 extends Node2D
+class_name IngredientSpawner
 
 @export_category("Nodes")
 @export var tilemap: TileMapLayer
@@ -17,11 +18,6 @@ extends Node2D
 var active_ingredient_pool = []
 
 
-func _ready() -> void:
-	start_spawn_timer()
-	# TODO - replace with signal to wave spawner start
-
-
 func _draw() -> void:
 	if show_valid_placements:
 		for point in get_valid_placements():
@@ -30,6 +26,14 @@ func _draw() -> void:
 
 func _process(_delta) -> void:
 	queue_redraw()
+
+
+func start_spawning() -> void:
+	spawn_timer.start(spawn_delay)
+
+
+func stop_spawning() -> void:
+	spawn_timer.stop()
 
 
 func spawn_ingredient(ingredient_data: IngredientData) -> Vector2:
@@ -110,11 +114,7 @@ func set_ingredient_pool(ingredients: Array[IngredientData]) -> void:
 	active_ingredient_pool = ingredients
 
 
-func start_spawn_timer() -> void:
-	spawn_timer.start(spawn_delay)
-
-
 func _on_spawn_timer_timeout() -> void:
 	if get_child_count() <= max_spawned:
 		spawn_ingredient(ingredients.pick_random())
-	start_spawn_timer()
+	start_spawning()
