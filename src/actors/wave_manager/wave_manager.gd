@@ -4,6 +4,7 @@ class_name WaveManager
 @export var waves: Array[Wave]
 @export var portal_parent: Node2D
 @export var portal_scene: PackedScene
+@export var ingredient_spawner: IngredientSpawner
 var active_portals: Array = []
 var active_enemies: Array = []
 var current_wave: Wave
@@ -30,6 +31,7 @@ func start_wave(wave: Wave = next_wave()) -> void:
 		#get_parent().state_debugger.debug_node(active_portals.front().state_chart)
 		await get_tree().create_timer(1.5).timeout
 		activate_portals(active_portals)
+		ingredient_spawner.start_spawning()
 		
 		current_wave = wave
 
@@ -37,6 +39,8 @@ func start_wave(wave: Wave = next_wave()) -> void:
 func end_wave(wave: Wave) -> void:
 	clear_portals(active_portals)
 	current_wave = null
+	ingredient_spawner.stop_spawning()
+	
 	await get_tree().create_timer(1.5).timeout
 	start_wave()
 

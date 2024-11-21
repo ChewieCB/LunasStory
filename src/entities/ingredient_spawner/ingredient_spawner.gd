@@ -1,4 +1,5 @@
 extends Node2D
+class_name IngredientSpawner
 
 @export_category("Nodes")
 @export var tilemap: TileMapLayer
@@ -17,11 +18,6 @@ extends Node2D
 var active_ingredient_pool = []
 
 
-func _ready() -> void:
-	start_spawn_timer()
-	# TODO - replace with signal to wave spawner start
-
-
 func _draw() -> void:
 	if show_valid_placements:
 		for point in get_valid_placements():
@@ -30,6 +26,14 @@ func _draw() -> void:
 
 func _process(_delta) -> void:
 	queue_redraw()
+
+
+func start_spawning() -> void:
+	spawn_timer.start(spawn_delay)
+
+
+func stop_spawning() -> void:
+	spawn_timer.stop()
 
 
 func spawn_ingredient(ingredient_data: IngredientData) -> Vector2:
@@ -48,7 +52,9 @@ func spawn_ingredient(ingredient_data: IngredientData) -> Vector2:
 func get_valid_placements() -> Array:
 	var floor_tiles = _get_floor_tiles()
 	# If there's an object with collision on a floor tile, don't spawn on that tile
-	var blockers = get_tree().get_nodes_in_group("interactible")
+	var objects = get_tree().get_nodes_in_group("interactible")
+	var portals = get_tree().get_nodes_in_group("spawner")
+	var blockers = objects + portals
 	var blocker_tiles = []
 	for node in blockers:
 		if node is FurnitureBig:
@@ -58,14 +64,14 @@ func get_valid_placements() -> Array:
 				)
 				blocker_tiles.append(cell)
 		else:
-			for tile in get_surrounding_tiles(node.position):
+			for tile in get_surrounding_tiles(node.global_position):
 				blocker_tiles.append(tile)
 	
 	var valid_tiles = floor_tiles.filter(
 		func(x):
 			return x not in blocker_tiles
 	)
-	# TODO - treat only open portals as blockers
+	
 	# TODO - add exclusion radius component to block spawning too close
 	
 	return valid_tiles
@@ -108,11 +114,7 @@ func set_ingredient_pool(ingredients: Array[IngredientData]) -> void:
 	active_ingredient_pool = ingredients
 
 
-func start_spawn_timer() -> void:
-	spawn_timer.start(spawn_delay)
-
-
 func _on_spawn_timer_timeout() -> void:
 	if get_child_count() <= max_spawned:
 		spawn_ingredient(ingredients.pick_random())
-	start_spawn_timer()
+	start_spawning()
