@@ -25,7 +25,7 @@ func set_potion_recipe(recipe: PotionRecipe) -> void:
 	set_requirements_ui(recipe.requirements)
 
 
-func set_requirements_ui(requirements: Array[PotionRecipeRequirement]) -> void:
+func set_requirements_ui(requirements: Array) -> void:
 	for i in range(requirements.size()):
 		var requirement = requirements[i]
 		set_ingredient_ui(requirement, i)

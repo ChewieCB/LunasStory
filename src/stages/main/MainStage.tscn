@@ -15,10 +15,10 @@
 [ext_resource type="PackedScene" uid="uid://cw1kellptc2ke" path="res://src/potion_brewing/BrewingManager.tscn" id="7_flksp"]
 [ext_resource type="PackedScene" uid="uid://bux1j4jbk8st2" path="res://src/entities/ingredients/Ingredient.tscn" id="8_awlm4"]
 [ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="8_f135c"]
-[ext_resource type="Resource" uid="uid://dk5nc7pd1atr0" path="res://src/potion_brewing/data/recipes/test_recipe.tres" id="8_fv5na"]
 [ext_resource type="PackedScene" uid="uid://dvtolvauk4son" path="res://src/ui/main_ui/luna_health/LunaHealthUI.tscn" id="9_ebxeo"]
 [ext_resource type="PackedScene" uid="uid://dm0gejh2fcolw" path="res://src/ui/potion_book/PotionBookUI.tscn" id="12_8ltgd"]
 [ext_resource type="PackedScene" uid="uid://ww8bgg1u8m71" path="res://src/ui/game_over/GameOverUI.tscn" id="12_vinen"]
+[ext_resource type="Script" path="res://src/stages/main/active_ingredients_ui.gd" id="17_4vnnt"]
 [ext_resource type="PackedScene" uid="uid://mki2vu2uiv40" path="res://src/entities/ingredient_spawner/IngredientSpawner.tscn" id="19_rxf6j"]
 
 [sub_resource type="Resource" id="Resource_k756b"]
@@ -85,17 +85,18 @@ position = Vector2(-128, -66)
 follow_component_tilemap = NodePath("../StructureTiles")
 follow_target = NodePath("../HandCursor")
 
-[node name="WaveManager" parent="." node_paths=PackedStringArray("portal_parent", "ingredient_spawner") instance=ExtResource("2_jugkp")]
-waves = Array[ExtResource("3_r4ehp")]([SubResource("Resource_7ysdy"), SubResource("Resource_pdnk6")])
-portal_parent = NodePath("../PortalSpawns")
-portal_scene = ExtResource("4_ea2v8")
-ingredient_spawner = NodePath("../IngredientSpawner")
-
 [node name="IngredientSpawner" parent="." node_paths=PackedStringArray("tilemap", "hand_cursor") instance=ExtResource("19_rxf6j")]
 tilemap = NodePath("../StructureTiles")
 hand_cursor = NodePath("../HandCursor")
 ingredient_scene = ExtResource("8_awlm4")
 max_spawned = 8
+
+[node name="WaveManager" parent="." node_paths=PackedStringArray("portal_parent", "ingredient_spawner", "brewing_manager") instance=ExtResource("2_jugkp")]
+waves = Array[ExtResource("3_r4ehp")]([SubResource("Resource_7ysdy"), SubResource("Resource_pdnk6")])
+portal_parent = NodePath("../PortalSpawns")
+portal_scene = ExtResource("4_ea2v8")
+ingredient_spawner = NodePath("../IngredientSpawner")
+brewing_manager = NodePath("../BrewingManager")
 
 [node name="Cauldron" parent="." instance=ExtResource("4_dnt3y")]
 position = Vector2(-120, 8)
@@ -155,6 +156,25 @@ grow_horizontal = 0
 grow_vertical = 1
 brewing_manager = NodePath("../../../BrewingManager")
 
+[node name="ActiveIngredientsUI" type="Control" parent="UI/MainUI" node_paths=PackedStringArray("ingredient_spawner")]
+visible = false
+anchors_preset = 0
+offset_left = 288.0
+offset_top = 34.0
+offset_right = 328.0
+offset_bottom = 74.0
+script = ExtResource("17_4vnnt")
+ingredient_spawner = NodePath("../../../IngredientSpawner")
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/MainUI/ActiveIngredientsUI"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/MainUI/ActiveIngredientsUI/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = -4
+
 [node name="GameOverUI" parent="UI" node_paths=PackedStringArray("health_component") instance=ExtResource("12_vinen")]
 health_component = NodePath("../../Cauldron/HealthComponent")
 
@@ -185,7 +205,7 @@ offset_bottom = 362.0
 grow_horizontal = 0
 grow_vertical = 1
 
-[node name="BrewingManager" parent="." instance=ExtResource("7_flksp")]
-initial_recipe = ExtResource("8_fv5na")
+[node name="BrewingManager" parent="." node_paths=PackedStringArray("ingredient_spawner") instance=ExtResource("7_flksp")]
+ingredient_spawner = NodePath("../IngredientSpawner")
 
 [editable path="Cauldron"]

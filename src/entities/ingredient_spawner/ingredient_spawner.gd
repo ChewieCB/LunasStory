@@ -1,6 +1,8 @@
 extends Node2D
 class_name IngredientSpawner
 
+signal new_ingredient_pool(ingredient_pool: Array)
+
 @export_category("Nodes")
 @export var tilemap: TileMapLayer
 @export var portal_spawn_parent: Node2D
@@ -10,8 +12,8 @@ class_name IngredientSpawner
 var ingredient_resources_path: String = "res://src/entities/ingredients/resources/"
 var ingredients: Array[IngredientData] = []
 @export var spawn_delay: float = 1.5
-@export var max_spawned: int = 10
-@export var max_ingredient_variety: int = 10
+@export var max_spawned: int = 15
+@export var max_ingredient_variety: int = 4
 @export_category("Debug")
 @export var show_valid_placements: bool = false
 
@@ -19,6 +21,7 @@ var ingredients: Array[IngredientData] = []
 
 var active_ingredient_pool: Array = []
 var current_spawns: Array = []
+var current_spawn_pool: Array = []
 
 
 func _ready() -> void:
@@ -47,6 +50,7 @@ func set_active_ingredients(max_variety: int = max_ingredient_variety) -> Array:
 		var ingredient = all_ingredients[idx]
 		active_ingredient_pool.append(ingredient)
 	
+	emit_signal("new_ingredient_pool", active_ingredient_pool)
 	return active_ingredient_pool
 
 
@@ -66,6 +70,8 @@ func spawn_ingredient(ingredient_data: IngredientData) -> Ingredient:
 	ingredient.position = spawn_pos
 	ingredient.data = ingredient_data
 	ingredient.follow_target = hand_cursor
+	ingredient.decayed.connect(_remove_from_current_spawns)
+	ingredient.consumed.connect(_remove_from_current_spawns)
 	add_child(ingredient)
 	
 	return ingredient
@@ -139,10 +145,20 @@ func _get_floor_tiles() -> Array:
 
 func set_ingredient_pool(ingredients: Array[IngredientData]) -> void:
 	active_ingredient_pool = ingredients
+	current_spawn_pool = []
 
 
 func _on_spawn_timer_timeout() -> void:
 	if active_ingredient_pool:
 		if get_child_count() <= max_spawned:
-			current_spawns.append(spawn_ingredient(active_ingredient_pool.pick_random()))
+			if not current_spawn_pool:
+				current_spawn_pool = active_ingredient_pool.duplicate()
+				current_spawn_pool.shuffle()
+			var _ingredient = current_spawn_pool.pop_front()
+			current_spawns.append(spawn_ingredient(_ingredient))
 		start_spawning()
+
+
+func _remove_from_current_spawns(ingredient: Ingredient) -> void:
+	if ingredient in current_spawns:
+		current_spawns.erase(ingredient)
