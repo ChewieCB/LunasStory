@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="IngredientData" load_steps=5 format=3 uid="uid://dfjc7asyns4tm"]
+
+[ext_resource type="Texture2D" uid="uid://ct1mbn8d0m84h" path="res://src/entities/ingredients/assets/normal/ingredient_003.png" id="1_x7ao4"]
+[ext_resource type="Texture2D" uid="uid://cexl5b7g1ns6o" path="res://src/entities/ingredients/assets/disabled/ingredient_disabled_003.png" id="2_bnu2r"]
+[ext_resource type="Texture2D" uid="uid://ugfb2bwl0bbb" path="res://src/entities/ingredients/assets/hover/ingredient_hover_003.png" id="3_6dabp"]
+[ext_resource type="Script" path="res://src/potion_brewing/resources/ingredient_data.gd" id="4_6wp5m"]
+
+[resource]
+script = ExtResource("4_6wp5m")
+name = "Steak"
+icon = ExtResource("1_x7ao4")
+icon_hover = ExtResource("3_6dabp")
+icon_disabled = ExtResource("2_bnu2r")

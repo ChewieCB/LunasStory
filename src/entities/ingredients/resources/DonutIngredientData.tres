@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="IngredientData" load_steps=5 format=3 uid="uid://c27803b4f0t8"]
+
+[ext_resource type="Texture2D" uid="uid://cndpp7t14rcq3" path="res://src/entities/ingredients/assets/normal/ingredient_019.png" id="1_aprl3"]
+[ext_resource type="Texture2D" uid="uid://cjolrkimsclif" path="res://src/entities/ingredients/assets/disabled/ingredient_disabled_019.png" id="2_665e0"]
+[ext_resource type="Texture2D" uid="uid://dfdmixa24bkhb" path="res://src/entities/ingredients/assets/hover/ingredient_hover_019.png" id="3_bjaik"]
+[ext_resource type="Script" path="res://src/potion_brewing/resources/ingredient_data.gd" id="4_y54e0"]
+
+[resource]
+script = ExtResource("4_y54e0")
+name = "Donut"
+icon = ExtResource("1_aprl3")
+icon_hover = ExtResource("3_bjaik")
+icon_disabled = ExtResource("2_665e0")

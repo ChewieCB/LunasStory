@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="IngredientData" load_steps=5 format=3 uid="uid://bph3vh8wwirsg"]
+
+[ext_resource type="Texture2D" uid="uid://yxjbv4v6ghli" path="res://src/entities/ingredients/assets/normal/ingredient_000.png" id="1_f8x3v"]
+[ext_resource type="Texture2D" uid="uid://durdlgl7cxy3n" path="res://src/entities/ingredients/assets/disabled/ingredient_disabled_000.png" id="2_soes1"]
+[ext_resource type="Texture2D" uid="uid://dhtlp4ksgxmpo" path="res://src/entities/ingredients/assets/hover/ingredient_hover_000.png" id="3_hts6e"]
+[ext_resource type="Script" path="res://src/potion_brewing/resources/ingredient_data.gd" id="4_7jr0o"]
+
+[resource]
+script = ExtResource("4_7jr0o")
+name = "Apple"
+icon = ExtResource("1_f8x3v")
+icon_hover = ExtResource("3_hts6e")
+icon_disabled = ExtResource("2_soes1")

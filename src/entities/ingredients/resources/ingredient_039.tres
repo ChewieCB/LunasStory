@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="IngredientData" load_steps=5 format=3]
+
+[ext_resource type="Texture2D" path="res://src/entities/ingredients/assets/normal/ingredient_039.png" id="1_a6eri"]
+[ext_resource type="Texture2D" path="res://src/entities/ingredients/assets/disabled/ingredient_disabled_039.png" id="2_bra5l"]
+[ext_resource type="Texture2D" path="res://src/entities/ingredients/assets/hover/ingredient_hover_039.png" id="3_4s5g5"]
+[ext_resource type="Script" path="res://src/potion_brewing/resources/ingredient_data.gd" id="4_7mi4f"]
+
+[resource]
+script = ExtResource("4_7mi4f")
+name = "ingredient_039.png"
+icon = ExtResource("1_a6eri")
+icon_hover = ExtResource("3_4s5g5")
+icon_disabled = ExtResource("2_bra5l")

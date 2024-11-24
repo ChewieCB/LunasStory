@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="IngredientData" load_steps=5 format=3 uid="uid://bb2r8eavnkkq3"]
+
+[ext_resource type="Texture2D" uid="uid://cujo0urvlc1l5" path="res://src/entities/ingredients/assets/normal/ingredient_020.png" id="1_h5lo4"]
+[ext_resource type="Texture2D" uid="uid://4dxu8yfew7lp" path="res://src/entities/ingredients/assets/disabled/ingredient_disabled_020.png" id="2_8svwa"]
+[ext_resource type="Texture2D" uid="uid://civoipjee5irq" path="res://src/entities/ingredients/assets/hover/ingredient_hover_020.png" id="3_o8yuk"]
+[ext_resource type="Script" path="res://src/potion_brewing/resources/ingredient_data.gd" id="4_qemrw"]
+
+[resource]
+script = ExtResource("4_qemrw")
+name = "Berry"
+icon = ExtResource("1_h5lo4")
+icon_hover = ExtResource("3_o8yuk")
+icon_disabled = ExtResource("2_8svwa")

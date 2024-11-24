@@ -7,15 +7,25 @@ class_name IngredientSpawner
 @export var hand_cursor: HandCursor
 @export_category("Spawning")
 @export var ingredient_scene: PackedScene
-@export var ingredients: Array[IngredientData]
+var ingredient_resources_path: String = "res://src/entities/ingredients/resources/"
+var ingredients: Array[IngredientData] = []
 @export var spawn_delay: float = 1.5
 @export var max_spawned: int = 10
+@export var max_ingredient_variety: int = 10
 @export_category("Debug")
 @export var show_valid_placements: bool = false
 
 @onready var spawn_timer: Timer = $SpawnTimer
 
-var active_ingredient_pool = []
+var active_ingredient_pool: Array = []
+var current_spawns: Array = []
+
+
+func _ready() -> void:
+	var resource_files = Array(DirAccess.get_files_at(ingredient_resources_path))
+	for filename in resource_files:
+		var ingredient = load(ingredient_resources_path + filename)
+		ingredients.append(ingredient)
 
 
 func _draw() -> void:
@@ -28,6 +38,18 @@ func _process(_delta) -> void:
 	queue_redraw()
 
 
+func set_active_ingredients(max_variety: int = max_ingredient_variety) -> Array:
+	var all_ingredients = ingredients
+	all_ingredients.shuffle()
+	
+	active_ingredient_pool = []
+	for idx in range(max_variety):
+		var ingredient = all_ingredients[idx]
+		active_ingredient_pool.append(ingredient)
+	
+	return active_ingredient_pool
+
+
 func start_spawning() -> void:
 	spawn_timer.start(spawn_delay)
 
@@ -36,7 +58,7 @@ func stop_spawning() -> void:
 	spawn_timer.stop()
 
 
-func spawn_ingredient(ingredient_data: IngredientData) -> Vector2:
+func spawn_ingredient(ingredient_data: IngredientData) -> Ingredient:
 	var ingredient = ingredient_scene.instantiate()
 	var valid_positions = get_valid_placements()
 	valid_positions.shuffle()
@@ -46,7 +68,12 @@ func spawn_ingredient(ingredient_data: IngredientData) -> Vector2:
 	ingredient.follow_target = hand_cursor
 	add_child(ingredient)
 	
-	return spawn_pos
+	return ingredient
+
+
+func clear_all_ingredients() -> void:
+	for ingredient in current_spawns:
+		ingredient.decay()
 
 
 func get_valid_placements() -> Array:
@@ -115,6 +142,7 @@ func set_ingredient_pool(ingredients: Array[IngredientData]) -> void:
 
 
 func _on_spawn_timer_timeout() -> void:
-	if get_child_count() <= max_spawned:
-		spawn_ingredient(ingredients.pick_random())
-	start_spawning()
+	if active_ingredient_pool:
+		if get_child_count() <= max_spawned:
+			current_spawns.append(spawn_ingredient(active_ingredient_pool.pick_random()))
+		start_spawning()

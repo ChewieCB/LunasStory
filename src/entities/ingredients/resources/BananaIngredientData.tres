@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="IngredientData" load_steps=5 format=3 uid="uid://betac7jlwpgcf"]
+[gd_resource type="Resource" script_class="IngredientData" load_steps=5 format=3 uid="uid://hg021dq6jcf"]
 
 [ext_resource type="Texture2D" uid="uid://du7bgr8ylvvnj" path="res://src/entities/ingredients/assets/normal/ingredient_005.png" id="1_4hmrl"]
 [ext_resource type="Script" path="res://src/potion_brewing/resources/ingredient_data.gd" id="1_4pbuw"]

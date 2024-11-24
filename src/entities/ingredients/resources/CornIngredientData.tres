@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="IngredientData" load_steps=5 format=3 uid="uid://cw8dtaoyneq7c"]
+
+[ext_resource type="Texture2D" uid="uid://bjnk037aspaot" path="res://src/entities/ingredients/assets/normal/ingredient_011.png" id="1_4o4ix"]
+[ext_resource type="Texture2D" uid="uid://b5jx5wvorpax3" path="res://src/entities/ingredients/assets/disabled/ingredient_disabled_011.png" id="2_hr7l2"]
+[ext_resource type="Texture2D" uid="uid://dw5hlq8flkxhx" path="res://src/entities/ingredients/assets/hover/ingredient_hover_011.png" id="3_nl4kr"]
+[ext_resource type="Script" path="res://src/potion_brewing/resources/ingredient_data.gd" id="4_2mvud"]
+
+[resource]
+script = ExtResource("4_2mvud")
+name = "Corn"
+icon = ExtResource("1_4o4ix")
+icon_hover = ExtResource("3_nl4kr")
+icon_disabled = ExtResource("2_hr7l2")
