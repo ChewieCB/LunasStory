@@ -3,7 +3,7 @@ class_name PotionRecipe
 
 @export var name: String = ""
 @export var potion: Potion
-@export var requirements: Array[PotionRecipeRequirement] 
+@export var requirements: Array 
 
 
 func get_ingredient_requirement(data: IngredientData) -> PotionRecipeRequirement:

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="IngredientData" load_steps=5 format=3 uid="uid://m35j8y76flns"]
+
+[ext_resource type="Texture2D" uid="uid://ded3v45qe5oe3" path="res://src/entities/ingredients/assets/normal/ingredient_015.png" id="1_k7wrf"]
+[ext_resource type="Texture2D" uid="uid://872ybeq3uyqi" path="res://src/entities/ingredients/assets/disabled/ingredient_disabled_015.png" id="2_0m2on"]
+[ext_resource type="Texture2D" uid="uid://dbugm1y6thtfj" path="res://src/entities/ingredients/assets/hover/ingredient_hover_015.png" id="3_111wa"]
+[ext_resource type="Script" path="res://src/potion_brewing/resources/ingredient_data.gd" id="4_s7ssq"]
+
+[resource]
+script = ExtResource("4_s7ssq")
+name = "Orange"
+icon = ExtResource("1_k7wrf")
+icon_hover = ExtResource("3_111wa")
+icon_disabled = ExtResource("2_0m2on")

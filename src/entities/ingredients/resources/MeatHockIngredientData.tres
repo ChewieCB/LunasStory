@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="IngredientData" load_steps=5 format=3 uid="uid://ra1eul14s558"]
+
+[ext_resource type="Texture2D" uid="uid://dqt0y0iao76u5" path="res://src/entities/ingredients/assets/normal/ingredient_028.png" id="1_ihbpv"]
+[ext_resource type="Texture2D" uid="uid://b4krijaudp56w" path="res://src/entities/ingredients/assets/disabled/ingredient_disabled_028.png" id="2_tnifi"]
+[ext_resource type="Texture2D" uid="uid://fm4neoxx4ahx" path="res://src/entities/ingredients/assets/hover/ingredient_hover_028.png" id="3_jk78h"]
+[ext_resource type="Script" path="res://src/potion_brewing/resources/ingredient_data.gd" id="4_gexqm"]
+
+[resource]
+script = ExtResource("4_gexqm")
+name = "Meat Hock"
+icon = ExtResource("1_ihbpv")
+icon_hover = ExtResource("3_jk78h")
+icon_disabled = ExtResource("2_tnifi")

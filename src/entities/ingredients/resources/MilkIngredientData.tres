@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="IngredientData" load_steps=5 format=3 uid="uid://c0iiqm1orqgi4"]
+
+[ext_resource type="Texture2D" uid="uid://dj4t7j2hk1m3q" path="res://src/entities/ingredients/assets/normal/ingredient_017.png" id="1_t1xpx"]
+[ext_resource type="Texture2D" uid="uid://6xg6hvtoygdr" path="res://src/entities/ingredients/assets/disabled/ingredient_disabled_017.png" id="2_e5wsw"]
+[ext_resource type="Texture2D" uid="uid://dx60kiuyw7gsh" path="res://src/entities/ingredients/assets/hover/ingredient_hover_017.png" id="3_r7f8r"]
+[ext_resource type="Script" path="res://src/potion_brewing/resources/ingredient_data.gd" id="4_5s17x"]
+
+[resource]
+script = ExtResource("4_5s17x")
+name = "Milk"
+icon = ExtResource("1_t1xpx")
+icon_hover = ExtResource("3_r7f8r")
+icon_disabled = ExtResource("2_e5wsw")

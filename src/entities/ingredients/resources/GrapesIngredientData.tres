@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="IngredientData" load_steps=5 format=3 uid="uid://o5su1243hoh4"]
+
+[ext_resource type="Texture2D" uid="uid://crjqaka0s6aix" path="res://src/entities/ingredients/assets/normal/ingredient_025.png" id="1_802h3"]
+[ext_resource type="Texture2D" uid="uid://b3lfl34qlp7d6" path="res://src/entities/ingredients/assets/disabled/ingredient_disabled_025.png" id="2_3iiah"]
+[ext_resource type="Texture2D" uid="uid://c0q6oyagxwtu7" path="res://src/entities/ingredients/assets/hover/ingredient_hover_025.png" id="3_rs62q"]
+[ext_resource type="Script" path="res://src/potion_brewing/resources/ingredient_data.gd" id="4_o3uva"]
+
+[resource]
+script = ExtResource("4_o3uva")
+name = "Grapes"
+icon = ExtResource("1_802h3")
+icon_hover = ExtResource("3_rs62q")
+icon_disabled = ExtResource("2_3iiah")

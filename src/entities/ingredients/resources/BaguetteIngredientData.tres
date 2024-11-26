@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="IngredientData" load_steps=5 format=3 uid="uid://bpwyqpp70baxf"]
+
+[ext_resource type="Texture2D" uid="uid://bdr7rcxddbl7k" path="res://src/entities/ingredients/assets/normal/ingredient_029.png" id="1_upy83"]
+[ext_resource type="Texture2D" uid="uid://be6mdplp381qa" path="res://src/entities/ingredients/assets/disabled/ingredient_disabled_029.png" id="2_8gecx"]
+[ext_resource type="Texture2D" uid="uid://dv0r3kf2vwrf5" path="res://src/entities/ingredients/assets/hover/ingredient_hover_029.png" id="3_mqus0"]
+[ext_resource type="Script" path="res://src/potion_brewing/resources/ingredient_data.gd" id="4_0yitj"]
+
+[resource]
+script = ExtResource("4_0yitj")
+name = "Baguette"
+icon = ExtResource("1_upy83")
+icon_hover = ExtResource("3_mqus0")
+icon_disabled = ExtResource("2_8gecx")

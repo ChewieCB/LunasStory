@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="IngredientData" load_steps=5 format=3 uid="uid://cyt4462gcwtc1"]
+
+[ext_resource type="Texture2D" uid="uid://dhq1oifc5qnnp" path="res://src/entities/ingredients/assets/normal/ingredient_030.png" id="1_frsky"]
+[ext_resource type="Texture2D" uid="uid://c3jrgf21kc7pm" path="res://src/entities/ingredients/assets/disabled/ingredient_disabled_030.png" id="2_prc15"]
+[ext_resource type="Texture2D" uid="uid://brnrfpx6dryad" path="res://src/entities/ingredients/assets/hover/ingredient_hover_030.png" id="3_kvbkv"]
+[ext_resource type="Script" path="res://src/potion_brewing/resources/ingredient_data.gd" id="4_uvjhq"]
+
+[resource]
+script = ExtResource("4_uvjhq")
+name = "Lime"
+icon = ExtResource("1_frsky")
+icon_hover = ExtResource("3_kvbkv")
+icon_disabled = ExtResource("2_prc15")

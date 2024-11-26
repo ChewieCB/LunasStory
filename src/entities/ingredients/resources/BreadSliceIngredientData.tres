@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="IngredientData" load_steps=5 format=3 uid="uid://bdxxjmerw4ndg"]
+
+[ext_resource type="Texture2D" uid="uid://c3q3q01w3hevl" path="res://src/entities/ingredients/assets/normal/ingredient_009.png" id="1_u2e1p"]
+[ext_resource type="Texture2D" uid="uid://5lcf5olfytik" path="res://src/entities/ingredients/assets/disabled/ingredient_disabled_009.png" id="2_6odbf"]
+[ext_resource type="Texture2D" uid="uid://bgo6n43iajp18" path="res://src/entities/ingredients/assets/hover/ingredient_hover_009.png" id="3_ckket"]
+[ext_resource type="Script" path="res://src/potion_brewing/resources/ingredient_data.gd" id="4_xacog"]
+
+[resource]
+script = ExtResource("4_xacog")
+name = "Bread Slice"
+icon = ExtResource("1_u2e1p")
+icon_hover = ExtResource("3_ckket")
+icon_disabled = ExtResource("2_6odbf")

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="IngredientData" load_steps=5 format=3 uid="uid://b6stlocq5s0yk"]
+[gd_resource type="Resource" script_class="IngredientData" load_steps=5 format=3 uid="uid://c2h0s7pevhh60"]
 
 [ext_resource type="Texture2D" uid="uid://bqjkweoj4ssp2" path="res://src/entities/ingredients/assets/normal/ingredient_006.png" id="1_dlh5u"]
 [ext_resource type="Texture2D" uid="uid://q7isk40fb1di" path="res://src/entities/ingredients/assets/disabled/ingredient_disabled_006.png" id="1_hwivv"]

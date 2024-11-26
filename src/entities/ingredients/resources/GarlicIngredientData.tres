@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="IngredientData" load_steps=5 format=3 uid="uid://doa67nd6dghfo"]
+
+[ext_resource type="Texture2D" uid="uid://dwp75w6xrrq7s" path="res://src/entities/ingredients/assets/normal/ingredient_031.png" id="1_if11w"]
+[ext_resource type="Texture2D" uid="uid://cta8ipekn1mbo" path="res://src/entities/ingredients/assets/disabled/ingredient_disabled_031.png" id="2_f01m1"]
+[ext_resource type="Texture2D" uid="uid://bjlvmo78ji434" path="res://src/entities/ingredients/assets/hover/ingredient_hover_031.png" id="3_wnj5g"]
+[ext_resource type="Script" path="res://src/potion_brewing/resources/ingredient_data.gd" id="4_ka41f"]
+
+[resource]
+script = ExtResource("4_ka41f")
+name = "Garlic"
+icon = ExtResource("1_if11w")
+icon_hover = ExtResource("3_wnj5g")
+icon_disabled = ExtResource("2_f01m1")

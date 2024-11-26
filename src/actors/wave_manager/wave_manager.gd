@@ -5,6 +5,7 @@ class_name WaveManager
 @export var portal_parent: Node2D
 @export var portal_scene: PackedScene
 @export var ingredient_spawner: IngredientSpawner
+@export var brewing_manager: BrewingManager
 var active_portals: Array = []
 var active_enemies: Array = []
 var current_wave: Wave
@@ -14,6 +15,7 @@ var last_portal_spawn: Marker2D
 
 func _ready() -> void:
 	valid_portal_spawns = portal_parent.get_children()
+	brewing_manager.recipe_completed.connect(_on_recipe_completed)
 	if waves:
 		start_wave()
 
@@ -31,15 +33,17 @@ func start_wave(wave: Wave = next_wave()) -> void:
 		#get_parent().state_debugger.debug_node(active_portals.front().state_chart)
 		await get_tree().create_timer(1.5).timeout
 		activate_portals(active_portals)
+		ingredient_spawner.set_active_ingredients()
 		ingredient_spawner.start_spawning()
 		
 		current_wave = wave
 
 
-func end_wave(wave: Wave) -> void:
+func end_wave(wave: Wave = current_wave) -> void:
 	clear_portals(active_portals)
 	current_wave = null
 	ingredient_spawner.stop_spawning()
+	#ingredient_spawner.clear_all_ingredients()
 	
 	await get_tree().create_timer(1.5).timeout
 	start_wave()
@@ -130,5 +134,9 @@ func _on_enemy_spawned(enemy: AIAgent, _portal: PortalSpawner) -> void:
 
 func _remove_enemy(enemy: AIAgent) -> void:
 	active_enemies.erase(enemy)
-	if active_enemies == []:
-		end_wave(current_wave)
+	#if active_enemies == []:
+		#end_wave(current_wave)
+
+
+func _on_recipe_completed(_recipe: PotionRecipe) -> void:
+	end_wave()

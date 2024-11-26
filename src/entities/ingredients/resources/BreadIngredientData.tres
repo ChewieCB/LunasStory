@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="IngredientData" load_steps=5 format=3 uid="uid://d2ow7qv2dxglj"]
+
+[ext_resource type="Texture2D" uid="uid://de07xd4h5nf36" path="res://src/entities/ingredients/assets/normal/ingredient_004.png" id="1_qynuf"]
+[ext_resource type="Texture2D" uid="uid://hu4uloaib3ty" path="res://src/entities/ingredients/assets/disabled/ingredient_disabled_004.png" id="2_sxwb8"]
+[ext_resource type="Texture2D" uid="uid://mi5vwlc4ne72" path="res://src/entities/ingredients/assets/hover/ingredient_hover_004.png" id="3_gdmsw"]
+[ext_resource type="Script" path="res://src/potion_brewing/resources/ingredient_data.gd" id="4_vay5p"]
+
+[resource]
+script = ExtResource("4_vay5p")
+name = "Bread"
+icon = ExtResource("1_qynuf")
+icon_hover = ExtResource("3_gdmsw")
+icon_disabled = ExtResource("2_sxwb8")

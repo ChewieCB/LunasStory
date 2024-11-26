@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="IngredientData" load_steps=5 format=3 uid="uid://c8gngxxw07id3"]
+
+[ext_resource type="Texture2D" uid="uid://3h5irvmqofur" path="res://src/entities/ingredients/assets/normal/ingredient_033.png" id="1_olwhh"]
+[ext_resource type="Texture2D" uid="uid://cufsh2p8tfg4" path="res://src/entities/ingredients/assets/disabled/ingredient_disabled_033.png" id="2_kjj8t"]
+[ext_resource type="Texture2D" uid="uid://dkh7tl43trfi7" path="res://src/entities/ingredients/assets/hover/ingredient_hover_033.png" id="3_ukd5q"]
+[ext_resource type="Script" path="res://src/potion_brewing/resources/ingredient_data.gd" id="4_esxkl"]
+
+[resource]
+script = ExtResource("4_esxkl")
+name = "Burger Patty"
+icon = ExtResource("1_olwhh")
+icon_hover = ExtResource("3_ukd5q")
+icon_disabled = ExtResource("2_kjj8t")

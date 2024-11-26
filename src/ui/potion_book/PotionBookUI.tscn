@@ -1,9 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://dm0gejh2fcolw"]
+[gd_scene load_steps=7 format=3 uid="uid://dm0gejh2fcolw"]
 
 [ext_resource type="Texture2D" uid="uid://vjh5jgifvcqg" path="res://src/ui/potion_book/book_ui.png" id="1_4hfqo"]
 [ext_resource type="Script" path="res://src/ui/potion_book/potion_book_ui.gd" id="1_xrwxj"]
 [ext_resource type="PackedScene" uid="uid://wikcwj3r3l11" path="res://src/ui/potion_book/IngredientUI.tscn" id="2_w34hi"]
-[ext_resource type="Texture2D" uid="uid://f7iqrgglxrh2" path="res://src/ui/potion_book/potion_null.png" id="4_hdrf3"]
 
 [sub_resource type="Animation" id="Animation_5r8yq"]
 length = 0.001
@@ -104,15 +103,6 @@ size_flags_horizontal = 3
 size_flags_vertical = 0
 theme_override_constants/separation = -4
 
-[node name="IngredientUI" parent="MarginContainer/TextureRect/MarginContainer/HBoxContainer/MarginContainer2/IngredientContainer" instance=ExtResource("2_w34hi")]
-layout_mode = 2
-
-[node name="IngredientUI2" parent="MarginContainer/TextureRect/MarginContainer/HBoxContainer/MarginContainer2/IngredientContainer" instance=ExtResource("2_w34hi")]
-layout_mode = 2
-
-[node name="IngredientUI3" parent="MarginContainer/TextureRect/MarginContainer/HBoxContainer/MarginContainer2/IngredientContainer" instance=ExtResource("2_w34hi")]
-layout_mode = 2
-
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/TextureRect/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 6
@@ -123,7 +113,6 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 mouse_filter = 0
-texture = ExtResource("4_hdrf3")
 expand_mode = 3
 stretch_mode = 3
 
