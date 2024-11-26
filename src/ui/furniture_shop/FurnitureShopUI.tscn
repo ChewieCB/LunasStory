@@ -1,0 +1,40 @@
+[gd_scene load_steps=4 format=3 uid="uid://dpp7ee7wmjjw5"]
+
+[ext_resource type="PackedScene" uid="uid://s21dn7ti8wy6" path="res://src/ui/furniture_shop/FurnitureButtonUI.tscn" id="1_52dhf"]
+[ext_resource type="Resource" uid="uid://okxj7q0mg4hn" path="res://src/entities/furniture/resources/SingleBookcaseData.tres" id="2_6wttm"]
+[ext_resource type="Resource" uid="uid://dfvhj8rvi2usq" path="res://src/entities/furniture/resources/DoubleBookcaseData.tres" id="3_82hmv"]
+
+[node name="FurnitureShopUI" type="Control"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 48
+
+[node name="FurnitureButtonUI" parent="MarginContainer/HBoxContainer" instance=ExtResource("1_52dhf")]
+layout_mode = 2
+data = ExtResource("2_6wttm")
+
+[node name="FurnitureButtonUI2" parent="MarginContainer/HBoxContainer" instance=ExtResource("1_52dhf")]
+layout_mode = 2
+data = ExtResource("3_82hmv")

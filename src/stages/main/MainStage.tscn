@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=4 uid="uid://b5vhj0fhn8xuq"]
+[gd_scene load_steps=26 format=4 uid="uid://b5vhj0fhn8xuq"]
 
 [ext_resource type="Script" path="res://src/stages/main/main_stage.gd" id="1_a8pxn"]
 [ext_resource type="PackedScene" uid="uid://cma5x6jxj78qw" path="res://src/environment/tilemap/VoidTiles.tscn" id="1_gwaru"]
@@ -19,6 +19,7 @@
 [ext_resource type="PackedScene" uid="uid://dm0gejh2fcolw" path="res://src/ui/potion_book/PotionBookUI.tscn" id="12_8ltgd"]
 [ext_resource type="PackedScene" uid="uid://ww8bgg1u8m71" path="res://src/ui/game_over/GameOverUI.tscn" id="12_vinen"]
 [ext_resource type="Script" path="res://src/stages/main/active_ingredients_ui.gd" id="17_4vnnt"]
+[ext_resource type="PackedScene" uid="uid://dpp7ee7wmjjw5" path="res://src/ui/furniture_shop/FurnitureShopUI.tscn" id="18_354q1"]
 [ext_resource type="PackedScene" uid="uid://mki2vu2uiv40" path="res://src/entities/ingredient_spawner/IngredientSpawner.tscn" id="19_rxf6j"]
 
 [sub_resource type="Resource" id="Resource_k756b"]
@@ -174,6 +175,11 @@ offset_bottom = 40.0
 [node name="HBoxContainer" type="HBoxContainer" parent="UI/MainUI/ActiveIngredientsUI/MarginContainer"]
 layout_mode = 2
 theme_override_constants/separation = -4
+
+[node name="FurnitureShopUI" parent="UI/MainUI" instance=ExtResource("18_354q1")]
+layout_mode = 1
+offset_top = 136.0
+offset_bottom = 136.0
 
 [node name="GameOverUI" parent="UI" node_paths=PackedStringArray("health_component") instance=ExtResource("12_vinen")]
 health_component = NodePath("../../Cauldron/HealthComponent")

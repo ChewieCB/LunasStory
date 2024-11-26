@@ -1,0 +1,68 @@
+[gd_scene load_steps=4 format=3 uid="uid://s21dn7ti8wy6"]
+
+[ext_resource type="Script" path="res://src/ui/furniture_shop/furniture_button_ui.gd" id="1_0wbbc"]
+[ext_resource type="Texture2D" uid="uid://bi72f376enu4p" path="res://src/ui/ui_box_1.png" id="1_rubek"]
+[ext_resource type="Texture2D" uid="uid://c8y0cjjrknr58" path="res://src/entities/furniture/assets/normal/furniture_16x16_35.png" id="2_tewin"]
+
+[node name="FurnitureButtonUI" type="MarginContainer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 2
+size_flags_vertical = 3
+mouse_filter = 2
+script = ExtResource("1_0wbbc")
+
+[node name="ButtonFrame" type="TextureRect" parent="."]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+mouse_filter = 2
+texture = ExtResource("1_rubek")
+expand_mode = 3
+stretch_mode = 3
+
+[node name="ButtonArea" type="Button" parent="ButtonFrame"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -24.0
+offset_top = -24.0
+offset_right = 24.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_default_cursor_shape = 2
+flat = true
+
+[node name="FurnitureIcon" type="TextureRect" parent="ButtonFrame"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_tewin")
+expand_mode = 3
+stretch_mode = 3
+
+[connection signal="mouse_entered" from="ButtonFrame/ButtonArea" to="." method="_on_button_area_mouse_entered"]
+[connection signal="mouse_exited" from="ButtonFrame/ButtonArea" to="." method="_on_button_area_mouse_exited"]
+[connection signal="pressed" from="ButtonFrame/ButtonArea" to="." method="_on_button_area_pressed"]

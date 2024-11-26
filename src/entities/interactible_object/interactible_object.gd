@@ -12,7 +12,7 @@ signal object_removed(object: InteractibleObject)
 @export var follow_component: FollowComponent
 @export var follow_target: Node2D
 
-@export var data: IngredientData
+@export var data: Data
 
 @onready var sprite := $Sprite2D
 
