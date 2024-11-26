@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=4 uid="uid://b5vhj0fhn8xuq"]
+[gd_scene load_steps=27 format=4 uid="uid://b5vhj0fhn8xuq"]
 
 [ext_resource type="Script" path="res://src/stages/main/main_stage.gd" id="1_a8pxn"]
 [ext_resource type="PackedScene" uid="uid://cma5x6jxj78qw" path="res://src/environment/tilemap/VoidTiles.tscn" id="1_gwaru"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" path="res://src/actors/wave_manager/enemy_spawn_resource.gd" id="4_imdxk"]
 [ext_resource type="PackedScene" uid="uid://clhm87crkcsl6" path="res://src/actors/enemies/base_enemy/BaseEnemy.tscn" id="5_jo4kr"]
 [ext_resource type="PackedScene" uid="uid://bwhulkm5ypjw2" path="res://src/entities/furniture/FurnitureBig.tscn" id="5_r4y4v"]
+[ext_resource type="PackedScene" uid="uid://co0s8tv0s52ls" path="res://src/entities/furniture/FurnitureSpawner.tscn" id="7_2vhb3"]
 [ext_resource type="PackedScene" uid="uid://cw1kellptc2ke" path="res://src/potion_brewing/BrewingManager.tscn" id="7_flksp"]
 [ext_resource type="PackedScene" uid="uid://bux1j4jbk8st2" path="res://src/entities/ingredients/Ingredient.tscn" id="8_awlm4"]
 [ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="8_f135c"]
@@ -87,10 +88,18 @@ follow_component_tilemap = NodePath("../StructureTiles")
 follow_target = NodePath("../HandCursor")
 
 [node name="IngredientSpawner" parent="." node_paths=PackedStringArray("tilemap", "hand_cursor") instance=ExtResource("19_rxf6j")]
+max_spawned = 8
 tilemap = NodePath("../StructureTiles")
 hand_cursor = NodePath("../HandCursor")
-ingredient_scene = ExtResource("8_awlm4")
-max_spawned = 8
+entity_scene = ExtResource("8_awlm4")
+entity_resources_path = "res://src/entities/ingredients/resources/"
+
+[node name="FurnitureSpawner" parent="." node_paths=PackedStringArray("furniture_shop_ui", "tilemap", "hand_cursor") instance=ExtResource("7_2vhb3")]
+furniture_shop_ui = NodePath("../UI/MainUI/FurnitureShopUI")
+tilemap = NodePath("../StructureTiles")
+hand_cursor = NodePath("../HandCursor")
+entity_scene = ExtResource("5_r4y4v")
+entity_resources_path = "res://src/entities/furniture/resources/"
 
 [node name="WaveManager" parent="." node_paths=PackedStringArray("portal_parent", "ingredient_spawner", "brewing_manager") instance=ExtResource("2_jugkp")]
 waves = Array[ExtResource("3_r4ehp")]([SubResource("Resource_7ysdy"), SubResource("Resource_pdnk6")])

@@ -49,7 +49,8 @@ func create_obstacle(collision_shape: Shape2D = obstacle_collider.shape) -> void
 
 
 func remove_previous_obstacle() -> void:
-	_remove_obstacle(previous_obstacle)
+	if previous_obstacle:
+		_remove_obstacle(previous_obstacle)
 
 
 func _remove_obstacle(obstacle: NavigationObstacle2D) -> void:

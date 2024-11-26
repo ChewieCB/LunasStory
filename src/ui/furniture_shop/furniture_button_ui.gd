@@ -1,6 +1,8 @@
 extends MarginContainer
 class_name FurnitureButtonUI
 
+signal purchased(data: FurnitureData)
+
 @export var data: FurnitureData
 
 @onready var icon_rect: TextureRect = $ButtonFrame/FurnitureIcon
@@ -19,5 +21,5 @@ func _on_button_area_mouse_exited() -> void:
 
 
 func _on_button_area_pressed() -> void:
+	emit_signal("purchased", data)
 	# TODO - check currency, remove currency, spawn furniture object
-	pass

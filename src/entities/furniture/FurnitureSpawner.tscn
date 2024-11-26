@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://co0s8tv0s52ls"]
+
+[ext_resource type="Script" path="res://src/entities/furniture/furniture_spawner.gd" id="1_pdxyw"]
+
+[node name="FurnitureSpawner" type="Node2D"]
+script = ExtResource("1_pdxyw")

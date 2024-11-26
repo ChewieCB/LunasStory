@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://6txhd08un0lx" path="res://src/entities/furniture/assets/normal/furniture_32x32_2.png" id="1_mf81t"]
 [ext_resource type="Texture2D" uid="uid://dgty0yluvxwqy" path="res://src/entities/furniture/assets/hover/furniture_32x32_highlight_2.png" id="2_8buic"]
-[ext_resource type="Script" path="res://src/entities/furniture/resources/furniture_data_resource.gd" id="3_sropd"]
+[ext_resource type="Script" path="res://src/entities/furniture/furniture_data_resource.gd" id="3_sropd"]
 
 [resource]
 script = ExtResource("3_sropd")
