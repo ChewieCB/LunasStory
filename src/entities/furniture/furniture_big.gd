@@ -11,20 +11,14 @@ class_name FurnitureBig
 		follow_component_tilemap = value
 		follow_component.tilemap = follow_component_tilemap
 
-var sprite_size: Vector2
 var sprite_offset: Vector2
 var sprite_tiles: Array[Vector2]
 
 
 func _ready() -> void:
 	super()
-	sprite_size = Vector2(
-		sprite.texture.get_width(),
-		sprite.texture.get_height()
-	)
-	sprite_offset = sprite_size / 2
-	
 	add_to_group("furniture_big")
+	sprite_offset = data.sprite_offset
 	sprite_tiles = get_tiles_for_sprite(follow_component_tilemap)
 	follow_component.valid_placement_location.connect(_hide_invalid_placement)
 	follow_component.invalid_placement_location.connect(_show_invalid_placement)
@@ -41,8 +35,8 @@ func _ready() -> void:
 
 func get_tiles_for_sprite(tilemap: TileMapLayer) -> Array[Vector2]:
 		var tile_size: Vector2 = follow_component_tilemap.tile_set.tile_size
-		var x_tiles_per_sprite: int = sprite_size.x / tile_size.x
-		var y_tiles_per_sprite: int = sprite_size.y / tile_size.y
+		var x_tiles_per_sprite: int = data.sprite_size.x / tile_size.x
+		var y_tiles_per_sprite: int = data.sprite_size.y / tile_size.y
 		
 		var tiles: Array[Vector2] = []
 		for x_tile in range(x_tiles_per_sprite):

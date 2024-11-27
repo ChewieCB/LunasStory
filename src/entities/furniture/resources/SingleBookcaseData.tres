@@ -7,6 +7,8 @@
 [resource]
 script = ExtResource("3_sropd")
 cost = 0
+sprite_size = Vector2(16, 32)
+sprite_offset = Vector2(8, 16)
 name = "Single Bookcase"
 icon = ExtResource("1_mf81t")
 icon_hover = ExtResource("2_8buic")
