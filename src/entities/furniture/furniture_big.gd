@@ -25,12 +25,17 @@ func _ready() -> void:
 	follow_component.was_disabled.connect(_hide_invalid_placement)
 
 
-#func _draw() -> void:
-	#draw_rect(cell_rect_DEBUG, cell_rect_color_DEBUG)
+func _draw() -> void:
+	for tile in follow_component.invalid_tiles:
+		var tile_local = tile - self.global_position
+		draw_rect(
+			Rect2(tile_local, follow_component.tilemap.tile_set.tile_size), 
+			Color.RED,
+		)
 
 
-#func _process(delta: float) -> void:
-	#queue_redraw()
+func _process(_delta: float) -> void:
+	queue_redraw()
 
 
 func get_tiles_for_sprite(tilemap: TileMapLayer) -> Array[Vector2]:

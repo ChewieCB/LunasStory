@@ -5,6 +5,8 @@ signal valid_placement_location
 signal invalid_placement_location
 
 @onready var entity: Node2D = get_parent()
+@onready var area_2d: Area2D = $Area2D
+@onready var collider: CollisionShape2D = $Area2D/CollisionShape2D
 
 @export var target: Node2D
 var follow_global_position: Vector2:
@@ -68,13 +70,13 @@ func get_nearest_valid_placement_cell(cell_coords: Vector2, _invalid_tiles: Arra
 	)
 	
 	for cell in closest_valid_cells:
-		if not _get_invalid_placment_tiles(cell):
+		if not _get_invalid_placement_tiles(cell):
 			return cell
 	
 	return cell_coords
 
 
-func _get_invalid_placment_tiles(cell_coords: Vector2) -> Array[Vector2]:
+func _get_invalid_placement_tiles(cell_coords: Vector2) -> Array[Vector2]:
 	var tile_size: Vector2 = tilemap.tile_set.tile_size
 	var tiles_to_check: Array[Vector2] = entity.sprite_tiles
 	var _invalid_tiles: Array[Vector2] = []
@@ -91,6 +93,16 @@ func _get_invalid_placment_tiles(cell_coords: Vector2) -> Array[Vector2]:
 		if cell_type != 1:
 			_invalid_tiles.append(cell_pos)
 			continue
+		# Get placed object locations and map to tiles
+		if area_2d.has_overlapping_areas():
+			for area in area_2d.get_overlapping_areas():
+				var obstacle = area.owner
+				if obstacle is FurnitureBig:
+					if obstacle == entity:
+						continue
+					for object_tile in obstacle.sprite_tiles:
+						var tile_offset = obstacle.global_position + object_tile - obstacle.sprite_offset
+						_invalid_tiles.append(tile_offset)
 	return _invalid_tiles
 
 
@@ -107,7 +119,7 @@ func _move_entity_within_grid(global_pos: Vector2) -> void:
 	var cell_global_pos_offset: Vector2 = _get_cell_global_position_offset(cell_coords)
 	
 	# Only allow placement on valid floor cells
-	invalid_tiles = _get_invalid_placment_tiles(cell_coords)
+	invalid_tiles = _get_invalid_placement_tiles(cell_coords)
 	
 	entity.global_position = cell_global_pos_offset + entity.sprite_offset
 
@@ -133,3 +145,23 @@ func _on_disabled() -> void:
 		var cell_coords: Vector2 = _get_cell_coords(self.global_position)
 		var global_pos_tile_offset: Vector2 = _get_cell_global_position_offset(cell_coords, true)
 		entity.global_position = global_pos_tile_offset + entity.sprite_offset
+
+
+func _on_area_2d_area_entered(area: Area2D) -> void:
+	if is_instance_valid(area.owner):
+		print_rich(
+			"FOLLOW COLLIDER: %s.%s [color=green]entered[/color] %s.%s area" % [
+				area.owner.name, area.get_parent().name, 
+				get_parent().name, self.name
+			]
+		)
+
+
+func _on_area_2d_area_exited(area: Area2D) -> void:
+	if is_instance_valid(area.owner):
+		print_rich(
+			"FOLLOW COLLIDER: %s.%s [color=red]exited[/color] %s.%s area" % [
+				area.owner.name, area.get_parent().name, 
+				get_parent().name, self.name
+			]
+		)

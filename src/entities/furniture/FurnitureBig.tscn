@@ -13,7 +13,7 @@
 radius = 22.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_upswy"]
-size = Vector2(32, 32)
+size = Vector2(28, 28)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_eawpa"]
 size = Vector2(32, 32)
@@ -35,7 +35,7 @@ sprite = NodePath("../Sprite2D")
 area_2d = NodePath("Area2D")
 
 [node name="Area2D" type="Area2D" parent="SelectableComponent"]
-collision_layer = 21
+collision_layer = 16
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SelectableComponent/Area2D"]
@@ -43,6 +43,13 @@ shape = SubResource("CircleShape2D_xexl2")
 
 [node name="FollowComponent" parent="." instance=ExtResource("4_6wpy1")]
 lock_to_grid = true
+
+[node name="Area2D" type="Area2D" parent="FollowComponent"]
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FollowComponent/Area2D"]
+shape = SubResource("RectangleShape2D_upswy")
 
 [node name="HitboxComponent" parent="." instance=ExtResource("5_kbkav")]
 
@@ -54,7 +61,7 @@ collision_mask = 12
 shape = SubResource("RectangleShape2D_upswy")
 
 [node name="GrabbableComponent" parent="." node_paths=PackedStringArray("selectable_component", "collider") instance=ExtResource("3_y2bme")]
-collision_layer = 20
+collision_layer = 16
 collision_mask = 2
 selectable_component = NodePath("../SelectableComponent")
 collider = NodePath("CollisionShape2D")
@@ -65,4 +72,7 @@ shape = SubResource("RectangleShape2D_eawpa")
 [node name="ParticlesComponent" parent="." instance=ExtResource("6_tuxp4")]
 
 [node name="DynamicNavObstacleComponent" parent="." node_paths=PackedStringArray("obstacle_collider") instance=ExtResource("9_b12nm")]
-obstacle_collider = NodePath("../HitboxComponent/Area2D/CollisionShape2D")
+obstacle_collider = NodePath("../FollowComponent/Area2D/CollisionShape2D")
+
+[connection signal="area_entered" from="FollowComponent/Area2D" to="FollowComponent" method="_on_area_2d_area_entered"]
+[connection signal="area_exited" from="FollowComponent/Area2D" to="FollowComponent" method="_on_area_2d_area_exited"]

@@ -195,6 +195,8 @@ terrain_set_0/terrain_0/color = Color(0.929412, 0.490196, 0.968627, 1)
 terrain_set_0/terrain_1/name = "Floor"
 terrain_set_0/terrain_1/color = Color(0, 0.535939, 0.16498, 1)
 navigation_layer_0/layers = 1
+custom_data_layer_0/name = "Blocked"
+custom_data_layer_0/type = 1
 sources/0 = SubResource("TileSetAtlasSource_lbabp")
 
 [node name="StructureTiles" type="TileMapLayer"]
