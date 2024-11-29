@@ -8,6 +8,7 @@ signal invalid_placement_location
 
 var collision_check_area: RID
 var collision_check_shape: RID
+var collision_check_debug: RID
 var blocked_tiles: Array[Vector2] = []
 
 @export var target: Node2D
@@ -56,13 +57,22 @@ func _setup_collision_check_area() -> void:
 	# TODO - do we need a teardown for this physics server area when the object is freed?
 	collision_check_area = PhysicsServer2D.area_create()
 	collision_check_shape = PhysicsServer2D.rectangle_shape_create()
-	PhysicsServer2D.shape_set_data(collision_check_shape, (entity.data.sprite_size - Vector2(2, 2))/ 2)
+	PhysicsServer2D.shape_set_data(collision_check_shape, tilemap.tile_set.tile_size)
 	PhysicsServer2D.area_add_shape(collision_check_area, collision_check_shape)
 	PhysicsServer2D.area_set_collision_layer(collision_check_area, pow(2, 0-1))
 	PhysicsServer2D.area_set_collision_mask(collision_check_area, pow(2, 3-1))
 	PhysicsServer2D.area_set_monitorable(collision_check_area, false)
 	PhysicsServer2D.area_set_area_monitor_callback(collision_check_area, _placement_collision_callback)
 	PhysicsServer2D.area_set_space(collision_check_area, entity.get_world_2d().space)
+	#
+	collision_check_debug = RenderingServer.canvas_item_create()
+	RenderingServer.canvas_item_set_parent(collision_check_debug, entity.get_canvas_item())
+	RenderingServer.canvas_item_add_rect(
+		collision_check_debug, 
+		Rect2(Vector2.ZERO, tilemap.tile_set.tile_size),
+		Color(Color.PURPLE, 0.6),
+	)
+	RenderingServer.canvas_item_set_transform(collision_check_debug, Transform2D())
 
 
 func _physics_process(_delta: float) -> void:
@@ -113,10 +123,9 @@ func _get_invalid_placement_tiles(cell_coords: Vector2) -> Array[Vector2]:
 			_invalid_tiles.append(cell_pos)
 			continue
 		# Get placed object locations and map to tiles
-		# TODO - move this to a dynamically allocated area check using 
-		#  PhysicsServer2D
-		var cell_local_pos = tilemap.map_to_local(cell_pos)
+		var cell_local_pos = tile - entity.sprite_offset
 		PhysicsServer2D.area_set_transform(collision_check_area, Transform2D(0, cell_local_pos))
+		RenderingServer.canvas_item_set_transform(collision_check_debug, Transform2D(0, cell_local_pos))
 		
 		for blocked_tile in blocked_tiles:
 			_invalid_tiles.append(blocked_tile)
@@ -178,7 +187,7 @@ func _on_disabled() -> void:
 func _placement_collision_callback(status: int, area_rid: RID, instance_id: int, area_shape_idx: int, self_shape_idx: int) -> void:
 	var collision_area = instance_from_id(instance_id)
 	var object = collision_area.owner
-	if object is FurnitureBig and not object == entity:
+	if object is FurnitureBig and object != entity:
 		var tiles = object.sprite_tiles
 		match status:
 			PhysicsServer2D.AreaBodyStatus.AREA_BODY_ADDED:

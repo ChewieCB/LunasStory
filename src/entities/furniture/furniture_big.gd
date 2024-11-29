@@ -27,13 +27,13 @@ func _ready() -> void:
 
 func _draw() -> void:
 	for tile in follow_component.invalid_tiles:
-		var tile_local = follow_component._get_local_pos_from_cell(tile) - position
+		var tile_local = tile - sprite_offset
 		draw_rect(
 			Rect2(tile_local, follow_component.tilemap.tile_set.tile_size), 
 			Color.RED,
 		)
 	for tile in follow_component.blocked_tiles:
-		var tile_local = follow_component._get_global_pos_from_cell(tile)
+		var tile_local = tile + sprite_offset
 		draw_rect(
 			Rect2(tile_local, follow_component.tilemap.tile_set.tile_size), 
 			Color.ORANGE,
