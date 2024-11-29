@@ -14,6 +14,7 @@
 
 [sub_resource type="Resource" id="Resource_dr7ri"]
 script = ExtResource("5_pod1u")
+sprite_size = Vector2(8, 8)
 name = "Cauldron"
 icon = ExtResource("1_x47gi")
 icon_hover = ExtResource("4_mfxhh")

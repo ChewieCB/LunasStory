@@ -10,6 +10,8 @@ var default_map_rid: RID
 
 
 func _ready() -> void:
+	if not obstacle_collider:
+		return disable()
 	default_map_rid = entity.get_world_2d().get_navigation_map()
 	await NavigationServer2D.map_changed
 	_get_current_nav_region()

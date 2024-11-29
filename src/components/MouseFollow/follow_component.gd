@@ -5,8 +5,10 @@ signal valid_placement_location
 signal invalid_placement_location
 
 @onready var entity: Node2D = get_parent()
-@onready var area_2d: Area2D = $Area2D
-@onready var collider: CollisionShape2D = $Area2D/CollisionShape2D
+
+var collision_check_area: RID
+var collision_check_shape: RID
+var blocked_tiles: Array[Vector2] = []
 
 @export var target: Node2D
 var follow_global_position: Vector2:
@@ -41,10 +43,26 @@ var invalid_tiles: Array[Vector2]:
 
 
 func _ready():
+	_setup_collision_check_area()
+	
 	if lock_to_grid:
 		_move_entity_within_grid(self.global_position)
+		
 	disable()
 	self.was_disabled.connect(_on_disabled)
+
+
+func _setup_collision_check_area() -> void:
+	# TODO - do we need a teardown for this physics server area when the object is freed?
+	collision_check_area = PhysicsServer2D.area_create()
+	collision_check_shape = PhysicsServer2D.rectangle_shape_create()
+	PhysicsServer2D.shape_set_data(collision_check_shape, (entity.data.sprite_size - Vector2(2, 2))/ 2)
+	PhysicsServer2D.area_add_shape(collision_check_area, collision_check_shape)
+	PhysicsServer2D.area_set_collision_layer(collision_check_area, pow(2, 0-1))
+	PhysicsServer2D.area_set_collision_mask(collision_check_area, pow(2, 3-1))
+	PhysicsServer2D.area_set_monitorable(collision_check_area, false)
+	PhysicsServer2D.area_set_area_monitor_callback(collision_check_area, _placement_collision_callback)
+	PhysicsServer2D.area_set_space(collision_check_area, entity.get_world_2d().space)
 
 
 func _physics_process(_delta: float) -> void:
@@ -81,6 +99,7 @@ func _get_invalid_placement_tiles(cell_coords: Vector2) -> Array[Vector2]:
 	var tiles_to_check: Array[Vector2] = entity.sprite_tiles
 	var _invalid_tiles: Array[Vector2] = []
 	
+	PhysicsServer2D.area_set_monitorable(collision_check_area, true)
 	for tile in tiles_to_check:
 		var cell := Vector2(tile.x / tile_size.x, tile.y / tile_size.y)
 		var cell_pos: Vector2 = cell_coords + cell
@@ -94,15 +113,14 @@ func _get_invalid_placement_tiles(cell_coords: Vector2) -> Array[Vector2]:
 			_invalid_tiles.append(cell_pos)
 			continue
 		# Get placed object locations and map to tiles
-		if area_2d.has_overlapping_areas():
-			for area in area_2d.get_overlapping_areas():
-				var obstacle = area.owner
-				if obstacle is FurnitureBig:
-					if obstacle == entity:
-						continue
-					for object_tile in obstacle.sprite_tiles:
-						var tile_offset = obstacle.global_position + object_tile - obstacle.sprite_offset
-						_invalid_tiles.append(tile_offset)
+		# TODO - move this to a dynamically allocated area check using 
+		#  PhysicsServer2D
+		var cell_local_pos = tilemap.map_to_local(cell_pos)
+		PhysicsServer2D.area_set_transform(collision_check_area, Transform2D(0, cell_local_pos))
+		
+		for blocked_tile in blocked_tiles:
+			_invalid_tiles.append(blocked_tile)
+	PhysicsServer2D.area_set_monitorable(collision_check_area, false)
 	return _invalid_tiles
 
 
@@ -116,10 +134,9 @@ func _move_entity_within_grid(global_pos: Vector2) -> void:
 		return
 	
 	var cell_coords: Vector2 = _get_cell_coords(global_pos)
-	var cell_global_pos_offset: Vector2 = _get_cell_global_position_offset(cell_coords)
-	
 	# Only allow placement on valid floor cells
 	invalid_tiles = _get_invalid_placement_tiles(cell_coords)
+	var cell_global_pos_offset: Vector2 = _get_cell_global_position_offset(cell_coords)
 	
 	entity.global_position = cell_global_pos_offset + entity.sprite_offset
 
@@ -140,6 +157,17 @@ func _get_cell_coords(global_pos: Vector2) -> Vector2:
 	return tilemap.local_to_map(local_pos)
 
 
+func _get_local_pos_from_cell(cell_coords: Vector2) -> Vector2:
+	var local_pos: Vector2 = tilemap.map_to_local(cell_coords)
+	return local_pos
+
+
+func _get_global_pos_from_cell(cell_coords: Vector2) -> Vector2:
+	var local_pos: Vector2 = tilemap.map_to_local(cell_coords)
+	var global_pos = tilemap.to_global(local_pos)
+	return global_pos
+
+
 func _on_disabled() -> void:
 	if invalid_tiles:
 		var cell_coords: Vector2 = _get_cell_coords(self.global_position)
@@ -147,21 +175,21 @@ func _on_disabled() -> void:
 		entity.global_position = global_pos_tile_offset + entity.sprite_offset
 
 
-func _on_area_2d_area_entered(area: Area2D) -> void:
-	if is_instance_valid(area.owner):
-		print_rich(
-			"FOLLOW COLLIDER: %s.%s [color=green]entered[/color] %s.%s area" % [
-				area.owner.name, area.get_parent().name, 
-				get_parent().name, self.name
-			]
-		)
-
-
-func _on_area_2d_area_exited(area: Area2D) -> void:
-	if is_instance_valid(area.owner):
-		print_rich(
-			"FOLLOW COLLIDER: %s.%s [color=red]exited[/color] %s.%s area" % [
-				area.owner.name, area.get_parent().name, 
-				get_parent().name, self.name
-			]
-		)
+func _placement_collision_callback(status: int, area_rid: RID, instance_id: int, area_shape_idx: int, self_shape_idx: int) -> void:
+	var collision_area = instance_from_id(instance_id)
+	var object = collision_area.owner
+	if object is FurnitureBig and not object == entity:
+		var tiles = object.sprite_tiles
+		match status:
+			PhysicsServer2D.AreaBodyStatus.AREA_BODY_ADDED:
+				for tile in tiles:
+					var offset_tile = tile + object.global_position - object.sprite_offset
+					if not blocked_tiles.has(offset_tile):
+						blocked_tiles.append(offset_tile)
+						print("%s (%s) added to blocked tiles" % [offset_tile, object.name])
+			PhysicsServer2D.AreaBodyStatus.AREA_BODY_REMOVED:
+				for tile in tiles:
+					var offset_tile = tile + object.global_position - object.sprite_offset
+					if blocked_tiles.has(offset_tile):
+						blocked_tiles.erase(offset_tile)
+						print("%s (%s) added to blocked tiles" % [offset_tile, object.name])

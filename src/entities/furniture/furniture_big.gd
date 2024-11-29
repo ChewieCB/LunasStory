@@ -27,11 +27,22 @@ func _ready() -> void:
 
 func _draw() -> void:
 	for tile in follow_component.invalid_tiles:
-		var tile_local = tile - self.global_position
+		var tile_local = follow_component._get_local_pos_from_cell(tile) - position
 		draw_rect(
 			Rect2(tile_local, follow_component.tilemap.tile_set.tile_size), 
 			Color.RED,
 		)
+	for tile in follow_component.blocked_tiles:
+		var tile_local = follow_component._get_global_pos_from_cell(tile)
+		draw_rect(
+			Rect2(tile_local, follow_component.tilemap.tile_set.tile_size), 
+			Color.ORANGE,
+		)
+	#if follow_component.debug_collision_check:
+		#draw_rect(
+			#follow_component.debug_collision_check,
+			#Color(Color.DARK_ORANGE, 0.6),
+		#)
 
 
 func _process(_delta: float) -> void:
@@ -69,3 +80,5 @@ func _on_drop(entity: Node2D) -> void:
 	super(entity)
 	if entity == self:
 		dynamic_nav_obstacle.create_obstacle()
+		follow_component.invalid_tiles = []
+		follow_component.blocked_tiles = []

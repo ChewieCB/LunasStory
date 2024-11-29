@@ -196,5 +196,3 @@ grow_vertical = 1
 
 [node name="BrewingManager" parent="." node_paths=PackedStringArray("ingredient_spawner") instance=ExtResource("7_flksp")]
 ingredient_spawner = NodePath("../IngredientSpawner")
-
-[editable path="Cauldron"]
