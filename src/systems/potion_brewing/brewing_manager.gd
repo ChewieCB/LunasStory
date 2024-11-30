@@ -41,7 +41,7 @@ func randomize_recipe() -> PotionRecipe:
 func _create_recipe(requirements: Array) -> PotionRecipe:
 	var new_recipe = PotionRecipe.new()
 	new_recipe.requirements = requirements
-	new_recipe.potion = load("res://src/potion_brewing/resources/DefaultPotion.tres")
+	new_recipe.potion = load("res://src/systems/potion_brewing/resources/DefaultPotion.tres")
 	return new_recipe
 
 

@@ -15,7 +15,10 @@ var current_spawns: Array = []
 var current_spawn_pool: Array = []
 
 
-func set_active_ingredients(max_variety: int = max_ingredient_variety) -> Array:
+func set_active_ingredients(max_variety: int = max_ingredient_variety, override_existing: bool = false) -> Array:
+	if active_ingredient_pool and not override_existing:
+		return active_ingredient_pool
+	
 	var all_ingredients = entities
 	all_ingredients.shuffle()
 	

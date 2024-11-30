@@ -5,8 +5,8 @@ signal purchased(data: FurnitureData)
 
 @export var data: FurnitureData
 
-@onready var button: Button = $VBoxContainer/ButtonFrame/ButtonArea
-@onready var icon_rect: TextureRect = $VBoxContainer/ButtonFrame/FurnitureIcon
+@onready var button: TextureButton = $VBoxContainer/ButtonArea
+@onready var icon_rect: TextureRect = $VBoxContainer/ButtonArea/FurnitureIcon
 @onready var cost_label: Label = $VBoxContainer/MarginContainer/HBoxContainer/Label
 
 
@@ -45,4 +45,3 @@ func _on_button_area_mouse_exited() -> void:
 
 func _on_button_area_pressed() -> void:
 	emit_signal("purchased", data)
-	# TODO - check currency, remove currency, spawn furniture object
