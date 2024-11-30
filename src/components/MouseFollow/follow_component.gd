@@ -63,14 +63,15 @@ func _setup_collision_check_area() -> void:
 	PhysicsServer2D.area_set_area_monitor_callback(collision_check_area, _placement_collision_callback)
 	PhysicsServer2D.area_set_space(collision_check_area, entity.get_world_2d().space)
 	#
-	collision_check_debug = RenderingServer.canvas_item_create()
-	RenderingServer.canvas_item_set_parent(collision_check_debug, entity.get_canvas_item())
-	RenderingServer.canvas_item_add_rect(
-		collision_check_debug, 
-		Rect2(Vector2.ZERO, tilemap.tile_set.tile_size),
-		Color(Color.PURPLE, 0.6),
-	)
-	RenderingServer.canvas_item_set_transform(collision_check_debug, Transform2D())
+	if entity.debug_placement_collider:
+		collision_check_debug = RenderingServer.canvas_item_create()
+		RenderingServer.canvas_item_set_parent(collision_check_debug, entity.get_canvas_item())
+		RenderingServer.canvas_item_add_rect(
+			collision_check_debug, 
+			Rect2(Vector2.ZERO, tilemap.tile_set.tile_size),
+			Color(Color.PURPLE, 0.6),
+		)
+		RenderingServer.canvas_item_set_transform(collision_check_debug, Transform2D())
 
 
 func _physics_process(_delta: float) -> void:
@@ -107,7 +108,7 @@ func _get_invalid_placement_tiles(cell_coords: Vector2) -> Array[Vector2]:
 	var tiles_to_check: Array[Vector2] = entity.sprite_tiles
 	var _invalid_tiles: Array[Vector2] = []
 	
-	PhysicsServer2D.area_set_monitorable(collision_check_area, true)
+	#PhysicsServer2D.area_set_monitorable(collision_check_area, true)
 	for tile in tiles_to_check:
 		var cell := Vector2(tile.x / tile_size.x, tile.y / tile_size.y)
 		var cell_pos: Vector2 = cell_coords + cell
@@ -121,13 +122,14 @@ func _get_invalid_placement_tiles(cell_coords: Vector2) -> Array[Vector2]:
 			_invalid_tiles.append(cell_pos)
 			continue
 		# Get placed object locations and map to tiles
-		var cell_local_pos = tile - entity.sprite_offset
-		PhysicsServer2D.area_set_transform(collision_check_area, Transform2D(0, cell_local_pos))
-		RenderingServer.canvas_item_set_transform(collision_check_debug, Transform2D(0, cell_local_pos))
-		
-		for blocked_tile in blocked_tiles:
-			_invalid_tiles.append(blocked_tile)
-	PhysicsServer2D.area_set_monitorable(collision_check_area, false)
+		#var cell_local_pos = tile - entity.sprite_offset
+		#PhysicsServer2D.area_set_transform(collision_check_area, Transform2D(0, cell_local_pos))
+		#if entity.debug_placement_collider:
+			#RenderingServer.canvas_item_set_transform(collision_check_debug, Transform2D(0, cell_local_pos))
+		#
+		#for blocked_tile in blocked_tiles:
+			#_invalid_tiles.append(blocked_tile)
+	#PhysicsServer2D.area_set_monitorable(collision_check_area, false)
 	return _invalid_tiles
 
 

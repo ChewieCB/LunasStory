@@ -14,6 +14,8 @@ class_name FurnitureBig
 var sprite_offset: Vector2
 var sprite_tiles: Array[Vector2]
 
+@export var debug_placement_collider: bool = false
+
 
 func _ready() -> void:
 	super()
