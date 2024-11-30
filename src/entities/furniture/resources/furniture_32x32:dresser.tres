@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="FurnitureData" load_steps=5 format=3 uid="uid://qxx5e52cxjnc"]
+
+[ext_resource type="Texture2D" uid="uid://dgi3ax3ibhxpf" path="res://src/entities/furniture/assets/normal/furniture_32x32:dresser.png" id="1_jbuoo"]
+[ext_resource type="Texture2D" uid="uid://c0d0gqihcheyb" path="res://src/entities/furniture/assets/disabled/furniture_32x32_disabled:dresser.png" id="2_jq3go"]
+[ext_resource type="Texture2D" uid="uid://bq11wvuwloans" path="res://src/entities/furniture/assets/hover/furniture_32x32_highlight:dresser.png" id="3_2ej5r"]
+[ext_resource type="Script" path="res://src/entities/furniture/furniture_data_resource.gd" id="4_njg7b"]
+
+[resource]
+script = ExtResource("4_njg7b")
+cost = 0
+sprite_size = Vector2(32, 32)
+sprite_offset = Vector2(16, 16)
+name = "Dresser"
+icon = ExtResource("1_jbuoo")
+icon_hover = ExtResource("3_2ej5r")
+icon_disabled = ExtResource("2_jq3go")

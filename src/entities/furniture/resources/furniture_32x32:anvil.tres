@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="FurnitureData" load_steps=5 format=3 uid="uid://ermjbpp1d4c6"]
+
+[ext_resource type="Texture2D" uid="uid://bjqrgidjpnxdp" path="res://src/entities/furniture/assets/normal/furniture_32x32:anvil.png" id="1_vqupu"]
+[ext_resource type="Texture2D" uid="uid://cuf4kdc8kkpvb" path="res://src/entities/furniture/assets/disabled/furniture_32x32_disabled:anvil.png" id="2_n28ds"]
+[ext_resource type="Texture2D" uid="uid://cc4go0fqdrmai" path="res://src/entities/furniture/assets/hover/furniture_32x32_highlight:anvil.png" id="3_tlt31"]
+[ext_resource type="Script" path="res://src/entities/furniture/furniture_data_resource.gd" id="4_ei2l0"]
+
+[resource]
+script = ExtResource("4_ei2l0")
+cost = 0
+sprite_size = Vector2(32, 32)
+sprite_offset = Vector2(16, 16)
+name = "Anvil"
+icon = ExtResource("1_vqupu")
+icon_hover = ExtResource("3_tlt31")
+icon_disabled = ExtResource("2_n28ds")

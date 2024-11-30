@@ -1,9 +1,30 @@
-[gd_scene load_steps=5 format=3 uid="uid://dpp7ee7wmjjw5"]
+[gd_scene load_steps=10 format=3 uid="uid://dpp7ee7wmjjw5"]
 
 [ext_resource type="Script" path="res://src/ui/furniture_shop/furniture_shop_ui.gd" id="1_2eugo"]
 [ext_resource type="PackedScene" uid="uid://s21dn7ti8wy6" path="res://src/ui/furniture_shop/FurnitureButtonUI.tscn" id="1_52dhf"]
-[ext_resource type="Resource" uid="uid://okxj7q0mg4hn" path="res://src/entities/furniture/resources/SingleBookcaseData.tres" id="2_6wttm"]
-[ext_resource type="Resource" uid="uid://dfvhj8rvi2usq" path="res://src/entities/furniture/resources/DoubleBookcaseData.tres" id="3_82hmv"]
+[ext_resource type="Texture2D" path="res://src/entities/furniture/assets/normal/furniture_32x32_2.png" id="3_mjmt5"]
+[ext_resource type="Texture2D" path="res://src/entities/furniture/assets/hover/furniture_32x32_highlight_2.png" id="4_p68cc"]
+[ext_resource type="Script" path="res://src/entities/furniture/furniture_data_resource.gd" id="5_bcafe"]
+[ext_resource type="Texture2D" path="res://src/entities/furniture/assets/normal/furniture_32x32_1.png" id="6_idwv8"]
+[ext_resource type="Texture2D" path="res://src/entities/furniture/assets/hover/furniture_32x32_highlight_1.png" id="7_tx186"]
+
+[sub_resource type="Resource" id="Resource_7k0rx"]
+script = ExtResource("5_bcafe")
+cost = 20
+sprite_size = Vector2(16, 32)
+sprite_offset = Vector2(8, 16)
+name = "Single Bookcase"
+icon = ExtResource("3_mjmt5")
+icon_hover = ExtResource("4_p68cc")
+
+[sub_resource type="Resource" id="Resource_vm7st"]
+script = ExtResource("5_bcafe")
+cost = 50
+sprite_size = Vector2(32, 32)
+sprite_offset = Vector2(16, 16)
+name = "Double Bookcase"
+icon = ExtResource("6_idwv8")
+icon_hover = ExtResource("7_tx186")
 
 [node name="FurnitureShopUI" type="Control"]
 custom_minimum_size = Vector2(128, 64)
@@ -38,11 +59,11 @@ theme_override_constants/separation = -8
 
 [node name="FurnitureButtonUI" parent="MarginContainer/FurnitureButtons" instance=ExtResource("1_52dhf")]
 layout_mode = 2
-data = ExtResource("2_6wttm")
+data = SubResource("Resource_7k0rx")
 
 [node name="FurnitureButtonUI2" parent="MarginContainer/FurnitureButtons" instance=ExtResource("1_52dhf")]
 layout_mode = 2
-data = ExtResource("3_82hmv")
+data = SubResource("Resource_vm7st")
 
 [connection signal="child_entered_tree" from="MarginContainer/FurnitureButtons" to="." method="_on_furniture_buttons_child_entered_tree"]
 [connection signal="child_exiting_tree" from="MarginContainer/FurnitureButtons" to="." method="_on_furniture_buttons_child_exiting_tree"]

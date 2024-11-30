@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="FurnitureData" load_steps=5 format=3 uid="uid://sj23rhe8wi1h"]
+
+[ext_resource type="Texture2D" uid="uid://7ram0mkpbnf1" path="res://src/entities/furniture/assets/normal/furniture_16x32:bookcase_half.png" id="1_mnb8e"]
+[ext_resource type="Texture2D" uid="uid://dy6o3ipjs7eov" path="res://src/entities/furniture/assets/disabled/furniture_16x32_disabled:bookcase_half.png" id="2_elprn"]
+[ext_resource type="Texture2D" uid="uid://dpwltb0ok5hn0" path="res://src/entities/furniture/assets/hover/furniture_16x32_highlight:bookcase_half.png" id="3_hgqvr"]
+[ext_resource type="Script" path="res://src/entities/furniture/furniture_data_resource.gd" id="4_b2rlr"]
+
+[resource]
+script = ExtResource("4_b2rlr")
+cost = 0
+sprite_size = Vector2(32, 32)
+sprite_offset = Vector2(16, 16)
+name = "Bookcase Half"
+icon = ExtResource("1_mnb8e")
+icon_hover = ExtResource("3_hgqvr")
+icon_disabled = ExtResource("2_elprn")

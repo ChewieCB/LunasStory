@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="FurnitureData" load_steps=5 format=3 uid="uid://cjr4ia0ewsais"]
+
+[ext_resource type="Texture2D" uid="uid://b28w1phstprme" path="res://src/entities/furniture/assets/normal/furniture_32x32:hay_bale_2.png" id="1_oqynb"]
+[ext_resource type="Texture2D" uid="uid://dsrnymy5wjsdd" path="res://src/entities/furniture/assets/disabled/furniture_32x32_disabled:hay_bale_2.png" id="2_t56is"]
+[ext_resource type="Texture2D" uid="uid://bbin875l8yd7w" path="res://src/entities/furniture/assets/hover/furniture_32x32_highlight:hay_bale_2.png" id="3_0mgbx"]
+[ext_resource type="Script" path="res://src/entities/furniture/furniture_data_resource.gd" id="4_lp726"]
+
+[resource]
+script = ExtResource("4_lp726")
+cost = 0
+sprite_size = Vector2(32, 32)
+sprite_offset = Vector2(16, 16)
+name = "Hay Bale 2"
+icon = ExtResource("1_oqynb")
+icon_hover = ExtResource("3_0mgbx")
+icon_disabled = ExtResource("2_t56is")

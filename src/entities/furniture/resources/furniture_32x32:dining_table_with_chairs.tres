@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="FurnitureData" load_steps=5 format=3 uid="uid://ccb7j014srgck"]
+
+[ext_resource type="Texture2D" uid="uid://b0rpndaa77uia" path="res://src/entities/furniture/assets/normal/furniture_32x32:dining_table_with_chairs.png" id="1_2kweh"]
+[ext_resource type="Texture2D" uid="uid://c3nsce5knp6cd" path="res://src/entities/furniture/assets/disabled/furniture_32x32_disabled:dining_table_with_chairs.png" id="2_tom8n"]
+[ext_resource type="Texture2D" uid="uid://lwp06k362o1d" path="res://src/entities/furniture/assets/hover/furniture_32x32_highlight:dining_table_with_chairs.png" id="3_xpcwi"]
+[ext_resource type="Script" path="res://src/entities/furniture/furniture_data_resource.gd" id="4_nssuh"]
+
+[resource]
+script = ExtResource("4_nssuh")
+cost = 0
+sprite_size = Vector2(32, 32)
+sprite_offset = Vector2(16, 16)
+name = "Dining Table With Chairs"
+icon = ExtResource("1_2kweh")
+icon_hover = ExtResource("3_xpcwi")
+icon_disabled = ExtResource("2_tom8n")
