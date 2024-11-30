@@ -27,6 +27,7 @@ func generate_shop_contents(max_items: int = 3) -> Array:
 	current_furniture_pool = []
 	for idx in range(max_items):
 		var furniture = all_furniture[idx]
+		furniture.cost = randi_range(1, 9) * 10
 		current_furniture_pool.append(furniture)
 	
 	emit_signal("new_shop_contents", current_furniture_pool)
