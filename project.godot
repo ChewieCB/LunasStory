@@ -15,6 +15,10 @@ run/main_scene="res://src/stages/main/MainStage.tscn"
 config/features=PackedStringArray("4.3", "Mobile")
 config/icon="res://icon.svg"
 
+[autoload]
+
+CurrencyManager="*res://src/systems/currency_manager/CurrencyManager.tscn"
+
 [display]
 
 window/size/viewport_width=640

@@ -1,0 +1,40 @@
+[gd_scene load_steps=5 format=3 uid="uid://dmvca4lqjmxd3"]
+
+[ext_resource type="Script" path="res://src/ui/main_ui/gold_ui/gold_ui.gd" id="1_6g5lw"]
+[ext_resource type="Texture2D" uid="uid://ccvp5211esrj" path="res://src/ui/gold_stack.png" id="1_ax0rc"]
+[ext_resource type="FontFile" uid="uid://c6nimynn33gk7" path="res://assets/fonts/Big Boy.ttf" id="2_ui2eq"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_fkbqu"]
+font = ExtResource("2_ui2eq")
+
+[node name="GoldUI" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 120.0
+offset_top = 52.0
+offset_right = 192.0
+offset_bottom = 80.0
+script = ExtResource("1_6g5lw")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("1_ax0rc")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "000"
+label_settings = SubResource("LabelSettings_fkbqu")

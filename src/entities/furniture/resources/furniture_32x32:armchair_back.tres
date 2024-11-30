@@ -7,7 +7,7 @@
 
 [resource]
 script = ExtResource("4_vtiv3")
-cost = 0
+cost = 50
 sprite_size = Vector2(16, 16)
 sprite_offset = Vector2(8, 8)
 name = "Armchair Back"

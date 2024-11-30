@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cihdgndgpf3x6"
-path="res://.godot/imported/complete_blue.png-0dcb2b52d66060b67c4e72ac913af123.ctex"
+uid="uid://doi6qxnwhcvid"
+path="res://.godot/imported/complete_red.png-07ca55650c070813bb95821ff48dff4a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://src/potion_brewing/assets/potions/flask/complete/complete_blue.png"
-dest_files=["res://.godot/imported/complete_blue.png-0dcb2b52d66060b67c4e72ac913af123.ctex"]
+source_file="res://src/systems/potion_brewing/assets/potions/flask/complete/complete_red.png"
+dest_files=["res://.godot/imported/complete_red.png-07ca55650c070813bb95821ff48dff4a.ctex"]
 
 [params]
 

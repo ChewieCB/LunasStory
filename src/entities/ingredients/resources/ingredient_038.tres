@@ -1,9 +1,9 @@
 [gd_resource type="Resource" script_class="IngredientData" load_steps=5 format=3]
 
-[ext_resource type="Texture2D" path="res://src/entities/ingredients/assets/normal/ingredient_038.png" id="1_srekl"]
-[ext_resource type="Texture2D" path="res://src/entities/ingredients/assets/disabled/ingredient_disabled_038.png" id="2_6apk8"]
-[ext_resource type="Texture2D" path="res://src/entities/ingredients/assets/hover/ingredient_hover_038.png" id="3_h34vm"]
-[ext_resource type="Script" path="res://src/potion_brewing/resources/ingredient_data.gd" id="4_d3x57"]
+[ext_resource type="Texture2D" uid="uid://bmba0os8u6kmi" path="res://src/entities/ingredients/assets/normal/ingredient_038.png" id="1_srekl"]
+[ext_resource type="Texture2D" uid="uid://dhpg1rn0py28a" path="res://src/entities/ingredients/assets/disabled/ingredient_disabled_038.png" id="2_6apk8"]
+[ext_resource type="Texture2D" uid="uid://c3pbxoaxrwqo4" path="res://src/entities/ingredients/assets/hover/ingredient_hover_038.png" id="3_h34vm"]
+[ext_resource type="Script" path="res://src/systems/potion_brewing/resources/ingredient_data.gd" id="4_d3x57"]
 
 [resource]
 script = ExtResource("4_d3x57")

@@ -1,9 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://s21dn7ti8wy6"]
+[gd_scene load_steps=7 format=3 uid="uid://s21dn7ti8wy6"]
 
 [ext_resource type="Script" path="res://src/ui/furniture_shop/furniture_button_ui.gd" id="1_0wbbc"]
 [ext_resource type="Texture2D" uid="uid://bi72f376enu4p" path="res://src/ui/ui_box_1.png" id="1_rubek"]
 [ext_resource type="Texture2D" uid="uid://ccvp5211esrj" path="res://src/ui/gold_stack.png" id="2_plkii"]
-[ext_resource type="Texture2D" path="res://src/entities/furniture/assets/normal/furniture_16x16_35.png" id="2_tewin"]
 [ext_resource type="FontFile" uid="uid://c6nimynn33gk7" path="res://assets/fonts/Big Boy.ttf" id="3_6diy6"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_qaqrv"]
@@ -101,7 +100,6 @@ offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-texture = ExtResource("2_tewin")
 expand_mode = 3
 stretch_mode = 3
 

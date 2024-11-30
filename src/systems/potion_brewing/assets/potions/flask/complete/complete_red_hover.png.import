@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b2y7fomvoxhn8"
-path="res://.godot/imported/complete_blue_hover.png-7fe0781c6d34bcc0b67235309218f5c6.ctex"
+uid="uid://b8yhm45ulmexa"
+path="res://.godot/imported/complete_red_hover.png-d2221e0fac27386234578ff508dbec01.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://src/potion_brewing/assets/potions/flask/complete/complete_blue_hover.png"
-dest_files=["res://.godot/imported/complete_blue_hover.png-7fe0781c6d34bcc0b67235309218f5c6.ctex"]
+source_file="res://src/systems/potion_brewing/assets/potions/flask/complete/complete_red_hover.png"
+dest_files=["res://.godot/imported/complete_red_hover.png-d2221e0fac27386234578ff508dbec01.ctex"]
 
 [params]
 
