@@ -24,12 +24,15 @@ var follow_global_position: Vector2:
 @export var tilemap: TileMapLayer:
 	set(value): 
 		tilemap = value
-		var used_cells = tilemap.get_used_cells()
-		valid_floor_tiles = used_cells.filter(
-			func(tile):
-				var data = tilemap.get_cell_tile_data(tile)
-				return data.terrain == 1
-		)
+		if tilemap:
+			await ready
+			_setup_collision_check_area()
+			var used_cells = tilemap.get_used_cells()
+			valid_floor_tiles = used_cells.filter(
+				func(tile):
+					var data = tilemap.get_cell_tile_data(tile)
+					return data.terrain == 1
+			)
 var valid_floor_tiles: Array[Vector2i]
 var invalid_tiles: Array[Vector2]:
 	set(value):
@@ -44,7 +47,7 @@ var invalid_tiles: Array[Vector2]:
 
 
 func _ready():
-	_setup_collision_check_area()
+	#_setup_collision_check_area()
 	
 	if lock_to_grid:
 		_move_entity_within_grid(self.global_position)

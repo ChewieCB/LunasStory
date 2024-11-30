@@ -1,8 +1,15 @@
-[gd_scene load_steps=4 format=3 uid="uid://s21dn7ti8wy6"]
+[gd_scene load_steps=8 format=3 uid="uid://s21dn7ti8wy6"]
 
 [ext_resource type="Script" path="res://src/ui/furniture_shop/furniture_button_ui.gd" id="1_0wbbc"]
 [ext_resource type="Texture2D" uid="uid://bi72f376enu4p" path="res://src/ui/ui_box_1.png" id="1_rubek"]
+[ext_resource type="Texture2D" uid="uid://ccvp5211esrj" path="res://src/ui/gold_stack.png" id="2_plkii"]
 [ext_resource type="Texture2D" uid="uid://c8y0cjjrknr58" path="res://src/entities/furniture/assets/normal/furniture_16x16_35.png" id="2_tewin"]
+[ext_resource type="FontFile" uid="uid://c6nimynn33gk7" path="res://assets/fonts/Big Boy.ttf" id="3_6diy6"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_qaqrv"]
+font = ExtResource("3_6diy6")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lnsht"]
 
 [node name="FurnitureButtonUI" type="MarginContainer"]
 anchors_preset = 8
@@ -10,18 +17,52 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
+offset_left = -29.0
+offset_top = -32.0
+offset_right = 29.0
+offset_bottom = 32.0
 grow_horizontal = 2
 grow_vertical = 2
-size_flags_horizontal = 2
+size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 2
 script = ExtResource("1_0wbbc")
 
-[node name="ButtonFrame" type="TextureRect" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/separation = 26
+alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 6
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/MarginContainer/HBoxContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("2_plkii")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="VBoxContainer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "000"
+label_settings = SubResource("LabelSettings_qaqrv")
+vertical_alignment = 1
+
+[node name="ButtonFrame" type="TextureRect" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
@@ -30,7 +71,7 @@ texture = ExtResource("1_rubek")
 expand_mode = 3
 stretch_mode = 3
 
-[node name="ButtonArea" type="Button" parent="ButtonFrame"]
+[node name="ButtonArea" type="Button" parent="VBoxContainer/ButtonFrame"]
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 1
 anchors_preset = 15
@@ -43,9 +84,10 @@ offset_bottom = 24.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_default_cursor_shape = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_lnsht")
 flat = true
 
-[node name="FurnitureIcon" type="TextureRect" parent="ButtonFrame"]
+[node name="FurnitureIcon" type="TextureRect" parent="VBoxContainer/ButtonFrame"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -63,6 +105,6 @@ texture = ExtResource("2_tewin")
 expand_mode = 3
 stretch_mode = 3
 
-[connection signal="mouse_entered" from="ButtonFrame/ButtonArea" to="." method="_on_button_area_mouse_entered"]
-[connection signal="mouse_exited" from="ButtonFrame/ButtonArea" to="." method="_on_button_area_mouse_exited"]
-[connection signal="pressed" from="ButtonFrame/ButtonArea" to="." method="_on_button_area_pressed"]
+[connection signal="mouse_entered" from="VBoxContainer/ButtonFrame/ButtonArea" to="." method="_on_button_area_mouse_entered"]
+[connection signal="mouse_exited" from="VBoxContainer/ButtonFrame/ButtonArea" to="." method="_on_button_area_mouse_exited"]
+[connection signal="pressed" from="VBoxContainer/ButtonFrame/ButtonArea" to="." method="_on_button_area_pressed"]

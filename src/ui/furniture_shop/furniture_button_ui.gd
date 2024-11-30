@@ -5,11 +5,13 @@ signal purchased(data: FurnitureData)
 
 @export var data: FurnitureData
 
-@onready var icon_rect: TextureRect = $ButtonFrame/FurnitureIcon
+@onready var icon_rect: TextureRect = $VBoxContainer/ButtonFrame/FurnitureIcon
+@onready var cost_label: Label = $VBoxContainer/MarginContainer/HBoxContainer/Label
 
 
 func _ready() -> void:
 	icon_rect.texture = data.icon
+	cost_label.text = str(data.cost)
 
 
 func _on_button_area_mouse_entered() -> void:

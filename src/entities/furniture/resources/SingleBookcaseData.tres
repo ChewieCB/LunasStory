@@ -6,7 +6,7 @@
 
 [resource]
 script = ExtResource("3_sropd")
-cost = 0
+cost = 20
 sprite_size = Vector2(16, 32)
 sprite_offset = Vector2(8, 16)
 name = "Single Bookcase"

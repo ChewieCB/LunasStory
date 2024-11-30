@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://ww8bgg1u8m71"]
+[gd_scene load_steps=14 format=3 uid="uid://ww8bgg1u8m71"]
 
 [ext_resource type="Texture2D" uid="uid://bpligtaxrlu5u" path="res://src/ui/game_over/assets/title_game.png" id="1_m0dkw"]
 [ext_resource type="Script" path="res://src/ui/game_over/game_over_ui.gd" id="1_qveu2"]
@@ -331,6 +331,10 @@ _data = {
 "hidden": SubResource("Animation_dgcpt")
 }
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jpfuj"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ejdh2"]
+
 [node name="GameOverUI" type="Control"]
 process_mode = 3
 visible = false
@@ -423,6 +427,7 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_fonts/font = ExtResource("4_qnwub")
 theme_override_font_sizes/font_size = 24
+theme_override_styles/focus = SubResource("StyleBoxEmpty_jpfuj")
 text = "Restart"
 icon = ExtResource("5_a7wix")
 flat = true
@@ -439,6 +444,7 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_fonts/font = ExtResource("4_qnwub")
 theme_override_font_sizes/font_size = 24
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ejdh2")
 text = "Quit"
 icon = ExtResource("6_y48je")
 flat = true
