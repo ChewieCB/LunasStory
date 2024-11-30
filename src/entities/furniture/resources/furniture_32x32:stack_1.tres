@@ -8,8 +8,8 @@
 [resource]
 script = ExtResource("4_tmdml")
 cost = 0
-sprite_size = Vector2(32, 32)
-sprite_offset = Vector2(16, 16)
+sprite_size = Vector2(16, 16)
+sprite_offset = Vector2(8, 8)
 name = "Stack 1"
 icon = ExtResource("1_80786")
 icon_hover = ExtResource("3_x7mm0")

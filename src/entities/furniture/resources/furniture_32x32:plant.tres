@@ -8,8 +8,8 @@
 [resource]
 script = ExtResource("4_c2k4n")
 cost = 0
-sprite_size = Vector2(32, 32)
-sprite_offset = Vector2(16, 16)
+sprite_size = Vector2(16, 16)
+sprite_offset = Vector2(8, 0)
 name = "Plant"
 icon = ExtResource("1_q0aqq")
 icon_hover = ExtResource("3_yakqu")

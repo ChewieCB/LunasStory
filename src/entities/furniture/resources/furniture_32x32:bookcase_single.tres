@@ -8,8 +8,8 @@
 [resource]
 script = ExtResource("4_fmw8y")
 cost = 0
-sprite_size = Vector2(32, 32)
-sprite_offset = Vector2(16, 16)
+sprite_size = Vector2(16, 32)
+sprite_offset = Vector2(8, 16)
 name = "Bookcase Single"
 icon = ExtResource("1_kqd33")
 icon_hover = ExtResource("3_7n1o6")

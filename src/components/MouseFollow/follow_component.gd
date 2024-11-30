@@ -47,11 +47,6 @@ var invalid_tiles: Array[Vector2]:
 
 
 func _ready():
-	#_setup_collision_check_area()
-	
-	if lock_to_grid:
-		_move_entity_within_grid(self.global_position)
-		
 	disable()
 	self.was_disabled.connect(_on_disabled)
 

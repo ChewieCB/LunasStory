@@ -8,8 +8,8 @@
 [resource]
 script = ExtResource("4_hkjaj")
 cost = 0
-sprite_size = Vector2(32, 32)
-sprite_offset = Vector2(16, 16)
+sprite_size = Vector2(16, 16)
+sprite_offset = Vector2(8, 8)
 name = "Armchair Side"
 icon = ExtResource("1_j7c5w")
 icon_hover = ExtResource("3_1eb0v")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=4 uid="uid://b5vhj0fhn8xuq"]
+[gd_scene load_steps=22 format=4 uid="uid://b5vhj0fhn8xuq"]
 
 [ext_resource type="Script" path="res://src/stages/main/main_stage.gd" id="1_a8pxn"]
 [ext_resource type="PackedScene" uid="uid://cma5x6jxj78qw" path="res://src/environment/tilemap/VoidTiles.tscn" id="1_gwaru"]
@@ -19,6 +19,7 @@
 [ext_resource type="Script" path="res://src/stages/main/active_ingredients_ui.gd" id="17_4vnnt"]
 [ext_resource type="PackedScene" uid="uid://dpp7ee7wmjjw5" path="res://src/ui/furniture_shop/FurnitureShopUI.tscn" id="18_354q1"]
 [ext_resource type="PackedScene" uid="uid://mki2vu2uiv40" path="res://src/entities/ingredient_spawner/IngredientSpawner.tscn" id="19_rxf6j"]
+[ext_resource type="PackedScene" uid="uid://b818guyop407v" path="res://src/furniture_shop/FurnitureShopManager.tscn" id="20_b7swm"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_ta56x"]
 vertices = PackedVector2Array(146, -162, 270, -190, 286, -190, 286, -174, 146, -94, 350, -174, 350, -94, 366, -94, 366, -50, 194, -82, 114, -162, 114, -178, 146, -190, 270, -222, -18, -110, -2, -110, -2, -30, 66, -30, 66, -46, 82, -46, 78, -34, 82, -62, 98, -62, 94, -50, 258, -50, 258, -66, 194, -66, 110, -82, 110, -50, 94, -34, -114, -110, -30, -110, -2, -18, -2, 30, -130, 30, -158, 14, -190, -34, -190, -94, -130, 62, -158, 62, -190, 14, -290, -34, -290, -2, -334, -2, -334, -18, -366, -18, -366, -50, -350, -62, -302, -78, -274, -46, -382, -50, -382, -62, -350, -78, -302, -110, -290, -110, -290, -94, -274, -94, -206, -46, -206, -94, -190, -142, -114, -142, 146, -222, -30, -190, -18, -178, 78, -18, 98, -94)
@@ -57,11 +58,6 @@ position = Vector2(328, -72)
 [node name="Spawn6" type="Marker2D" parent="PortalSpawns"]
 position = Vector2(248, -152)
 
-[node name="FurnitureBig" parent="." node_paths=PackedStringArray("follow_component_tilemap", "follow_target") instance=ExtResource("5_r4y4v")]
-position = Vector2(-128, -66)
-follow_component_tilemap = NodePath("../StructureTiles")
-follow_target = NodePath("../HandCursor")
-
 [node name="IngredientSpawner" parent="." node_paths=PackedStringArray("tilemap", "hand_cursor") instance=ExtResource("19_rxf6j")]
 max_spawned = 8
 tilemap = NodePath("../StructureTiles")
@@ -69,8 +65,7 @@ hand_cursor = NodePath("../HandCursor")
 entity_scene = ExtResource("8_awlm4")
 entity_resources_path = "res://src/entities/ingredients/resources/"
 
-[node name="FurnitureSpawner" parent="." node_paths=PackedStringArray("furniture_shop_ui", "tilemap", "hand_cursor") instance=ExtResource("7_2vhb3")]
-furniture_shop_ui = NodePath("../UI/MainUI/FurnitureShopUI")
+[node name="FurnitureSpawner" parent="." node_paths=PackedStringArray("tilemap", "hand_cursor") instance=ExtResource("7_2vhb3")]
 tilemap = NodePath("../StructureTiles")
 hand_cursor = NodePath("../HandCursor")
 entity_scene = ExtResource("5_r4y4v")
@@ -196,3 +191,7 @@ grow_vertical = 1
 
 [node name="BrewingManager" parent="." node_paths=PackedStringArray("ingredient_spawner") instance=ExtResource("7_flksp")]
 ingredient_spawner = NodePath("../IngredientSpawner")
+
+[node name="FurnitureShopManager" parent="." node_paths=PackedStringArray("furniture_spawner", "furniture_shop_ui") instance=ExtResource("20_b7swm")]
+furniture_spawner = NodePath("../FurnitureSpawner")
+furniture_shop_ui = NodePath("../UI/MainUI/FurnitureShopUI")

@@ -1,7 +1,6 @@
-[gd_scene load_steps=12 format=3 uid="uid://bwhulkm5ypjw2"]
+[gd_scene load_steps=11 format=3 uid="uid://bwhulkm5ypjw2"]
 
 [ext_resource type="Script" path="res://src/entities/furniture/furniture_big.gd" id="1_ag406"]
-[ext_resource type="Resource" uid="uid://dfvhj8rvi2usq" path="res://src/entities/furniture/resources/DoubleBookcaseData.tres" id="2_c8uwu"]
 [ext_resource type="PackedScene" uid="uid://l82e7lamaemc" path="res://src/components/Selectable/SelectableComponent.tscn" id="3_wyaeg"]
 [ext_resource type="PackedScene" uid="uid://cojyfxu5j1idb" path="res://src/components/Grabbable/GrabbableComponent.tscn" id="3_y2bme"]
 [ext_resource type="PackedScene" uid="uid://b6irvllg6u58o" path="res://src/components/MouseFollow/MouseFollowComponent.tscn" id="4_6wpy1"]
@@ -26,7 +25,6 @@ hitbox_component = NodePath("HitboxComponent")
 selectable_component = NodePath("SelectableComponent")
 grabbable_component = NodePath("GrabbableComponent")
 follow_component = NodePath("FollowComponent")
-data = ExtResource("2_c8uwu")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 
