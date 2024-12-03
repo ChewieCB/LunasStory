@@ -8,6 +8,7 @@ signal purchased(data: FurnitureData)
 @onready var button: TextureButton = $VBoxContainer/ButtonArea
 @onready var icon_rect: TextureRect = $VBoxContainer/ButtonArea/FurnitureIcon
 @onready var cost_label: Label = $VBoxContainer/MarginContainer/HBoxContainer/Label
+@onready var label_container: Container = $VBoxContainer/MarginContainer/HBoxContainer
 
 
 func _ready() -> void:
@@ -20,11 +21,13 @@ func _ready() -> void:
 func disable() -> void:
 	icon_rect.texture = data.icon_disabled
 	button.disabled = true
+	label_container.modulate = Color("#575757")
 
 
 func enable() -> void:
 	icon_rect.texture = data.icon
 	button.disabled = false
+	label_container.modulate = Color("#ffffff")
 
 
 func _on_gold_changed(current_gold: int) -> void:

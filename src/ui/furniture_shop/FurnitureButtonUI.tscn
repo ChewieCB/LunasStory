@@ -10,6 +10,9 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_qaqrv"]
 font = ExtResource("3_6diy6")
+font_color = Color(0.984314, 0.666667, 0.113725, 1)
+outline_size = 4
+outline_color = Color(0.745098, 0.341176, 0.0509804, 1)
 
 [node name="FurnitureButtonUI" type="MarginContainer"]
 anchors_preset = 8
@@ -38,6 +41,7 @@ layout_mode = 2
 theme_override_constants/margin_left = 6
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/MarginContainer"]
+modulate = Color(0.340339, 0.340339, 0.340339, 1)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4

@@ -38,7 +38,7 @@ func get_new_spawn(pos: Vector2) -> Vector2:
 
 func _on_enemy_killed(enemy: AIAgent) -> void:
 	var new_gold = spawn_gold_around_pos(enemy.global_position)
-	add_child(new_gold)
+	call_deferred("add_child", new_gold)
 
 
 func _on_gold_collected(value: int, global_pos: Vector2) -> void:
