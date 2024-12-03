@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=4 uid="uid://b5vhj0fhn8xuq"]
+[gd_scene load_steps=32 format=4 uid="uid://b5vhj0fhn8xuq"]
 
 [ext_resource type="Script" path="res://src/stages/main/main_stage.gd" id="1_a8pxn"]
 [ext_resource type="PackedScene" uid="uid://cma5x6jxj78qw" path="res://src/environment/tilemap/VoidTiles.tscn" id="1_gwaru"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://b3vxay7vo5fod" path="res://src/entities/tools/Tool.tscn" id="3_7xpmx"]
 [ext_resource type="PackedScene" uid="uid://uot6d4qertbc" path="res://src/entities/cauldron/Cauldron.tscn" id="4_dnt3y"]
 [ext_resource type="PackedScene" uid="uid://dcxugwx7ivfx" path="res://src/entities/portal_spawner/PortalSpawner.tscn" id="4_ea2v8"]
+[ext_resource type="PackedScene" uid="uid://6p86ajka0t1m" path="res://src/entities/gold/Gold.tscn" id="4_ktlqy"]
 [ext_resource type="PackedScene" uid="uid://bwhulkm5ypjw2" path="res://src/entities/furniture/FurnitureBig.tscn" id="5_r4y4v"]
 [ext_resource type="PackedScene" uid="uid://co0s8tv0s52ls" path="res://src/entities/furniture/FurnitureSpawner.tscn" id="7_2vhb3"]
 [ext_resource type="PackedScene" uid="uid://cw1kellptc2ke" path="res://src/systems/potion_brewing/BrewingManager.tscn" id="7_flksp"]
@@ -122,6 +123,24 @@ brewing_manager = NodePath("../BrewingManager")
 
 [node name="Cauldron" parent="." instance=ExtResource("4_dnt3y")]
 position = Vector2(-120, 8)
+
+[node name="Gold" type="Node2D" parent="."]
+
+[node name="Gold" parent="Gold" node_paths=PackedStringArray("follow_target") instance=ExtResource("4_ktlqy")]
+position = Vector2(-312, -56)
+follow_target = NodePath("../../HandCursor")
+
+[node name="Gold2" parent="Gold" node_paths=PackedStringArray("follow_target") instance=ExtResource("4_ktlqy")]
+position = Vector2(-176, -112)
+follow_target = NodePath("../../HandCursor")
+
+[node name="Gold3" parent="Gold" node_paths=PackedStringArray("follow_target") instance=ExtResource("4_ktlqy")]
+position = Vector2(-32, -88)
+follow_target = NodePath("../../HandCursor")
+
+[node name="Gold4" parent="Gold" node_paths=PackedStringArray("follow_target") instance=ExtResource("4_ktlqy")]
+position = Vector2(-32, 16)
+follow_target = NodePath("../../HandCursor")
 
 [node name="Tool" parent="." node_paths=PackedStringArray("follow_target") instance=ExtResource("3_7xpmx")]
 position = Vector2(-82, -94)

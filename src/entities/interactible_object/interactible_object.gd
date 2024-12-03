@@ -19,14 +19,15 @@ signal object_removed(object: InteractibleObject)
 
 func _ready() -> void:
 	add_to_group("interactible")
-	sprite.texture = data.icon
+	_set_sprite_texture()
 	
 	# TODO - further decouple these components if possible
 	if follow_component:
 		follow_component.target = follow_target
 	
-	selectable_component.hover.connect(_on_hover)
-	selectable_component.was_disabled.connect(toggle_hover_texture.bind(false))
+	if grabbable_component:
+		selectable_component.hover.connect(_on_hover)
+		selectable_component.was_disabled.connect(toggle_hover_texture.bind(false))
 	
 	if grabbable_component:
 		grabbable_component.pickup.connect(_on_pickup)
@@ -34,6 +35,10 @@ func _ready() -> void:
 	
 	if health_component:
 		health_component.died.connect(_on_died)
+
+
+func _set_sprite_texture() -> void:
+	sprite.texture = data.icon
 
 
 func _notification(what):
