@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bca0l26ad5a12"]
+
+[ext_resource type="Script" path="res://src/entities/gold_spawner/gold_spawner.gd" id="1_o83ab"]
+
+[node name="GoldSpawner" type="Node2D"]
+script = ExtResource("1_o83ab")

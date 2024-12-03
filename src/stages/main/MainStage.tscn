@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=4 uid="uid://b5vhj0fhn8xuq"]
+[gd_scene load_steps=34 format=4 uid="uid://b5vhj0fhn8xuq"]
 
 [ext_resource type="Script" path="res://src/stages/main/main_stage.gd" id="1_a8pxn"]
 [ext_resource type="PackedScene" uid="uid://cma5x6jxj78qw" path="res://src/environment/tilemap/VoidTiles.tscn" id="1_gwaru"]
@@ -20,7 +20,9 @@
 [ext_resource type="PackedScene" uid="uid://clhm87crkcsl6" path="res://src/actors/enemies/base_enemy/BaseEnemy.tscn" id="11_gn4ec"]
 [ext_resource type="PackedScene" uid="uid://dm0gejh2fcolw" path="res://src/ui/potion_book/PotionBookUI.tscn" id="12_8ltgd"]
 [ext_resource type="PackedScene" uid="uid://ww8bgg1u8m71" path="res://src/ui/game_over/GameOverUI.tscn" id="12_vinen"]
+[ext_resource type="PackedScene" uid="uid://bca0l26ad5a12" path="res://src/entities/gold_spawner/GoldSpawner.tscn" id="14_o320m"]
 [ext_resource type="PackedScene" uid="uid://dmvca4lqjmxd3" path="res://src/ui/main_ui/gold_ui/GoldUI.tscn" id="14_rdikb"]
+[ext_resource type="PackedScene" uid="uid://bmucbur88mwkn" path="res://src/entities/gold_spawner/GoldLabel.tscn" id="15_vvqso"]
 [ext_resource type="Script" path="res://src/stages/main/active_ingredients_ui.gd" id="17_4vnnt"]
 [ext_resource type="PackedScene" uid="uid://dpp7ee7wmjjw5" path="res://src/ui/furniture_shop/FurnitureShopUI.tscn" id="18_354q1"]
 [ext_resource type="PackedScene" uid="uid://mki2vu2uiv40" path="res://src/entities/ingredient_spawner/IngredientSpawner.tscn" id="19_rxf6j"]
@@ -124,23 +126,12 @@ brewing_manager = NodePath("../BrewingManager")
 [node name="Cauldron" parent="." instance=ExtResource("4_dnt3y")]
 position = Vector2(-120, 8)
 
-[node name="Gold" type="Node2D" parent="."]
-
-[node name="Gold" parent="Gold" node_paths=PackedStringArray("follow_target") instance=ExtResource("4_ktlqy")]
-position = Vector2(-312, -56)
-follow_target = NodePath("../../HandCursor")
-
-[node name="Gold2" parent="Gold" node_paths=PackedStringArray("follow_target") instance=ExtResource("4_ktlqy")]
-position = Vector2(-176, -112)
-follow_target = NodePath("../../HandCursor")
-
-[node name="Gold3" parent="Gold" node_paths=PackedStringArray("follow_target") instance=ExtResource("4_ktlqy")]
-position = Vector2(-32, -88)
-follow_target = NodePath("../../HandCursor")
-
-[node name="Gold4" parent="Gold" node_paths=PackedStringArray("follow_target") instance=ExtResource("4_ktlqy")]
-position = Vector2(-32, 16)
-follow_target = NodePath("../../HandCursor")
+[node name="GoldSpawner" parent="." node_paths=PackedStringArray("wave_manager", "tilemap", "hand_cursor") instance=ExtResource("14_o320m")]
+wave_manager = NodePath("../WaveManager")
+value_label_scene = ExtResource("15_vvqso")
+tilemap = NodePath("../StructureTiles")
+hand_cursor = NodePath("../HandCursor")
+entity_scene = ExtResource("4_ktlqy")
 
 [node name="Tool" parent="." node_paths=PackedStringArray("follow_target") instance=ExtResource("3_7xpmx")]
 position = Vector2(-82, -94)

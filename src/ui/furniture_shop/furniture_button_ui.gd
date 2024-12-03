@@ -14,6 +14,7 @@ func _ready() -> void:
 	icon_rect.texture = data.icon
 	cost_label.text = str(data.cost)
 	CurrencyManager.gold_changed.connect(_on_gold_changed)
+	_on_gold_changed(CurrencyManager.current_gold)
 
 
 func disable() -> void:

@@ -1,0 +1,94 @@
+[gd_scene load_steps=7 format=3 uid="uid://bmucbur88mwkn"]
+
+[ext_resource type="FontFile" uid="uid://c6nimynn33gk7" path="res://assets/fonts/Big Boy.ttf" id="1_h1c05"]
+[ext_resource type="Script" path="res://src/entities/gold_spawner/gold_label.gd" id="2_xd0s5"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_26nkx"]
+font = ExtResource("1_h1c05")
+font_color = Color(0.98436, 0.666819, 0.113329, 1)
+outline_size = 8
+outline_color = Color(0.744991, 0.340978, 0.0507973, 1)
+
+[sub_resource type="Animation" id="Animation_f82op"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(297, -12)]
+}
+
+[sub_resource type="Animation" id="Animation_rrxu5"]
+resource_name = "collect"
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.366667, 0.8),
+"transitions": PackedFloat32Array(0.233, 0.578481, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0.984314), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.366667),
+"transitions": PackedFloat32Array(0.233, 0.578481),
+"update": 0,
+"values": [Vector2(-23, -10), Vector2(-23, -28)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vigah"]
+_data = {
+"RESET": SubResource("Animation_f82op"),
+"collect": SubResource("Animation_rrxu5")
+}
+
+[node name="GoldLabel" type="Node2D"]
+script = ExtResource("2_xd0s5")
+
+[node name="Label" type="Label" parent="."]
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -23.0
+offset_top = -27.9999
+offset_right = 25.0
+offset_bottom = 4.00014
+grow_horizontal = 2
+text = "000"
+label_settings = SubResource("LabelSettings_26nkx")
+horizontal_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Label")
+libraries = {
+"": SubResource("AnimationLibrary_vigah")
+}

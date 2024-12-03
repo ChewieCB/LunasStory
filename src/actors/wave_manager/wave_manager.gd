@@ -1,6 +1,8 @@
 extends Node
 class_name WaveManager
 
+signal enemy_killed(enemy: AIAgent)
+
 @export var waves: Array[Wave]
 @export var portal_parent: Node2D
 @export var portal_scene: PackedScene
@@ -42,8 +44,8 @@ func start_wave(wave: Wave = next_wave()) -> void:
 func end_wave(wave: Wave = current_wave, stop_waves: bool = false) -> void:
 	clear_portals(active_portals)
 	current_wave = null
-	ingredient_spawner.stop_spawning()
-	ingredient_spawner.clear_all_ingredients()
+	#ingredient_spawner.stop_spawning()
+	#ingredient_spawner.clear_all_ingredients()
 	
 	if not stop_waves:
 		await get_tree().create_timer(1.5).timeout
@@ -135,6 +137,7 @@ func _on_enemy_spawned(enemy: AIAgent, _portal: PortalSpawner) -> void:
 
 func _remove_enemy(enemy: AIAgent) -> void:
 	active_enemies.erase(enemy)
+	emit_signal("enemy_killed", enemy)
 	if active_enemies == []:
 		end_wave(current_wave)
 

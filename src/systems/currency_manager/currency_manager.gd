@@ -2,7 +2,7 @@ extends Node
 
 signal gold_changed(current_gold: int)
 
-@export var starting_gold: int = 100
+@export var starting_gold: int = 0
 
 var current_gold: int = starting_gold:
 	set(value):

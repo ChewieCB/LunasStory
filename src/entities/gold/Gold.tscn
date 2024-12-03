@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://6p86ajka0t1m"]
+[gd_scene load_steps=15 format=3 uid="uid://6p86ajka0t1m"]
 
 [ext_resource type="Script" path="res://src/entities/gold/gold.gd" id="1_gs0mq"]
 [ext_resource type="Texture2D" uid="uid://cyl4rluukyvxf" path="res://src/entities/gold/assets/gold_1_stack.png" id="1_rm33h"]
@@ -8,60 +8,12 @@
 [ext_resource type="Texture2D" uid="uid://cjbi6b1upgvmk" path="res://src/entities/gold/assets/gold_4_stack.png" id="5_3qb1e"]
 [ext_resource type="Script" path="res://src/entities/gold/move_towards_component.gd" id="5_dfd3m"]
 [ext_resource type="Texture2D" uid="uid://dxkqfk3qirsq5" path="res://src/entities/gold/assets/gold_5_stack.png" id="6_0xv5u"]
-[ext_resource type="FontFile" uid="uid://c6nimynn33gk7" path="res://assets/fonts/Big Boy.ttf" id="9_dib63"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lshw8"]
 radius = 11.3137
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qqsfo"]
 radius = 72.0
-
-[sub_resource type="LabelSettings" id="LabelSettings_26nkx"]
-font = ExtResource("9_dib63")
-font_color = Color(0.98436, 0.666819, 0.113329, 1)
-outline_size = 8
-outline_color = Color(0.744991, 0.340978, 0.0507973, 1)
-
-[sub_resource type="Animation" id="Animation_cfuvp"]
-resource_name = "spawn"
-length = 0.3
-step = 0.05
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(0.34151, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:scale")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(0.34151, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(1, 1)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Sprite2D:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(0.34151, 1),
-"update": 0,
-"values": [Vector2(0, 10), Vector2(0, 0)]
-}
 
 [sub_resource type="Animation" id="Animation_x3pwq"]
 length = 0.001
@@ -100,30 +52,6 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(0, 0)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Label:modulate")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 0)]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Label:position")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(-23, -12)]
 }
 
 [sub_resource type="Animation" id="Animation_na3u8"]
@@ -166,29 +94,46 @@ tracks/2/keys = {
 "update": 0,
 "values": [Vector2(0, 0), Vector2(0, -10)]
 }
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Label:modulate")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.4, 0.8),
-"transitions": PackedFloat32Array(0.2333, 1.31951, 1),
+
+[sub_resource type="Animation" id="Animation_cfuvp"]
+resource_name = "spawn"
+length = 0.3
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(0.34151, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Label:position")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(0.2333, 2.46229),
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(0.34151, 1),
 "update": 0,
-"values": [Vector2(-23, -12), Vector2(-23, -30)]
+"values": [Vector2(0, 0), Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(0.34151, 1),
+"update": 0,
+"values": [Vector2(0, 10), Vector2(0, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_g4mfo"]
@@ -212,6 +157,7 @@ texture = ExtResource("1_rm33h")
 collision_layer = 16
 collision_mask = 2
 collider = NodePath("CollisionShape2D")
+enabled = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CollectibleComponent"]
 shape = SubResource("CircleShape2D_lshw8")
@@ -225,20 +171,7 @@ move_speed = 450.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MoveTowardsComponent"]
 shape = SubResource("CircleShape2D_qqsfo")
-
-[node name="Label" type="Label" parent="."]
-modulate = Color(1, 1, 1, 0)
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -23.0
-offset_top = -12.0
-offset_right = 25.0
-offset_bottom = 20.0
-grow_horizontal = 2
-text = "000"
-label_settings = SubResource("LabelSettings_26nkx")
-horizontal_alignment = 1
+disabled = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

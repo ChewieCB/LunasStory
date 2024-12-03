@@ -1,7 +1,7 @@
 extends InteractibleObject
 class_name Gold
 
-signal collected(value: int)
+signal collected(value: int, global_pos: Vector2)
 
 @export_category("Components")
 @export var collectible_component: CollectibleComponent
@@ -10,32 +10,32 @@ signal collected(value: int)
 @export var value: int
 @export var gold_sprite_texures: Array[Texture]
 
-@onready var value_label: Label = $Label
 @onready var anim_player: AnimationPlayer = $AnimationPlayer
 
 var move_to_cursor: bool = false
 
 
 func _ready() -> void:
-	value = randi_range(1, 30)
-	if randf() < 0.3:
+	move_to_component.range_collider.set_deferred("disabled", true)
+	collectible_component.disable()
+	
+	value = randi_range(1, 20)
+	if randf() < 0.1:
 		value += randi_range(10, 20)
-	value_label.text = str(value)
 	
 	super()
 	add_to_group("gold")
 	
 	# Disable collection until spawn anim is finished
-	move_to_component.range_collider.disabled = true
 	collectible_component.collected.connect(_collect)
 	await _show()
-	move_to_component.range_collider.disabled = false
+	move_to_component.range_collider.set_deferred("disabled", false)
+	collectible_component.enable()
 
 
 func _show() -> bool:
 	anim_player.play("spawn")
 	await anim_player.animation_finished
-	await get_tree().create_timer(1.0).timeout
 	return true
 
 
@@ -59,7 +59,9 @@ func _collect() -> void:
 		#particles.queue_free()
 	#)
 	#particles.emitting = true
+	emit_signal("collected", value, self.global_position)
 	collectible_component.disable()
+	move_to_component.range_collider.set_deferred("disabled", true)
 	CurrencyManager.add_gold(value)
 	await _hide()
 	# TODO - disable collision and implement object pooling instead of freeing this
