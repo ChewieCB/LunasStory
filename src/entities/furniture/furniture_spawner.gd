@@ -5,15 +5,46 @@ class_name FurnitureSpawner
 @export var max_spawn_distance_tiles: int = 4
 @export var debug_placement_collider: bool = false
 
+@export var spawn_time: float = 0.4
+@onready var spawn_arc_path: Path2D = $SpawnArc
+@onready var spawn_arc_follow: PathFollow2D = $SpawnArc/SpawnArcFollow
+@onready var spawn_target: Marker2D = $SpawnArc/SpawnArcFollow/SpawnTarget
+
 
 func spawn_furniture(data: FurnitureData) -> FurnitureBig:
 	var new_furniture = spawn_entity(data)
 	new_furniture.follow_component_tilemap = tilemap
 	new_furniture.debug_placement_collider = debug_placement_collider
-	add_child(new_furniture)
 	
-	await new_furniture.ready
+	add_child(new_furniture)
 	new_furniture.follow_component._move_entity_within_grid(new_furniture.global_position)
+	
+	
+	# Tween the object in an arc from the cauldron from it's placement point
+	var final_pos: Vector2 = new_furniture.global_position
+	var spawn_pos: Vector2 = cauldron_target.global_position
+	spawn_arc_path.curve.set_point_position(0, spawn_pos)
+	spawn_arc_path.curve.set_point_position(1, final_pos)
+	new_furniture.spawn_movement_target = spawn_target
+	
+	var tween = get_tree().create_tween()
+	new_furniture.selectable_component.disable()
+	new_furniture.sprite.scale = Vector2.ZERO
+	tween.tween_property(
+		spawn_arc_follow, "progress_ratio", 1.0, spawn_time
+	).set_trans(Tween.TRANS_SINE)
+	tween.parallel().tween_property(
+		new_furniture.sprite, "scale", Vector2.ONE, spawn_time
+	).set_trans(Tween.TRANS_SINE)
+	tween.tween_callback(func():
+		new_furniture.spawn_movement_target = null
+		new_furniture.selectable_component.enable()
+		new_furniture.selectable_component.query_hover()
+		new_furniture.global_position = final_pos
+		spawn_arc_follow.progress_ratio = 0.0
+	)
+	
+	cauldron_target.emit_particles(load("res://assets/particles/poof/PoofParticle.tres"))
 	
 	return new_furniture
 

@@ -18,6 +18,8 @@ var sprite_tiles: Array[Vector2]
 
 @onready var state_chart: StateChart =  $StateChart
 
+var spawn_movement_target: Marker2D
+
 
 func _ready() -> void:
 	super()
@@ -51,6 +53,11 @@ func _draw() -> void:
 
 func _process(_delta: float) -> void:
 	queue_redraw()
+
+
+func _physics_process(_delta: float) -> void:
+	if spawn_movement_target:
+		self.global_position = spawn_movement_target.global_position
 
 
 func get_tiles_for_sprite(tilemap: TileMapLayer) -> Array[Vector2]:
