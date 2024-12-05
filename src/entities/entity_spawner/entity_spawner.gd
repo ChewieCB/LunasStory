@@ -10,6 +10,7 @@ class_name EntitySpawner
 var entities: Array[Data] = []
 @export_category("Debug")
 @export var show_valid_placements: bool = false
+var debug_central_tile: Vector2
 
 
 
@@ -24,6 +25,8 @@ func _draw() -> void:
 	if show_valid_placements:
 		for point in get_valid_placements():
 			draw_circle(point, 2.0, Color.RED)
+	if debug_central_tile:
+		draw_circle(debug_central_tile, 4.0, Color.PURPLE)
 
 
 func _process(_delta) -> void:

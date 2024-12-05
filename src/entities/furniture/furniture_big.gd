@@ -16,6 +16,8 @@ var sprite_tiles: Array[Vector2]
 
 @export var debug_placement_collider: bool = false
 
+@onready var state_chart: StateChart =  $StateChart
+
 
 func _ready() -> void:
 	super()
@@ -64,6 +66,10 @@ func get_tiles_for_sprite(tilemap: TileMapLayer) -> Array[Vector2]:
 		return tiles
 
 
+func enable_preview() -> void:
+	state_chart.send_event("preview")
+
+
 func _show_invalid_placement() -> void:
 	sprite.modulate = Color.RED
 
@@ -84,3 +90,25 @@ func _on_drop(entity: Node2D) -> void:
 		dynamic_nav_obstacle.create_obstacle()
 		follow_component.invalid_tiles = []
 		follow_component.blocked_tiles = []
+
+
+func _on_placement_preview_state_entered() -> void:
+	sprite.modulate = Color(Color.GREEN, 0.5)
+	selectable_component.disable()
+	grabbable_component.disable()
+	hitbox_component.disable()
+	follow_component.enable()
+
+
+func _on_placement_preview_state_exited() -> void:
+	sprite.modulate = Color.WHITE
+	selectable_component.enable()
+	grabbable_component.enable()
+	hitbox_component.enable()
+	follow_component.disable()
+
+
+func _on_placement_preview_state_input(event: InputEvent) -> void:
+	if Input.is_action_just_pressed("interact"):
+		state_chart.send_event("drop")
+		state_chart.send_event("place_furniture")

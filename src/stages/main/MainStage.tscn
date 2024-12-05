@@ -110,11 +110,13 @@ hand_cursor = NodePath("../HandCursor")
 entity_scene = ExtResource("8_awlm4")
 entity_resources_path = "res://src/entities/ingredients/resources/"
 
-[node name="FurnitureSpawner" parent="." node_paths=PackedStringArray("tilemap", "hand_cursor") instance=ExtResource("7_2vhb3")]
+[node name="FurnitureSpawner" parent="." node_paths=PackedStringArray("cauldron_target", "tilemap", "hand_cursor") instance=ExtResource("7_2vhb3")]
+cauldron_target = NodePath("../Cauldron")
 tilemap = NodePath("../StructureTiles")
 hand_cursor = NodePath("../HandCursor")
 entity_scene = ExtResource("5_r4y4v")
 entity_resources_path = "res://src/entities/furniture/resources/"
+show_valid_placements = true
 
 [node name="WaveManager" parent="." node_paths=PackedStringArray("portal_parent", "ingredient_spawner", "brewing_manager") instance=ExtResource("2_jugkp")]
 waves = Array[ExtResource("9_kuilh")]([SubResource("Resource_1mybo"), SubResource("Resource_paaul"), SubResource("Resource_87prv"), SubResource("Resource_4xf7s"), SubResource("Resource_4xf7s"), SubResource("Resource_4xf7s"), SubResource("Resource_4xf7s")])

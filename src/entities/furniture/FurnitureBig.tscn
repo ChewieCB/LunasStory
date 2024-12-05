@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bwhulkm5ypjw2"]
+[gd_scene load_steps=13 format=3 uid="uid://bwhulkm5ypjw2"]
 
 [ext_resource type="Script" path="res://src/entities/furniture/furniture_big.gd" id="1_ag406"]
 [ext_resource type="PackedScene" uid="uid://l82e7lamaemc" path="res://src/components/Selectable/SelectableComponent.tscn" id="3_wyaeg"]
@@ -6,7 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://b6irvllg6u58o" path="res://src/components/MouseFollow/MouseFollowComponent.tscn" id="4_6wpy1"]
 [ext_resource type="PackedScene" uid="uid://pfmp13n5e2is" path="res://src/components/Hitbox/HitboxComponent.tscn" id="5_kbkav"]
 [ext_resource type="PackedScene" uid="uid://twux0snbpc37" path="res://src/components/Particles/ParticlesComponent.tscn" id="6_tuxp4"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="8_vt005"]
 [ext_resource type="PackedScene" uid="uid://b1idbltbgx3a4" path="res://src/components/NavObstacle/DynamicNavObstacle.tscn" id="9_b12nm"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/parallel_state.gd" id="9_pqynd"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_xexl2"]
 radius = 22.0
@@ -67,3 +69,9 @@ debug_color = Color(0, 0.6, 0.701961, 0)
 
 [node name="DynamicNavObstacleComponent" parent="." node_paths=PackedStringArray("obstacle_collider") instance=ExtResource("9_b12nm")]
 obstacle_collider = NodePath("../HitboxComponent/Area2D/CollisionShape2D")
+
+[node name="StateChart" type="Node" parent="."]
+script = ExtResource("8_vt005")
+
+[node name="Root" type="Node" parent="StateChart"]
+script = ExtResource("9_pqynd")

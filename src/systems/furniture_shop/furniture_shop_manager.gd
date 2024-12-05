@@ -41,5 +41,6 @@ func populate_shop_contents() -> void:
 
 
 func _on_furniture_purchased(data: FurnitureData) -> void:
+	#furniture_spawner.spawn_furniture(data)
 	furniture_spawner.spawn_furniture(data)
 	CurrencyManager.current_gold -= data.cost
