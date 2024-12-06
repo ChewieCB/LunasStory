@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="FurnitureData" load_steps=5 format=3 uid="uid://c4asgqqlnsyot"]
+
+[ext_resource type="Texture2D" uid="uid://d2rt78wncoa04" path="res://src/entities/furniture/assets/normal/furniture_32x32:armchair_side.png" id="1_j7c5w"]
+[ext_resource type="Texture2D" uid="uid://b8a6o2obclys8" path="res://src/entities/furniture/assets/disabled/furniture_32x32_disabled:armchair_side.png" id="2_hiejs"]
+[ext_resource type="Texture2D" uid="uid://1ximnro4h1kd" path="res://src/entities/furniture/assets/hover/furniture_32x32_highlight:armchair_side.png" id="3_1eb0v"]
+[ext_resource type="Script" path="res://src/entities/furniture/furniture_data_resource.gd" id="4_hkjaj"]
+
+[resource]
+script = ExtResource("4_hkjaj")
+cost = 50
+sprite_size = Vector2(16, 16)
+sprite_offset = Vector2(8, 8)
+name = "Armchair Side"
+icon = ExtResource("1_j7c5w")
+icon_hover = ExtResource("3_1eb0v")
+icon_disabled = ExtResource("2_hiejs")

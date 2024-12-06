@@ -1,0 +1,185 @@
+[gd_scene load_steps=15 format=3 uid="uid://6p86ajka0t1m"]
+
+[ext_resource type="Script" path="res://src/entities/gold/gold.gd" id="1_gs0mq"]
+[ext_resource type="Texture2D" uid="uid://cyl4rluukyvxf" path="res://src/entities/gold/assets/gold_1_stack.png" id="1_rm33h"]
+[ext_resource type="PackedScene" uid="uid://bajo5fm7b78gk" path="res://src/components/Collectible/CollectibleComponent.tscn" id="3_0yq7v"]
+[ext_resource type="Texture2D" uid="uid://dtexqns3sjqhk" path="res://src/entities/gold/assets/gold_2_stack.png" id="3_2y73x"]
+[ext_resource type="Texture2D" uid="uid://b10tsp0b570" path="res://src/entities/gold/assets/gold_3_stack.png" id="4_l1qut"]
+[ext_resource type="Texture2D" uid="uid://cjbi6b1upgvmk" path="res://src/entities/gold/assets/gold_4_stack.png" id="5_3qb1e"]
+[ext_resource type="Script" path="res://src/entities/gold/move_towards_component.gd" id="5_dfd3m"]
+[ext_resource type="Texture2D" uid="uid://dxkqfk3qirsq5" path="res://src/entities/gold/assets/gold_5_stack.png" id="6_0xv5u"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lshw8"]
+radius = 11.3137
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qqsfo"]
+radius = 72.0
+
+[sub_resource type="Animation" id="Animation_x3pwq"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_na3u8"]
+resource_name = "collect"
+length = 0.8
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(0.233258, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(0.233258, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.2, 1.2)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(0.233258, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -10)]
+}
+
+[sub_resource type="Animation" id="Animation_cfuvp"]
+resource_name = "spawn"
+length = 0.3
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(0.34151, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(0.34151, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(0.34151, 1),
+"update": 0,
+"values": [Vector2(0, 10), Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_g4mfo"]
+_data = {
+"RESET": SubResource("Animation_x3pwq"),
+"collect": SubResource("Animation_na3u8"),
+"spawn": SubResource("Animation_cfuvp")
+}
+
+[node name="Gold" type="Node2D" node_paths=PackedStringArray("collectible_component", "move_to_component")]
+script = ExtResource("1_gs0mq")
+collectible_component = NodePath("CollectibleComponent")
+move_to_component = NodePath("MoveTowardsComponent")
+gold_sprite_texures = Array[Texture]([ExtResource("1_rm33h"), ExtResource("3_2y73x"), ExtResource("4_l1qut"), ExtResource("5_3qb1e"), ExtResource("6_0xv5u")])
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0)
+texture = ExtResource("1_rm33h")
+
+[node name="CollectibleComponent" parent="." node_paths=PackedStringArray("collider") instance=ExtResource("3_0yq7v")]
+collision_layer = 16
+collision_mask = 2
+collider = NodePath("CollisionShape2D")
+enabled = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollectibleComponent"]
+shape = SubResource("CircleShape2D_lshw8")
+
+[node name="MoveTowardsComponent" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 2
+script = ExtResource("5_dfd3m")
+collection_radius = 115.0
+move_speed = 450.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MoveTowardsComponent"]
+shape = SubResource("CircleShape2D_qqsfo")
+disabled = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_g4mfo")
+}
+
+[connection signal="area_entered" from="CollectibleComponent" to="CollectibleComponent" method="_on_area_entered"]
+[connection signal="area_entered" from="MoveTowardsComponent" to="MoveTowardsComponent" method="_on_area_entered"]
+[connection signal="area_exited" from="MoveTowardsComponent" to="MoveTowardsComponent" method="_on_area_exited"]
+[connection signal="body_entered" from="MoveTowardsComponent" to="MoveTowardsComponent" method="_on_body_entered"]
+[connection signal="body_exited" from="MoveTowardsComponent" to="MoveTowardsComponent" method="_on_body_exited"]

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="FurnitureData" load_steps=5 format=3 uid="uid://b1fh6gmg6d1qq"]
+
+[ext_resource type="Texture2D" uid="uid://b3068vlwamhhq" path="res://src/entities/furniture/assets/normal/furniture_32x32:plant.png" id="1_q0aqq"]
+[ext_resource type="Texture2D" uid="uid://depoeliocghqj" path="res://src/entities/furniture/assets/disabled/furniture_32x32_disabled:plant.png" id="2_y6lqa"]
+[ext_resource type="Texture2D" uid="uid://bebjmok0sxayy" path="res://src/entities/furniture/assets/hover/furniture_32x32_highlight:plant.png" id="3_yakqu"]
+[ext_resource type="Script" path="res://src/entities/furniture/furniture_data_resource.gd" id="4_c2k4n"]
+
+[resource]
+script = ExtResource("4_c2k4n")
+cost = 50
+sprite_size = Vector2(16, 16)
+sprite_offset = Vector2(8, 0)
+name = "Plant"
+icon = ExtResource("1_q0aqq")
+icon_hover = ExtResource("3_yakqu")
+icon_disabled = ExtResource("2_y6lqa")

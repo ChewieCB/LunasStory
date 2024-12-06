@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="FurnitureData" load_steps=5 format=3 uid="uid://8s2ea40nidjl"]
+
+[ext_resource type="Texture2D" uid="uid://ss6ccx2pbbw3" path="res://src/entities/furniture/assets/normal/furniture_32x32:bookcase_single.png" id="1_kqd33"]
+[ext_resource type="Texture2D" uid="uid://duncq1lfnq45g" path="res://src/entities/furniture/assets/disabled/furniture_32x32_disabled:bookcase_single.png" id="2_hcjnk"]
+[ext_resource type="Texture2D" uid="uid://6giuad5hk4t2" path="res://src/entities/furniture/assets/hover/furniture_32x32_highlight:bookcase_single.png" id="3_7n1o6"]
+[ext_resource type="Script" path="res://src/entities/furniture/furniture_data_resource.gd" id="4_fmw8y"]
+
+[resource]
+script = ExtResource("4_fmw8y")
+cost = 50
+sprite_size = Vector2(16, 32)
+sprite_offset = Vector2(8, 16)
+name = "Bookcase Single"
+icon = ExtResource("1_kqd33")
+icon_hover = ExtResource("3_7n1o6")
+icon_disabled = ExtResource("2_hcjnk")

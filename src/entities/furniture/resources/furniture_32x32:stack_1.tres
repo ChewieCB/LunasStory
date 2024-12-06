@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="FurnitureData" load_steps=5 format=3 uid="uid://djw83vmsorr68"]
+
+[ext_resource type="Texture2D" uid="uid://4v4ycak0j73s" path="res://src/entities/furniture/assets/normal/furniture_32x32:stack_1.png" id="1_80786"]
+[ext_resource type="Texture2D" uid="uid://btl3swjtvke4a" path="res://src/entities/furniture/assets/disabled/furniture_32x32_disabled:stacks.png" id="2_ncpbj"]
+[ext_resource type="Texture2D" uid="uid://con76vc64n8oo" path="res://src/entities/furniture/assets/hover/furniture_32x32_highlight:stacks.png" id="3_x7mm0"]
+[ext_resource type="Script" path="res://src/entities/furniture/furniture_data_resource.gd" id="4_tmdml"]
+
+[resource]
+script = ExtResource("4_tmdml")
+cost = 50
+sprite_size = Vector2(16, 16)
+sprite_offset = Vector2(8, 8)
+name = "Stack 1"
+icon = ExtResource("1_80786")
+icon_hover = ExtResource("3_x7mm0")
+icon_disabled = ExtResource("2_ncpbj")

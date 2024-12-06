@@ -1,0 +1,97 @@
+[gd_scene load_steps=9 format=3 uid="uid://s21dn7ti8wy6"]
+
+[ext_resource type="Script" path="res://src/ui/furniture_shop/furniture_button_ui.gd" id="1_0wbbc"]
+[ext_resource type="Texture2D" uid="uid://ccvp5211esrj" path="res://src/ui/gold_stack.png" id="2_plkii"]
+[ext_resource type="FontFile" uid="uid://c6nimynn33gk7" path="res://assets/fonts/Big Boy.ttf" id="3_6diy6"]
+[ext_resource type="Texture2D" uid="uid://c3gfyoe1u4c6y" path="res://src/ui/ui_box_1_normal.png" id="4_mika3"]
+[ext_resource type="Texture2D" uid="uid://dtpghju0086yx" path="res://src/ui/ui_box_1_pressed.png" id="5_0qbja"]
+[ext_resource type="Texture2D" uid="uid://1l6gx3wryjil" path="res://src/ui/ui_box_1_hover.png" id="6_g8gn1"]
+[ext_resource type="Texture2D" uid="uid://cs75847vrvci0" path="res://src/ui/ui_box_1_disabled.png" id="7_4nokd"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_qaqrv"]
+font = ExtResource("3_6diy6")
+font_color = Color(0.984314, 0.666667, 0.113725, 1)
+outline_size = 4
+outline_color = Color(0.745098, 0.341176, 0.0509804, 1)
+
+[node name="FurnitureButtonUI" type="MarginContainer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -29.0
+offset_top = -32.0
+offset_right = 29.0
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+script = ExtResource("1_0wbbc")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 0
+alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 6
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/MarginContainer"]
+modulate = Color(0.340339, 0.340339, 0.340339, 1)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/MarginContainer/HBoxContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("2_plkii")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="VBoxContainer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "000"
+label_settings = SubResource("LabelSettings_qaqrv")
+vertical_alignment = 1
+
+[node name="ButtonArea" type="TextureButton" parent="VBoxContainer"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("4_mika3")
+texture_pressed = ExtResource("5_0qbja")
+texture_hover = ExtResource("6_g8gn1")
+texture_disabled = ExtResource("7_4nokd")
+stretch_mode = 5
+
+[node name="FurnitureIcon" type="TextureRect" parent="VBoxContainer/ButtonArea"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+expand_mode = 3
+stretch_mode = 3
+
+[connection signal="mouse_entered" from="VBoxContainer/ButtonArea" to="." method="_on_button_area_mouse_entered"]
+[connection signal="mouse_exited" from="VBoxContainer/ButtonArea" to="." method="_on_button_area_mouse_exited"]
+[connection signal="pressed" from="VBoxContainer/ButtonArea" to="." method="_on_button_area_pressed"]

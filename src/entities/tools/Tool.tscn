@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://dmfheynsjdgj7" path="res://src/entities/tools/assets/brush_normal.png" id="2_osrbq"]
 [ext_resource type="Texture2D" uid="uid://cms2w0631rpt4" path="res://src/entities/tools/assets/brush_hover.png" id="3_53mbn"]
 [ext_resource type="Texture2D" uid="uid://b1l6p811ovgga" path="res://src/entities/tools/assets/brush_disabled.png" id="3_cochu"]
-[ext_resource type="Script" path="res://src/potion_brewing/resources/ingredient_data.gd" id="5_4h4cy"]
+[ext_resource type="Script" path="res://src/systems/potion_brewing/resources/ingredient_data.gd" id="5_4h4cy"]
 [ext_resource type="PackedScene" uid="uid://b6irvllg6u58o" path="res://src/components/MouseFollow/MouseFollowComponent.tscn" id="5_xjewd"]
 [ext_resource type="PackedScene" uid="uid://pfmp13n5e2is" path="res://src/components/Hitbox/HitboxComponent.tscn" id="7_bryfa"]
 

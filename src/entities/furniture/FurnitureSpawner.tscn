@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://co0s8tv0s52ls"]
+
+[ext_resource type="Script" path="res://src/entities/furniture/furniture_spawner.gd" id="1_pdxyw"]
+
+[sub_resource type="Curve2D" id="Curve2D_b4kup"]
+_data = {
+"points": PackedVector2Array(0, 0, 16, -32, 0, 0, 0, 0, 0, 0, 32, 0)
+}
+point_count = 2
+
+[node name="FurnitureSpawner" type="Node2D"]
+script = ExtResource("1_pdxyw")
+
+[node name="SpawnArc" type="Path2D" parent="."]
+curve = SubResource("Curve2D_b4kup")
+
+[node name="SpawnArcFollow" type="PathFollow2D" parent="SpawnArc"]
+rotation = -1.10715
+rotates = false
+loop = false
+
+[node name="SpawnTarget" type="Marker2D" parent="SpawnArc/SpawnArcFollow"]

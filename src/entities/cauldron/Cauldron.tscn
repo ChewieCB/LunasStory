@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://fg2bdp05jf4t" path="res://src/entities/cauldron/assets/cauldron_unlit_disabled.png" id="3_e4v0e"]
 [ext_resource type="PackedScene" uid="uid://l82e7lamaemc" path="res://src/components/Selectable/SelectableComponent.tscn" id="4_i3fde"]
 [ext_resource type="Texture2D" uid="uid://cbyj24cjqhvpx" path="res://src/entities/cauldron/assets/cauldron_unlit_hover.png" id="4_mfxhh"]
-[ext_resource type="Script" path="res://src/potion_brewing/resources/ingredient_data.gd" id="5_pod1u"]
+[ext_resource type="Script" path="res://src/systems/potion_brewing/resources/ingredient_data.gd" id="5_pod1u"]
 [ext_resource type="Script" path="res://src/components/Hitbox/hitbox_component.gd" id="7_lhmb4"]
 [ext_resource type="PackedScene" uid="uid://twux0snbpc37" path="res://src/components/Particles/ParticlesComponent.tscn" id="8_5t560"]
 [ext_resource type="PackedScene" uid="uid://b1idbltbgx3a4" path="res://src/components/NavObstacle/DynamicNavObstacle.tscn" id="9_ino11"]
@@ -14,6 +14,7 @@
 
 [sub_resource type="Resource" id="Resource_dr7ri"]
 script = ExtResource("5_pod1u")
+sprite_size = Vector2(8, 8)
 name = "Cauldron"
 icon = ExtResource("1_x47gi")
 icon_hover = ExtResource("4_mfxhh")

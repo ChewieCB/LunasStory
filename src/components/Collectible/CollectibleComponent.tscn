@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bajo5fm7b78gk"]
+
+[ext_resource type="Script" path="res://src/components/Collectible/collectible_component.gd" id="1_f7068"]
+
+[node name="CollectibleComponent" type="Area2D"]
+script = ExtResource("1_f7068")

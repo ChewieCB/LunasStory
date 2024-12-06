@@ -15,15 +15,19 @@ func _ready() -> void:
 	add_to_group("consumer")
 
 
-func _consume_ingredient(ingredient: Ingredient) -> void:
-	print_rich("%s [color=purple]consumed[/color]!" % ingredient.name)
-	var particles = particles_component.spawn_one_shot_particle()
+func emit_particles(particle = particles_component.default_particle) -> void:
+	var particles = particles_component.spawn_one_shot_particle(particle)
 	add_child(particles)
 	particles.finished.connect(func(): 
 		remove_child(particles) 
 		particles.queue_free()
 	)
 	particles.emitting = true
+
+
+func _consume_ingredient(ingredient: Ingredient) -> void:
+	print_rich("%s [color=purple]consumed[/color]!" % ingredient.name)
+	emit_particles()
 	emit_signal("ingredient_consumed", ingredient)
 
 

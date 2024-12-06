@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="FurnitureData" load_steps=5 format=3 uid="uid://b4732ycq74m2n"]
+
+[ext_resource type="Texture2D" uid="uid://ehsdu10d224" path="res://src/entities/furniture/assets/normal/furniture_32x32:bookcase_candles.png" id="1_i5uuk"]
+[ext_resource type="Texture2D" uid="uid://cb6m5cfd2n5to" path="res://src/entities/furniture/assets/disabled/furniture_32x32_disabled:bookcase_candles.png" id="2_8qoij"]
+[ext_resource type="Texture2D" uid="uid://e0sr8x1tvgcl" path="res://src/entities/furniture/assets/hover/furniture_32x32_highlight:bookcase_candles.png" id="3_7sfyv"]
+[ext_resource type="Script" path="res://src/entities/furniture/furniture_data_resource.gd" id="4_5fip1"]
+
+[resource]
+script = ExtResource("4_5fip1")
+cost = 50
+sprite_size = Vector2(32, 16)
+sprite_offset = Vector2(8, 0)
+name = "Bookcase Candles"
+icon = ExtResource("1_i5uuk")
+icon_hover = ExtResource("3_7sfyv")
+icon_disabled = ExtResource("2_8qoij")

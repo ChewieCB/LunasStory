@@ -10,6 +10,8 @@ var default_map_rid: RID
 
 
 func _ready() -> void:
+	if not obstacle_collider:
+		return disable()
 	default_map_rid = entity.get_world_2d().get_navigation_map()
 	await NavigationServer2D.map_changed
 	_get_current_nav_region()
@@ -49,7 +51,8 @@ func create_obstacle(collision_shape: Shape2D = obstacle_collider.shape) -> void
 
 
 func remove_previous_obstacle() -> void:
-	_remove_obstacle(previous_obstacle)
+	if previous_obstacle:
+		_remove_obstacle(previous_obstacle)
 
 
 func _remove_obstacle(obstacle: NavigationObstacle2D) -> void:

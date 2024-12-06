@@ -1,27 +1,20 @@
-[gd_scene load_steps=15 format=3 uid="uid://bwhulkm5ypjw2"]
+[gd_scene load_steps=13 format=3 uid="uid://bwhulkm5ypjw2"]
 
 [ext_resource type="Script" path="res://src/entities/furniture/furniture_big.gd" id="1_ag406"]
-[ext_resource type="Texture2D" uid="uid://dfghcnj0dnxal" path="res://src/entities/furniture/assets/normal/furniture_32x32_1.png" id="2_l2jcn"]
-[ext_resource type="Texture2D" uid="uid://vtw7mcvpnjr5" path="res://src/entities/furniture/assets/hover/furniture_32x32_highlight_1.png" id="3_3hhr4"]
 [ext_resource type="PackedScene" uid="uid://l82e7lamaemc" path="res://src/components/Selectable/SelectableComponent.tscn" id="3_wyaeg"]
 [ext_resource type="PackedScene" uid="uid://cojyfxu5j1idb" path="res://src/components/Grabbable/GrabbableComponent.tscn" id="3_y2bme"]
-[ext_resource type="Script" path="res://src/potion_brewing/resources/ingredient_data.gd" id="4_1a4y5"]
 [ext_resource type="PackedScene" uid="uid://b6irvllg6u58o" path="res://src/components/MouseFollow/MouseFollowComponent.tscn" id="4_6wpy1"]
 [ext_resource type="PackedScene" uid="uid://pfmp13n5e2is" path="res://src/components/Hitbox/HitboxComponent.tscn" id="5_kbkav"]
 [ext_resource type="PackedScene" uid="uid://twux0snbpc37" path="res://src/components/Particles/ParticlesComponent.tscn" id="6_tuxp4"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="8_vt005"]
 [ext_resource type="PackedScene" uid="uid://b1idbltbgx3a4" path="res://src/components/NavObstacle/DynamicNavObstacle.tscn" id="9_b12nm"]
-
-[sub_resource type="Resource" id="Resource_fu0ev"]
-script = ExtResource("4_1a4y5")
-name = "BookCase"
-icon = ExtResource("2_l2jcn")
-icon_hover = ExtResource("3_3hhr4")
+[ext_resource type="Script" path="res://addons/godot_state_charts/parallel_state.gd" id="9_pqynd"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_xexl2"]
 radius = 22.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_upswy"]
-size = Vector2(32, 32)
+size = Vector2(28, 28)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_eawpa"]
 size = Vector2(32, 32)
@@ -34,7 +27,6 @@ hitbox_component = NodePath("HitboxComponent")
 selectable_component = NodePath("SelectableComponent")
 grabbable_component = NodePath("GrabbableComponent")
 follow_component = NodePath("FollowComponent")
-data = SubResource("Resource_fu0ev")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 
@@ -43,11 +35,12 @@ sprite = NodePath("../Sprite2D")
 area_2d = NodePath("Area2D")
 
 [node name="Area2D" type="Area2D" parent="SelectableComponent"]
-collision_layer = 21
+collision_layer = 16
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SelectableComponent/Area2D"]
 shape = SubResource("CircleShape2D_xexl2")
+debug_color = Color(0, 0.6, 0.701961, 0)
 
 [node name="FollowComponent" parent="." instance=ExtResource("4_6wpy1")]
 lock_to_grid = true
@@ -60,17 +53,25 @@ collision_mask = 12
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent/Area2D"]
 shape = SubResource("RectangleShape2D_upswy")
+debug_color = Color(0, 0.6, 0.701961, 0)
 
 [node name="GrabbableComponent" parent="." node_paths=PackedStringArray("selectable_component", "collider") instance=ExtResource("3_y2bme")]
-collision_layer = 20
+collision_layer = 16
 collision_mask = 2
 selectable_component = NodePath("../SelectableComponent")
 collider = NodePath("CollisionShape2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GrabbableComponent"]
 shape = SubResource("RectangleShape2D_eawpa")
+debug_color = Color(0, 0.6, 0.701961, 0)
 
 [node name="ParticlesComponent" parent="." instance=ExtResource("6_tuxp4")]
 
 [node name="DynamicNavObstacleComponent" parent="." node_paths=PackedStringArray("obstacle_collider") instance=ExtResource("9_b12nm")]
 obstacle_collider = NodePath("../HitboxComponent/Area2D/CollisionShape2D")
+
+[node name="StateChart" type="Node" parent="."]
+script = ExtResource("8_vt005")
+
+[node name="Root" type="Node" parent="StateChart"]
+script = ExtResource("9_pqynd")

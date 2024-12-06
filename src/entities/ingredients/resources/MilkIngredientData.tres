@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://dj4t7j2hk1m3q" path="res://src/entities/ingredients/assets/normal/ingredient_017.png" id="1_t1xpx"]
 [ext_resource type="Texture2D" uid="uid://6xg6hvtoygdr" path="res://src/entities/ingredients/assets/disabled/ingredient_disabled_017.png" id="2_e5wsw"]
 [ext_resource type="Texture2D" uid="uid://dx60kiuyw7gsh" path="res://src/entities/ingredients/assets/hover/ingredient_hover_017.png" id="3_r7f8r"]
-[ext_resource type="Script" path="res://src/potion_brewing/resources/ingredient_data.gd" id="4_5s17x"]
+[ext_resource type="Script" path="res://src/systems/potion_brewing/resources/ingredient_data.gd" id="4_5s17x"]
 
 [resource]
 script = ExtResource("4_5s17x")

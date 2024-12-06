@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://b818guyop407v"]
+
+[ext_resource type="Script" path="res://src/systems/furniture_shop/furniture_shop_manager.gd" id="1_0mnw5"]
+
+[node name="FurnitureShopManager" type="Node"]
+script = ExtResource("1_0mnw5")
