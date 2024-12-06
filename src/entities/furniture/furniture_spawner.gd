@@ -23,6 +23,7 @@ func spawn_furniture(data: FurnitureData) -> FurnitureBig:
 	# Tween the object in an arc from the cauldron from it's placement point
 	var final_pos: Vector2 = new_furniture.global_position
 	var spawn_pos: Vector2 = cauldron_target.global_position
+	# TODO - tweak the arc direction based on the angle between positions
 	spawn_arc_path.curve.set_point_position(0, spawn_pos)
 	spawn_arc_path.curve.set_point_position(1, final_pos)
 	new_furniture.spawn_movement_target = spawn_target
