@@ -15,12 +15,13 @@ signal spawn_limit_reached(portal: PortalSpawner)
 @export var spawn_timer: Timer
 
 @export_category("Spawn Settings")
-@export var spawn_type: PackedScene
+@export var spawns: Array[EnemySpawn]
 @export var spawn_time: float = 2.0:
 	set(value):
 		spawn_time = value
 		spawn_timer.wait_time = spawn_time
 @export var max_spawns: int = -1
+@export var agent_target: InteractibleObject
 var current_spawns: int = 0
 
 
@@ -44,9 +45,11 @@ func deactivate() -> void:
 	state_chart.send_event("disable")
 
 
-func spawn_agent(agent_type: PackedScene = spawn_type) -> AIAgent:
+func spawn_agent(agent_type: PackedScene) -> AIAgent:
 	var new_agent: AIAgent = agent_type.instantiate()
 	get_parent().add_child(new_agent)
+	new_agent.target = agent_target
+	new_agent._spawn()
 	emit_signal("agent_spawned", new_agent, self)
 	return new_agent
 
@@ -67,8 +70,20 @@ func _on_status_idle_state_entered() -> void:
 func _on_status_active_state_entered() -> void:
 	spawn_timer.stop()
 	
-	if spawn_type and (max_spawns == -1 or current_spawns < max_spawns):
-		var new_agent: AIAgent = spawn_agent()
+	if spawns and (max_spawns == -1 or current_spawns < max_spawns):
+		
+		# Select a random enemy type to spawn based on the spawn chance
+		var spawn_roll: float = randf()
+		var valid_spawns = spawns.filter(func(x): return spawn_roll <= x.spawn_chance)
+		valid_spawns.sort_custom(
+			func(a, b):
+				if a.spawn_chance > b.spawn_chance:
+					return true
+				return false
+		)
+		var spawn_type = valid_spawns[0]
+		
+		var new_agent: AIAgent = await spawn_agent(spawn_type.enemy)
 		await new_agent.spawned
 		current_spawns += 1
 		

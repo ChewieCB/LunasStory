@@ -4,10 +4,12 @@ class_name WaveManager
 signal enemy_killed(enemy: AIAgent)
 
 @export var waves: Array[Wave]
+@export var agent_target: InteractibleObject
 @export var portal_parent: Node2D
 @export var portal_scene: PackedScene
 @export var ingredient_spawner: IngredientSpawner
 @export var brewing_manager: BrewingManager
+@export var nav_manager: NavigationManager
 var active_portals: Array = []
 var active_enemies: Array = []
 var current_wave: Wave
@@ -31,7 +33,7 @@ func start_wave(wave: Wave = next_wave()) -> void:
 		end_wave(current_wave)
 	
 	if wave:
-		active_portals = spawn_portals(wave.num_portals, wave.portal_max_spawns, wave.spawn_delay)
+		active_portals = spawn_portals(wave)
 		#get_parent().state_debugger.debug_node(active_portals.front().state_chart)
 		await get_tree().create_timer(1.5).timeout
 		activate_portals(active_portals)
@@ -52,13 +54,15 @@ func end_wave(wave: Wave = current_wave, stop_waves: bool = false) -> void:
 		start_wave()
 
 
-func spawn_portals(count: int, max_spawns: int, spawn_time: float) -> Array:
+func spawn_portals(wave: Wave) -> Array:
 	var portals = []
 	
-	for i in count:
+	for i in wave.num_portals:
 		var _portal = portal_scene.instantiate()
-		_portal.max_spawns = max_spawns
-		_portal.spawn_time = spawn_time
+		_portal.max_spawns = wave.portal_max_spawns
+		_portal.spawn_time = wave.spawn_delay
+		_portal.spawns = wave.spawns
+		_portal.agent_target = agent_target
 		
 		var portal_spawn = _get_portal_spawn()
 		if not portal_spawn:

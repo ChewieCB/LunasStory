@@ -1,9 +1,8 @@
-[gd_scene load_steps=24 format=3 uid="uid://dcxugwx7ivfx"]
+[gd_scene load_steps=23 format=3 uid="uid://dcxugwx7ivfx"]
 
 [ext_resource type="Script" path="res://src/entities/portal_spawner/portal_spawner.gd" id="1_7nh3d"]
 [ext_resource type="Texture2D" uid="uid://pn0awgc3pc8a" path="res://src/entities/portal_spawner/assets/active/portal_active_1.png" id="1_urptd"]
 [ext_resource type="Texture2D" uid="uid://khnnl4hkqwkh" path="res://src/entities/portal_spawner/assets/active/portal_active_2.png" id="2_3wnpw"]
-[ext_resource type="PackedScene" uid="uid://clhm87crkcsl6" path="res://src/actors/enemies/base_enemy/BaseEnemy.tscn" id="2_15vrf"]
 [ext_resource type="Texture2D" uid="uid://bals7irrwrlfe" path="res://src/entities/portal_spawner/assets/active/portal_active_3.png" id="3_tnna3"]
 [ext_resource type="Texture2D" uid="uid://03qml2iqvxiv" path="res://src/entities/portal_spawner/assets/active/portal_active_4.png" id="4_v1o66"]
 [ext_resource type="Texture2D" uid="uid://beydep6nvetx5" path="res://src/entities/portal_spawner/assets/opening/portal_opening_6.png" id="5_3w5qw"]
@@ -118,7 +117,7 @@ script = ExtResource("1_7nh3d")
 anim_sprite = NodePath("AnimatedSprite2D")
 state_chart = NodePath("StateChart")
 spawn_timer = NodePath("SpawnTimer")
-spawn_type = ExtResource("2_15vrf")
+spawns = null
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_1s6ir")
