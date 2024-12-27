@@ -10,7 +10,7 @@ signal hurt
 @export var max_health: float = 100
 var current_health: float:
 	set(value):
-		if has_died:
+		if has_died or not enabled:
 			return
 		# Cache previous value so we can do dynamic health bars
 		var prev_health = current_health
@@ -31,11 +31,13 @@ func _ready() -> void:
 
 
 func damage(_damage: float) -> void:
-	current_health -= _damage
+	if enabled:
+		current_health -= _damage
 
 
 func heal(health: float) -> void:
-	current_health += health
+	if enabled:
+		current_health += health
 
 
 func initialize_health() -> void:

@@ -16,11 +16,8 @@ signal navigation_finished
 @export var search_radius: float = 128
 @export var max_intersect_results := 8
 
-@export_category("Pathfinding")
-@export var path_distance: float = 4.0
-@export var target_distance: float = 8.0
 @export_category("Avoidance")
-@export var avoid_radius: float = 8.0
+@export var avoid_radius: float = 4.0
 
 var target: InteractibleObject: set = set_target
 var path: PackedVector2Array
@@ -28,11 +25,6 @@ var nav_map_rid: RID
 var nav_agent_rid: RID
 
 var query: PhysicsShapeQueryParameters2D
-
-## Skip n calculation frames
-@export var skip_frames: int = 20
-# Offset the tick used for skip_frames by a random number so it's more evenly spread out 
-var tick_offset: int
 
 
 # TODO - make weighting exportable for enemies with different target priorities
@@ -75,9 +67,6 @@ func _wait_for_navigation_setup() -> void:
 	NavigationServer2D.agent_set_avoidance_callback(nav_agent_rid, self._on_velocity_computed)
 	nav_agent.velocity_computed.connect(self._on_velocity_computed)
 	
-	# random tick offset 
-	tick_offset = randi() % 60
-	
 	process_mode = Node.PROCESS_MODE_INHERIT
 
 
@@ -91,6 +80,12 @@ func _physics_process(_delta) -> void:
 			nav_agent.set_velocity(new_velocity)
 		else:
 			_on_velocity_computed(new_velocity)
+	
+	# Lock enemies to the nav region
+	entity.global_position = NavigationServer2D.map_get_closest_point(
+		nav_map_rid,
+		entity.global_position,
+	)
 
 
 func set_nav_target_position(pos: Vector2) -> void:
@@ -179,20 +174,21 @@ func _get_target(_entity: Node2D = null) -> Node2D:
 
 func set_target(value):
 	# Disconnect previous signals
-	if target:
-		if target.grabbable_component:
-			target.grabbable_component.pickup.disconnect(_get_target)
-			#target.grabbable_component.drop.disconnect(update_path)
-		if target.health_component:
-			target.health_component.died.disconnect(_get_target)
+	#if target:
+		#if target.grabbable_component:
+			#target.grabbable_component.pickup.disconnect(_get_target)
+			##target.grabbable_component.drop.disconnect(update_path)
+		#if target.health_component:
+			#target.health_component.died.disconnect(_get_target)
 	
 	target = value
+	entity.target_node = target
 	
 	# Connect signals
-	if target.grabbable_component:
-		target.grabbable_component.pickup.connect(_get_target)
-		#target.grabbable_component.drop.connect(update_path)
-	if target.health_component:
-		target.health_component.died.connect(_get_target)
+	#if target.grabbable_component:
+		#target.grabbable_component.pickup.connect(_get_target)
+		##target.grabbable_component.drop.connect(update_path)
+	#if target.health_component:
+		#target.health_component.died.connect(_get_target)
 	
 	set_nav_target_position(target.global_position)

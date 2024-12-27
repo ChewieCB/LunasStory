@@ -21,7 +21,7 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_srcb7"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8h6wu"]
-radius = 132.0
+radius = 16.0
 
 [sub_resource type="Resource" id="Resource_ti5ql"]
 script = ExtResource("5_yo8xg")
@@ -105,9 +105,9 @@ path_desired_distance = 4.0
 target_desired_distance = 8.0
 simplify_path = true
 avoidance_enabled = true
-radius = 8.0
-neighbor_distance = 128.0
-debug_enabled = true
+radius = 6.0
+neighbor_distance = 32.0
+max_neighbors = 12
 debug_path_custom_color = Color(1, 0.08, 0.08, 1)
 
 [node name="StateChart" type="Node" parent="."]

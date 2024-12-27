@@ -9,7 +9,7 @@ signal enemy_killed(enemy: AIAgent)
 @export var portal_scene: PackedScene
 @export var ingredient_spawner: IngredientSpawner
 @export var brewing_manager: BrewingManager
-@export var nav_manager: NavigationManager
+#@export var nav_manager: NavigationManager
 var active_portals: Array = []
 var active_enemies: Array = []
 var current_wave: Wave
