@@ -153,11 +153,8 @@ func _on_damage_hurt_state_entered() -> void:
 
 func _on_damage_dead_state_entered() -> void:
 	var particles = particles_component.spawn_one_shot_particle(death_particle)
-	particles_component.emit_particles(self, particles)
-	
+	particles_component.emit_particles(get_parent(), particles)
 	sprite.visible = false
-	
-	await particles.finished
 	queue_free()
 
 ## ======== Signal Callbacks ========
