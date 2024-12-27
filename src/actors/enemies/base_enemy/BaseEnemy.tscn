@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://clhm87crkcsl6"]
+[gd_scene load_steps=21 format=3 uid="uid://clhm87crkcsl6"]
 
 [ext_resource type="Script" path="res://src/actors/enemies/base_enemy/base_enemy.gd" id="1_ch4pi"]
 [ext_resource type="Texture2D" uid="uid://bxwvf55pjcr52" path="res://src/actors/enemies/assets/cabezo/ghost_enemy_sheet.png" id="1_rqkiv"]
@@ -17,12 +17,8 @@
 [ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="7_8e0vm"]
 [ext_resource type="Resource" uid="uid://bfll8kxvcyxn2" path="res://assets/particles/impact/ImpactParticle.tres" id="8_v0c0v"]
 [ext_resource type="PackedScene" uid="uid://lysd0wn0n81t" path="res://src/ui/health_bar/HealthBar.tscn" id="15_pxubp"]
-[ext_resource type="Script" path="res://src/components/Hitbox/hitbox_component.gd" id="18_rai2j"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_srcb7"]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_urmvv"]
-radius = 132.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8h6wu"]
 radius = 132.0
@@ -46,7 +42,7 @@ collision_layer = 8
 collision_mask = 13
 motion_mode = 1
 script = ExtResource("1_ch4pi")
-target_range_hitbox_component = NodePath("TargetGatheringHitbox")
+target_range_hitbox_component = NodePath("")
 attack_range_hitbox_component = NodePath("AttackRangeHitbox")
 ai_pathfinding_component = NodePath("AIPathfindingComponent")
 hitbox_component = NodePath("HitboxComponent")
@@ -81,16 +77,6 @@ collision_mask = 84
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent/Area2D"]
 shape = SubResource("CircleShape2D_srcb7")
 
-[node name="TargetGatheringHitbox" type="Node2D" parent="."]
-script = ExtResource("18_rai2j")
-
-[node name="Area2D" type="Area2D" parent="TargetGatheringHitbox"]
-collision_layer = 8
-collision_mask = 52
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TargetGatheringHitbox/Area2D"]
-shape = SubResource("CircleShape2D_urmvv")
-
 [node name="AttackRangeHitbox" parent="." instance=ExtResource("2_sp0wo")]
 
 [node name="Area2D" type="Area2D" parent="AttackRangeHitbox"]
@@ -121,6 +107,7 @@ simplify_path = true
 avoidance_enabled = true
 radius = 8.0
 neighbor_distance = 128.0
+debug_enabled = true
 debug_path_custom_color = Color(1, 0.08, 0.08, 1)
 
 [node name="StateChart" type="Node" parent="."]
@@ -266,7 +253,6 @@ health_component = NodePath("../../HealthComponent")
 [connection signal="area_entered" from="HitboxComponent/Area2D" to="HitboxComponent" method="_on_area_2d_area_entered"]
 [connection signal="area_exited" from="HitboxComponent/Area2D" to="HitboxComponent" method="_on_area_2d_area_exited"]
 [connection signal="area_entered" from="AttackRangeHitbox/Area2D" to="." method="_on_attack_hitbox_triggered"]
-[connection signal="velocity_computed" from="NavigationAgent2D" to="AIPathfindingComponent" method="_on_navigation_agent_2d_velocity_computed"]
 [connection signal="state_entered" from="StateChart/Root/Movement/Idle" to="." method="_on_idle_state_entered"]
 [connection signal="state_entered" from="StateChart/Root/Movement/Moving" to="." method="_on_moving_state_entered"]
 [connection signal="state_entered" from="StateChart/Root/Attacking/Idle" to="." method="_on_attacking_idle_state_entered"]
