@@ -75,30 +75,13 @@ func _set_target_node(new_target: InteractibleObject) -> void:
 		target_pos = target_node.global_position
 
 
-func _connect_signal_callbacks(target: InteractibleObject) -> void:
+func _connect_signal_callbacks(target_node: InteractibleObject) -> void:
 	pass
-	#if not target_node:
-		#return
-	#if target_node.grabbable_component:
-		#target_node.grabbable_component.drop.connect(_drop_target)
-		#target_node.grabbable_component.pickup.connect(_pickup_target)
-	#if target_node.health_component:
-		#target_node.health_component.died.connect(_target_dead)
-	#target_node.object_removed.connect(
-		#func(object):
-			#target_node = target_range_hitbox_component.get_target()
-	#)
 
 
-func _disconnect_signal_callbacks(target: InteractibleObject) -> void:
+func _disconnect_signal_callbacks(target_node: InteractibleObject) -> void:
 	pass
-	#if not target_node:
-		#return
-	#if target_node.grabbable_component:
-		#target_node.grabbable_component.drop.disconnect(_drop_target)
-		#target_node.grabbable_component.pickup.disconnect(_pickup_target)
-	#if target_node.health_component:
-		#target_node.health_component.died.disconnect(_target_dead)
+
 
 ## ======== STATE MACHINE CALLBACKS ========
 

@@ -7,15 +7,12 @@ signal navigation_finished
 
 @export_category("Components")
 @export var nav_agent: NavigationAgent2D
-#@export var velocity_component
 @export_category("Movement")
 @export var current_speed: float = 10.0
 @export var acceleration: float = 7.0
-
 @export_category("Target Finding")
 @export var search_radius: float = 128
 @export var max_intersect_results := 8
-
 @export_category("Avoidance")
 @export var avoid_radius: float = 4.0
 
@@ -112,10 +109,6 @@ func get_new_nav_agent_velocity() -> Vector2:
 	return intended_velocity
 
 
-#func _unstick_pathfinding() -> void:
-	#set_nav_target_position(nav_agent.target_position)
-
-
 func _on_velocity_computed(safe_velocity: Vector2) -> void:
 	entity.velocity = safe_velocity
 	entity.move_and_slide()
@@ -173,22 +166,7 @@ func _get_target(_entity: Node2D = null) -> Node2D:
 
 
 func set_target(value):
-	# Disconnect previous signals
-	#if target:
-		#if target.grabbable_component:
-			#target.grabbable_component.pickup.disconnect(_get_target)
-			##target.grabbable_component.drop.disconnect(update_path)
-		#if target.health_component:
-			#target.health_component.died.disconnect(_get_target)
-	
 	target = value
 	entity.target_node = target
-	
-	# Connect signals
-	#if target.grabbable_component:
-		#target.grabbable_component.pickup.connect(_get_target)
-		##target.grabbable_component.drop.connect(update_path)
-	#if target.health_component:
-		#target.health_component.died.connect(_get_target)
 	
 	set_nav_target_position(target.global_position)
