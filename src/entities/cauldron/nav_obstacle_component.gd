@@ -64,6 +64,8 @@ func _remove_obstacle(obstacle: NavigationObstacle2D) -> void:
 
 func _rebake_nav() -> void:
 	var current_nav_region: NavigationRegion2D = _get_current_nav_region()
+	if current_nav_region.is_baking():
+		await current_nav_region.bake_finished
 	current_nav_region.bake_navigation_polygon()
 
 

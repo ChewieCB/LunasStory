@@ -49,11 +49,13 @@ func set_ingredient_ui(requirement: PotionRecipeRequirement, index: int = 0) -> 
 		push_error("Ingredient UI index exceeds maximum index.")
 		return
 	
-	var ui = ingredient_ui_container.get_child(index)
-	if not ui:
+	var ui: IngredientUIContainer
+	if ingredient_ui_container.get_child_count() <= index:
 		ui = ingredient_ui.instantiate()
 		ingredient_ui_container.add_child(ui)
 		ingredient_ui_container.move_child(ui, index)
+	else:
+		ui = ingredient_ui_container.get_child(index)
 	
 	ui.data = requirement.data
 	ui.set_label(requirement.current_count, requirement.max_count)

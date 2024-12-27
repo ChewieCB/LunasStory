@@ -55,7 +55,7 @@ func _setup_collision_check_area() -> void:
 	# TODO - do we need a teardown for this physics server area when the object is freed?
 	collision_check_area = PhysicsServer2D.area_create()
 	collision_check_shape = PhysicsServer2D.rectangle_shape_create()
-	PhysicsServer2D.shape_set_data(collision_check_shape, tilemap.tile_set.tile_size)
+	PhysicsServer2D.shape_set_data(collision_check_shape, Vector2(tilemap.tile_set.tile_size))
 	PhysicsServer2D.area_add_shape(collision_check_area, collision_check_shape)
 	PhysicsServer2D.area_set_collision_layer(collision_check_area, pow(2, 0-1))
 	PhysicsServer2D.area_set_collision_mask(collision_check_area, pow(2, 3-1))

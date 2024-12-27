@@ -17,6 +17,9 @@ func spawn_one_shot_particle(particle: ParticleResource = default_particle) -> G
 	particles.process_material = particle.process_material
 	particles.material = particle.canvas_material
 	particles.texture = particle.texture
+	# If we don't explicitly set emitting to false before we set one shot,
+	# the finished signal wont emit for some reason.
+	particles.emitting = false
 	particles.one_shot = true
 	particles.lifetime = particle.lifetime
 	
