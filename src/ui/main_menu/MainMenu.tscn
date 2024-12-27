@@ -1,0 +1,126 @@
+[gd_scene load_steps=9 format=3 uid="uid://cjavyteptth4d"]
+
+[ext_resource type="Script" path="res://src/ui/main_menu/main_menu.gd" id="1_6ur4x"]
+[ext_resource type="FontFile" uid="uid://c6nimynn33gk7" path="res://assets/fonts/Big Boy.ttf" id="1_hdak3"]
+[ext_resource type="Texture2D" uid="uid://4kh5gl1mk7vn" path="res://src/ui/main_menu/assets/title FULL2.png" id="1_his33"]
+[ext_resource type="Texture2D" uid="uid://ctnmp6vivan8d" path="res://src/ui/button/button_frame_1.png" id="2_essyw"]
+[ext_resource type="PackedScene" uid="uid://b5vhj0fhn8xuq" path="res://src/stages/main/MainStage.tscn" id="2_faok8"]
+[ext_resource type="Texture2D" uid="uid://bphgt63gohkt" path="res://src/ui/button/button_frame_2.png" id="3_o44ar"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hwn58"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qab8s"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_6ur4x")
+level_scene = ExtResource("2_faok8")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0547036, 0.0507973, 0.117235, 1)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 25.0
+offset_top = 11.0
+offset_right = 597.0
+offset_bottom = 338.0
+
+[node name="MarginContainer2" type="MarginContainer" parent="HBoxContainer"]
+custom_minimum_size = Vector2(256, 64)
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/margin_top = 92
+theme_override_constants/margin_bottom = 92
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/MarginContainer2"]
+custom_minimum_size = Vector2(256, 64)
+layout_mode = 2
+theme_override_constants/separation = -10
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/MarginContainer2/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="PlayButton" type="Button" parent="HBoxContainer/MarginContainer2/VBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("1_hdak3")
+theme_override_font_sizes/font_size = 16
+theme_override_styles/focus = SubResource("StyleBoxEmpty_hwn58")
+text = "Play"
+icon = ExtResource("2_essyw")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="MarginContainer3" type="MarginContainer" parent="HBoxContainer/MarginContainer2/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="SettingsButton" type="Button" parent="HBoxContainer/MarginContainer2/VBoxContainer/MarginContainer3"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("1_hdak3")
+theme_override_font_sizes/font_size = 16
+theme_override_styles/focus = SubResource("StyleBoxEmpty_hwn58")
+disabled = true
+text = "Settings"
+icon = ExtResource("2_essyw")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="MarginContainer2" type="MarginContainer" parent="HBoxContainer/MarginContainer2/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="QuitButton" type="Button" parent="HBoxContainer/MarginContainer2/VBoxContainer/MarginContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("1_hdak3")
+theme_override_font_sizes/font_size = 16
+theme_override_styles/focus = SubResource("StyleBoxEmpty_qab8s")
+text = "Quit"
+icon = ExtResource("3_o44ar")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="Control" type="Control" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -12.0
+offset_top = -9.0
+offset_right = 21.0
+offset_bottom = 23.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/Control/MarginContainer"]
+layout_mode = 2
+texture = ExtResource("1_his33")
+expand_mode = 5
+stretch_mode = 4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[connection signal="pressed" from="HBoxContainer/MarginContainer2/VBoxContainer/MarginContainer/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/MarginContainer2/VBoxContainer/MarginContainer2/QuitButton" to="." method="_on_quit_button_pressed"]
