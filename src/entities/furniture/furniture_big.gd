@@ -29,6 +29,7 @@ func _ready() -> void:
 	follow_component.valid_placement_location.connect(_hide_invalid_placement)
 	follow_component.invalid_placement_location.connect(_show_invalid_placement)
 	follow_component.was_disabled.connect(_hide_invalid_placement)
+	hitbox_component.collider.shape.size = data.sprite_size
 
 
 func _draw() -> void:

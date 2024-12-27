@@ -42,6 +42,7 @@ func spawn_furniture(data: FurnitureData) -> FurnitureBig:
 		new_furniture.selectable_component.enable()
 		new_furniture.selectable_component.query_hover()
 		new_furniture.global_position = final_pos
+		new_furniture.dynamic_nav_obstacle.create_obstacle()
 		spawn_arc_follow.progress_ratio = 0.0
 	)
 	
