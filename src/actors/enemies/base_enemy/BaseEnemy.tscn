@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://c38ly1pqdi348" path="res://src/components/Health/HealthComponent.tscn" id="3_tctfl"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/parallel_state.gd" id="4_1a6wa"]
 [ext_resource type="Resource" uid="uid://df4xulkx6r7kj" path="res://assets/particles/poof/PoofParticle.tres" id="4_b58tt"]
-[ext_resource type="PackedScene" uid="uid://druawb5me37ot" path="res://src/components/Pathfinding/AIPathfindingComponent.tscn" id="4_uk0hc"]
+[ext_resource type="PackedScene" uid="uid://druawb5me37ot" path="res://src/components/Pathfinding/PathfindingComponent.tscn" id="4_uk0hc"]
 [ext_resource type="PackedScene" uid="uid://ckjpj7tql40n" path="res://src/components/Attack/AttackComponent.tscn" id="4_vdv4v"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="5_ihvx6"]
 [ext_resource type="Script" path="res://src/components/Attack/attack_resource.gd" id="5_yo8xg"]
@@ -37,14 +37,13 @@ particle_size = 64
 attack_particle = ExtResource("8_v0c0v")
 attack_sfx = Array[AudioStream]([])
 
-[node name="BaseEnemy" type="CharacterBody2D" node_paths=PackedStringArray("target_range_hitbox_component", "attack_range_hitbox_component", "ai_pathfinding_component", "hitbox_component", "health_component", "attack_component", "particles_component", "state_chart", "nav_agent")]
+[node name="BaseEnemy" type="CharacterBody2D" node_paths=PackedStringArray("attack_range_hitbox_component", "pathfinding_component", "hitbox_component", "health_component", "attack_component", "particles_component", "state_chart", "nav_agent")]
 collision_layer = 8
 collision_mask = 13
 motion_mode = 1
 script = ExtResource("1_ch4pi")
-target_range_hitbox_component = NodePath("")
 attack_range_hitbox_component = NodePath("AttackRangeHitbox")
-ai_pathfinding_component = NodePath("AIPathfindingComponent")
+pathfinding_component = NodePath("PathfindingComponent")
 hitbox_component = NodePath("HitboxComponent")
 health_component = NodePath("HealthComponent")
 attack_component = NodePath("AttackComponent")
@@ -54,7 +53,6 @@ nav_agent = NodePath("NavigationAgent2D")
 hit_particle = ExtResource("8_v0c0v")
 damage_particle = ExtResource("3_ffmc0")
 death_particle = ExtResource("4_b58tt")
-target_search_range = 512.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_rqkiv")
@@ -92,7 +90,7 @@ attack_range_hitbox_component = NodePath("../AttackRangeHitbox")
 particles_component = NodePath("../ParticlesComponent")
 attacks = Array[ExtResource("5_yo8xg")]([SubResource("Resource_ti5ql")])
 
-[node name="AIPathfindingComponent" parent="." node_paths=PackedStringArray("nav_agent") instance=ExtResource("4_uk0hc")]
+[node name="PathfindingComponent" parent="." node_paths=PackedStringArray("nav_agent") instance=ExtResource("4_uk0hc")]
 nav_agent = NodePath("../NavigationAgent2D")
 current_speed = 50.0
 enabled = true

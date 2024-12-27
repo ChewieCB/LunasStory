@@ -4,9 +4,8 @@ class_name AIAgent
 signal spawned(agent: AIAgent)
 
 @export_category("Components")
-@export var target_range_hitbox_component: HitboxComponent
 @export var attack_range_hitbox_component: HitboxComponent
-@export var ai_pathfinding_component: AIPathfindingComponent
+@export var pathfinding_component: PathfindingComponent
 @export var hitbox_component: HitboxComponent
 @export var health_component: HealthComponent
 @export var attack_component: AttackComponent
@@ -24,26 +23,18 @@ signal spawned(agent: AIAgent)
 @export var damage_particle: ParticleResource
 @export var death_particle: ParticleResource
 
-# TODO - work this into a stats component
-@export var target_search_range: float = 128.0:
-	set(value):
-		target_search_range = value
-		await ready
-		if target_range_hitbox_component:
-			target_range_hitbox_component.collider.shape.radius = target_search_range
-
 var target_pos: Vector2:
 	set(value):
 		target_pos = value
-		ai_pathfinding_component.set_nav_target_position(target_pos)
+		pathfinding_component.set_nav_target_position(target_pos)
 		if target_pos != self.global_position:
 			state_chart.send_event("start_moving")
 
 
 func _ready() -> void:
-	ai_pathfinding_component.pathfinding_ready.connect(_spawn)
-	ai_pathfinding_component.nav_target_updated.connect(_on_nav_target_updated)
-	ai_pathfinding_component.navigation_finished.connect(_on_navigation_finished)
+	pathfinding_component.pathfinding_ready.connect(_spawn)
+	pathfinding_component.nav_target_updated.connect(_on_nav_target_updated)
+	pathfinding_component.navigation_finished.connect(_on_navigation_finished)
 	attack_component.attack_chosen.connect(_on_attack_chosen)
 	attack_component.cooldown_finished.connect(_on_attack_cooldown_finished)
 	attack_component.finish_attack.connect(_on_attack_finished)
@@ -79,8 +70,8 @@ func _set_target_node(new_target: InteractibleObject) -> void:
 	
 	if target_node:
 		_connect_signal_callbacks(target_node)
-		if not ai_pathfinding_component.is_node_ready():
-			await ai_pathfinding_component.pathfinding_ready
+		if not pathfinding_component.is_node_ready():
+			await pathfinding_component.pathfinding_ready
 		target_pos = target_node.global_position
 
 
@@ -113,7 +104,7 @@ func _disconnect_signal_callbacks(target: InteractibleObject) -> void:
 
 func _on_idle_state_entered():
 	if velocity != Vector2.ZERO:
-		ai_pathfinding_component.stop_moving()
+		pathfinding_component.stop_moving()
 
 
 func _on_moving_state_entered():
@@ -183,7 +174,7 @@ func _on_attack_failed(_attack: AttackResource) -> void:
 func _pickup_target(_entity: Node2D) -> void:
 	target_pos = self.global_position
 	if velocity != Vector2.ZERO:
-		ai_pathfinding_component.stop_moving()
+		pathfinding_component.stop_moving()
 	state_chart.send_event("abort_attack")
 
 func _drop_target(_entity: Node2D) -> void:

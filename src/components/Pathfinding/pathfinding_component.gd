@@ -1,5 +1,5 @@
 extends BaseComponent
-class_name AIPathfindingComponent
+class_name PathfindingComponent
 
 signal pathfinding_ready
 signal nav_target_updated(position: Vector2)
