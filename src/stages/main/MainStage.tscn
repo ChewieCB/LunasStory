@@ -38,15 +38,15 @@ spawn_cost = 1.0
 script = ExtResource("9_kuilh")
 wave_start_text = ""
 spawns = Array[ExtResource("10_6vtff")]([SubResource("Resource_2xho5")])
-num_portals = 6
-portal_max_spawns = 30
-spawn_delay = 0.2
+num_portals = 1
+portal_max_spawns = 4
+spawn_delay = 0.1
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_ta56x"]
-vertices = PackedVector2Array(146, -162, 270, -190, 286, -190, 286, -174, 146, -94, 350, -174, 350, -94, 366, -94, 366, -50, 194, -82, 114, -162, 114, -178, 146, -190, 270, -222, -18, -110, -2, -110, -2, -30, 66, -30, 66, -46, 82, -46, 78, -34, 82, -62, 98, -62, 94, -50, 258, -50, 258, -66, 194, -66, 110, -82, 110, -50, 94, -34, -114, -110, -30, -110, -2, -18, -2, 30, -130, 30, -158, 14, -190, -34, -190, -94, -130, 62, -158, 62, -190, 14, -290, -34, -290, -2, -334, -2, -334, -18, -366, -18, -366, -50, -350, -62, -302, -78, -274, -46, -382, -50, -382, -62, -350, -78, -302, -110, -290, -110, -290, -94, -274, -94, -206, -46, -206, -94, -190, -142, -114, -142, 146, -222, -30, -190, -18, -178, 78, -18, 98, -94)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4), PackedInt32Array(3, 5, 6, 4), PackedInt32Array(6, 7, 8), PackedInt32Array(4, 6, 8, 9), PackedInt32Array(1, 0, 10, 11, 12, 13), PackedInt32Array(14, 15, 16), PackedInt32Array(17, 18, 19, 20), PackedInt32Array(19, 21, 22, 23), PackedInt32Array(8, 24, 25), PackedInt32Array(25, 26, 9), PackedInt32Array(27, 28, 23, 22), PackedInt32Array(23, 29, 20, 19), PackedInt32Array(30, 31, 32, 33, 34, 35, 36, 37), PackedInt32Array(34, 38, 39, 35), PackedInt32Array(35, 40, 36), PackedInt32Array(41, 42, 43, 44), PackedInt32Array(41, 44, 45, 46, 47, 48, 49), PackedInt32Array(46, 50, 51, 47), PackedInt32Array(47, 52, 48), PackedInt32Array(48, 53, 54, 55), PackedInt32Array(55, 56, 49, 48), PackedInt32Array(36, 41, 49, 57), PackedInt32Array(57, 58, 37, 36), PackedInt32Array(37, 59, 60, 30), PackedInt32Array(12, 61, 13), PackedInt32Array(62, 12, 11, 63), PackedInt32Array(31, 62, 63, 14), PackedInt32Array(31, 14, 16, 32), PackedInt32Array(32, 16, 17, 64), PackedInt32Array(20, 64, 17), PackedInt32Array(27, 22, 65), PackedInt32Array(27, 65, 4, 9), PackedInt32Array(9, 8, 25)])
+vertices = PackedVector2Array(148, -92, 196, -84, 108, -84, 100, -92, 100, -60, 108, -52, 92, -52, 84, -60, 84, -44, 92, -36, 76, -36, 68, -44, 68, -28, 76, -20, -4, -20, -4, -28, 268, -188, 284, -188, 284, -172, 260, -68, 196, -68, 348, -172, 348, -92, 260, -52, 364, -92, 364, -52, 148, -164, 116, -164, 116, -180, 148, -188, -20, -108, -4, -108, -116, -108, -28, -108, -4, 28, -132, 28, -156, 12, -188, -36, -188, -92, -132, 60, -156, 60, -188, 12, -292, -36, -292, -4, -332, -4, -332, -20, -364, -20, -364, -52, -348, -60, -300, -76, -276, -44, -380, -52, -380, -60, -348, -76, -300, -108, -292, -108, -292, -92, -276, -92, -204, -44, -204, -92, -188, -140, -116, -140, 148, -220, 268, -220, -28, -188, -20, -180)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 3, 2, 5), PackedInt32Array(4, 5, 6, 7), PackedInt32Array(8, 7, 6, 9), PackedInt32Array(8, 9, 10, 11), PackedInt32Array(12, 11, 10, 13), PackedInt32Array(12, 13, 14, 15), PackedInt32Array(1, 16, 17, 18, 19, 20), PackedInt32Array(19, 18, 21, 22, 23), PackedInt32Array(22, 24, 25, 23), PackedInt32Array(26, 27, 28, 29), PackedInt32Array(30, 31, 15), PackedInt32Array(32, 33, 14, 34, 35, 36, 37, 38), PackedInt32Array(35, 39, 40, 36), PackedInt32Array(36, 41, 37), PackedInt32Array(42, 43, 44, 45), PackedInt32Array(42, 45, 46, 47, 48, 49, 50), PackedInt32Array(47, 51, 52, 48), PackedInt32Array(48, 53, 49), PackedInt32Array(49, 54, 55, 56), PackedInt32Array(56, 57, 50, 49), PackedInt32Array(37, 42, 50, 58), PackedInt32Array(58, 59, 38, 37), PackedInt32Array(38, 60, 61, 32), PackedInt32Array(29, 62, 63, 16, 1), PackedInt32Array(1, 0, 26), PackedInt32Array(29, 1, 26), PackedInt32Array(64, 29, 28, 65), PackedInt32Array(33, 64, 65, 30), PackedInt32Array(33, 30, 15, 14)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-192, -144, -192, -96, -208, -96, -208, -48, -208, -32, -192, -32, -192, 16, -160, 16, -160, 64, -128, 64, -128, 32, 0, 32, 0, -112, -112, -112, -112, -144), PackedVector2Array(-208, -48, -272, -48, -272, -96, -288, -96, -288, -112, -304, -112, -304, -80, -352, -80, -352, -64, -384, -64, -384, -48, -368, -48, -368, -16, -336, -16, -336, 0, -288, 0, -288, -32, -208, -32), PackedVector2Array(0, -32, 64, -32, 64, -48, 80, -48, 80, -64, 96, -64, 96, -96, 144, -96, 144, -160, 112, -160, 112, -192, 144, -192, 144, -224, 272, -224, 272, -192, 288, -192, 288, -176, 352, -176, 352, -96, 368, -96, 368, -48, 256, -48, 256, -64, 192, -64, 192, -80, 112, -80, 112, -48, 96, -48, 96, -32, 80, -32, 80, -16, 0, -16), PackedVector2Array(112, -192, -32, -192, -32, -112, -16, -112, -16, -176, 112, -176)])
-agent_radius = 2.0
+agent_radius = 4.0
 
 [node name="MainStage" type="Node2D"]
 script = ExtResource("1_a8pxn")
@@ -64,21 +64,6 @@ navigation_enabled = false
 [node name="Spawn1" type="Marker2D" parent="PortalSpawns"]
 position = Vector2(-328, -56)
 
-[node name="Spawn2" type="Marker2D" parent="PortalSpawns"]
-position = Vector2(184, -200)
-
-[node name="Spawn3" type="Marker2D" parent="PortalSpawns"]
-position = Vector2(312, -152)
-
-[node name="Spawn4" type="Marker2D" parent="PortalSpawns"]
-position = Vector2(232, -88)
-
-[node name="Spawn5" type="Marker2D" parent="PortalSpawns"]
-position = Vector2(328, -72)
-
-[node name="Spawn6" type="Marker2D" parent="PortalSpawns"]
-position = Vector2(248, -152)
-
 [node name="IngredientSpawner" parent="." node_paths=PackedStringArray("tilemap", "hand_cursor") instance=ExtResource("19_rxf6j")]
 max_spawned = 8
 tilemap = NodePath("../StructureTiles")
@@ -94,7 +79,7 @@ entity_scene = ExtResource("5_r4y4v")
 entity_resources_path = "res://src/entities/furniture/resources/"
 
 [node name="WaveManager" parent="." node_paths=PackedStringArray("agent_target", "portal_parent", "ingredient_spawner", "brewing_manager") instance=ExtResource("2_jugkp")]
-waves = Array[ExtResource("9_kuilh")]([SubResource("Resource_1mybo")])
+waves = Array[ExtResource("9_kuilh")]([SubResource("Resource_1mybo"), SubResource("Resource_1mybo"), SubResource("Resource_1mybo"), SubResource("Resource_1mybo")])
 agent_target = NodePath("../Cauldron")
 portal_parent = NodePath("../PortalSpawns")
 portal_scene = ExtResource("4_ea2v8")
@@ -102,7 +87,7 @@ ingredient_spawner = NodePath("../IngredientSpawner")
 brewing_manager = NodePath("../BrewingManager")
 
 [node name="Cauldron" parent="." instance=ExtResource("4_dnt3y")]
-position = Vector2(-120, 8)
+position = Vector2(-104, -24)
 
 [node name="GoldSpawner" parent="." node_paths=PackedStringArray("wave_manager", "tilemap", "hand_cursor") instance=ExtResource("14_o320m")]
 wave_manager = NodePath("../WaveManager")
@@ -125,6 +110,7 @@ zoom = Vector2(0.75, 0.75)
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
 navigation_polygon = SubResource("NavigationPolygon_ta56x")
+use_edge_connections = false
 metadata/_edit_lock_ = true
 
 [node name="UI" type="CanvasLayer" parent="."]

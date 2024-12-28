@@ -67,7 +67,7 @@ position = Vector2(0, -7)
 obstacle_collider = NodePath("../HitboxComponent/Area2D/CollisionShape2D")
 
 [node name="HealthComponent" parent="." instance=ExtResource("10_qqjd1")]
-enabled = false
+max_health = 300.0
 
 [connection signal="area_entered" from="HitboxComponent/Area2D" to="HitboxComponent" method="_on_area_2d_area_entered"]
 [connection signal="area_exited" from="HitboxComponent/Area2D" to="HitboxComponent" method="_on_area_2d_area_exited"]

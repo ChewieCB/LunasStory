@@ -30,13 +30,26 @@ func _on_input_event(_viewport: Node, _event: InputEvent, _shape_idx: int) -> vo
 
 
 func _on_hover(_entity: Node2D, state: bool) -> void:
-	enable() if state == true else disable()
+	if is_enabled:
+		enable() if state == true else disable()
 
 
 func _on_held_state_entered() -> void:
 	emit_signal("pickup", entity)
+	if log_events:
+		print_rich(
+			"%s.%s [color=green]picked up[/color]" % [
+				entity.name, entity.get_instance_id()
+			]
+		)
 
 
 func _on_dropped_state_entered() -> void:
 	emit_signal("drop", entity)
+	if log_events:
+		print_rich(
+			"%s.%s [color=red]dropped[/color]" % [
+				entity.name, entity.get_instance_id()
+			]
+		)
 	state_chart.send_event("settle")

@@ -1,10 +1,11 @@
-[gd_scene load_steps=14 format=3 uid="uid://bux1j4jbk8st2"]
+[gd_scene load_steps=15 format=3 uid="uid://bux1j4jbk8st2"]
 
 [ext_resource type="Script" path="res://src/entities/ingredients/assets/ingredient.gd" id="1_ipyti"]
 [ext_resource type="Texture2D" uid="uid://yxjbv4v6ghli" path="res://src/entities/ingredients/assets/normal/ingredient_000.png" id="2_jk5ra"]
 [ext_resource type="PackedScene" uid="uid://l82e7lamaemc" path="res://src/components/Selectable/SelectableComponent.tscn" id="4_727f8"]
 [ext_resource type="PackedScene" uid="uid://b6irvllg6u58o" path="res://src/components/MouseFollow/MouseFollowComponent.tscn" id="5_unb27"]
 [ext_resource type="PackedScene" uid="uid://cojyfxu5j1idb" path="res://src/components/Grabbable/GrabbableComponent.tscn" id="6_etj2y"]
+[ext_resource type="PackedScene" uid="uid://c38ly1pqdi348" path="res://src/components/Health/HealthComponent.tscn" id="7_wfkag"]
 [ext_resource type="Script" path="res://src/components/Hitbox/hitbox_component.gd" id="7_ywfev"]
 [ext_resource type="Script" path="res://src/entities/ingredients/consumable_component.gd" id="8_v8v5x"]
 
@@ -142,10 +143,11 @@ _data = {
 "spawn": SubResource("Animation_d5pk8")
 }
 
-[node name="Ingredient" type="Node2D" node_paths=PackedStringArray("consumable_component", "hitbox_component", "selectable_component", "grabbable_component", "follow_component")]
+[node name="Ingredient" type="Node2D" node_paths=PackedStringArray("consumable_component", "hitbox_component", "health_component", "selectable_component", "grabbable_component", "follow_component")]
 script = ExtResource("1_ipyti")
 consumable_component = NodePath("ConsumableComponent")
 hitbox_component = NodePath("HitboxComponent")
+health_component = NodePath("HealthComponent")
 selectable_component = NodePath("SelectableComponent")
 grabbable_component = NodePath("GrabbableComponent")
 follow_component = NodePath("MouseFollowComponent")
@@ -169,6 +171,7 @@ collision_layer = 16
 collision_mask = 2
 selectable_component = NodePath("../SelectableComponent")
 collider = NodePath("CollisionShape2D")
+log_events = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GrabbableComponent"]
 shape = SubResource("CircleShape2D_gvquo")
@@ -184,6 +187,9 @@ collision_mask = 108
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent/Area2D"]
 shape = SubResource("CircleShape2D_b1q5v")
+
+[node name="HealthComponent" parent="." instance=ExtResource("7_wfkag")]
+max_health = 15.0
 
 [node name="ConsumableComponent" type="Node2D" parent="." node_paths=PackedStringArray("hitbox_component")]
 script = ExtResource("8_v8v5x")

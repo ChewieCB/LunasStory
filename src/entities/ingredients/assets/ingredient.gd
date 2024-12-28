@@ -44,5 +44,10 @@ func _on_drop(entity: Node2D) -> void:
 			emit_signal("consumed", self)
 
 
+func _on_died() -> void:
+	super()
+	decay()
+
+
 func _on_decay_timer_timeout() -> void:
 	decay()

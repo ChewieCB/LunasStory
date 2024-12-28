@@ -20,6 +20,9 @@ signal was_disabled()
 	get:
 		return enabled
 
+@export_category("Logging")
+@export var log_events: bool = false
+
 func enable() -> void:
 	enabled = true
 

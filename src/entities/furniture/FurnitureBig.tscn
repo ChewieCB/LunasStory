@@ -1,14 +1,19 @@
-[gd_scene load_steps=13 format=3 uid="uid://bwhulkm5ypjw2"]
+[gd_scene load_steps=18 format=3 uid="uid://bwhulkm5ypjw2"]
 
 [ext_resource type="Script" path="res://src/entities/furniture/furniture_big.gd" id="1_ag406"]
+[ext_resource type="Resource" uid="uid://bfll8kxvcyxn2" path="res://assets/particles/impact/ImpactParticle.tres" id="2_exgm1"]
+[ext_resource type="Resource" uid="uid://dr68h35syqink" path="res://assets/particles/stars/StarsParticle.tres" id="3_3qysn"]
 [ext_resource type="PackedScene" uid="uid://l82e7lamaemc" path="res://src/components/Selectable/SelectableComponent.tscn" id="3_wyaeg"]
 [ext_resource type="PackedScene" uid="uid://cojyfxu5j1idb" path="res://src/components/Grabbable/GrabbableComponent.tscn" id="3_y2bme"]
+[ext_resource type="Resource" uid="uid://df4xulkx6r7kj" path="res://assets/particles/poof/PoofParticle.tres" id="4_5fae1"]
 [ext_resource type="PackedScene" uid="uid://b6irvllg6u58o" path="res://src/components/MouseFollow/MouseFollowComponent.tscn" id="4_6wpy1"]
 [ext_resource type="PackedScene" uid="uid://pfmp13n5e2is" path="res://src/components/Hitbox/HitboxComponent.tscn" id="5_kbkav"]
 [ext_resource type="PackedScene" uid="uid://twux0snbpc37" path="res://src/components/Particles/ParticlesComponent.tscn" id="6_tuxp4"]
+[ext_resource type="PackedScene" uid="uid://c38ly1pqdi348" path="res://src/components/Health/HealthComponent.tscn" id="7_fidhw"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="8_vt005"]
 [ext_resource type="PackedScene" uid="uid://b1idbltbgx3a4" path="res://src/components/NavObstacle/DynamicNavObstacle.tscn" id="9_b12nm"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/parallel_state.gd" id="9_pqynd"]
+[ext_resource type="PackedScene" uid="uid://lysd0wn0n81t" path="res://src/ui/health_bar/HealthBar.tscn" id="11_dfaex"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_xexl2"]
 radius = 22.0
@@ -19,14 +24,18 @@ size = Vector2(28, 28)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_eawpa"]
 size = Vector2(32, 32)
 
-[node name="FurnitureBig" type="Node2D" node_paths=PackedStringArray("dynamic_nav_obstacle", "particles_component", "hitbox_component", "selectable_component", "grabbable_component", "follow_component")]
+[node name="FurnitureBig" type="Node2D" node_paths=PackedStringArray("dynamic_nav_obstacle", "particles_component", "hitbox_component", "health_component", "selectable_component", "grabbable_component", "follow_component")]
 script = ExtResource("1_ag406")
 dynamic_nav_obstacle = NodePath("DynamicNavObstacleComponent")
 particles_component = NodePath("ParticlesComponent")
 hitbox_component = NodePath("HitboxComponent")
+health_component = NodePath("HealthComponent")
 selectable_component = NodePath("SelectableComponent")
 grabbable_component = NodePath("GrabbableComponent")
 follow_component = NodePath("FollowComponent")
+hit_particle = ExtResource("2_exgm1")
+damage_particle = ExtResource("3_3qysn")
+death_particle = ExtResource("4_5fae1")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 
@@ -53,19 +62,22 @@ collision_mask = 12
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent/Area2D"]
 shape = SubResource("RectangleShape2D_upswy")
-debug_color = Color(0, 0.6, 0.701961, 0)
+debug_color = Color(0.729496, 0.235781, 1, 0.42)
 
 [node name="GrabbableComponent" parent="." node_paths=PackedStringArray("selectable_component", "collider") instance=ExtResource("3_y2bme")]
 collision_layer = 16
 collision_mask = 2
 selectable_component = NodePath("../SelectableComponent")
 collider = NodePath("CollisionShape2D")
+log_events = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GrabbableComponent"]
 shape = SubResource("RectangleShape2D_eawpa")
 debug_color = Color(0, 0.6, 0.701961, 0)
 
 [node name="ParticlesComponent" parent="." instance=ExtResource("6_tuxp4")]
+
+[node name="HealthComponent" parent="." instance=ExtResource("7_fidhw")]
 
 [node name="DynamicNavObstacleComponent" parent="." node_paths=PackedStringArray("obstacle_collider") instance=ExtResource("9_b12nm")]
 obstacle_collider = NodePath("../HitboxComponent/Area2D/CollisionShape2D")
@@ -75,3 +87,31 @@ script = ExtResource("8_vt005")
 
 [node name="Root" type="Node" parent="StateChart"]
 script = ExtResource("9_pqynd")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 40.0
+grow_horizontal = 2
+mouse_filter = 2
+
+[node name="HealthBar" parent="Control" node_paths=PackedStringArray("health_component") instance=ExtResource("11_dfaex")]
+z_index = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -17.0
+offset_top = -52.0
+offset_right = 95.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.3, 0.3)
+health_component = NodePath("../../HealthComponent")

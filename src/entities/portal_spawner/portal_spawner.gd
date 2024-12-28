@@ -48,7 +48,9 @@ func deactivate() -> void:
 func spawn_agent(agent_type: PackedScene) -> AIAgent:
 	var new_agent: AIAgent = agent_type.instantiate()
 	get_parent().add_child(new_agent)
-	new_agent.target_node = agent_target
+	await new_agent.pathfinding_component.pathfinding_ready
+	new_agent.pathfinding_component.set_target(agent_target)
+	#new_agent.target_node = agent_target
 	new_agent._spawn()
 	emit_signal("agent_spawned", new_agent, self)
 	return new_agent

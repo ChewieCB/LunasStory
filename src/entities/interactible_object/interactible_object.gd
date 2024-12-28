@@ -14,12 +14,20 @@ signal object_removed(object: InteractibleObject)
 
 @export var data: Data
 
+@export_category("Particles")
+@export var pickup_particle: ParticleResource
+@export var drop_particle: ParticleResource
+@export var hit_particle: ParticleResource
+@export var damage_particle: ParticleResource
+@export var death_particle: ParticleResource
+
 @onready var sprite := $Sprite2D
 
 
 func _ready() -> void:
 	add_to_group("interactible")
 	_set_sprite_texture()
+	#self.name = self.data.name if self.data.name != "" else get_class()
 	
 	# TODO - further decouple these components if possible
 	if follow_component:
@@ -35,6 +43,7 @@ func _ready() -> void:
 	
 	if health_component:
 		health_component.died.connect(_on_died)
+		health_component.health_changed.connect(_on_health_changed)
 
 
 func _set_sprite_texture() -> void:
@@ -65,21 +74,26 @@ func _on_hover(entity: Node2D, state: bool) -> void:
 
 func _on_pickup(entity: Node2D) -> void:
 	if entity == self and grabbable_component.is_enabled():
+		hitbox_component.disable()
 		follow_component.enable()
 		selectable_component.disable()
-		hitbox_component.disable()
 		_handle_item(true)
 
 
 func _on_drop(entity: Node2D) -> void:
 	if entity == self:
+		hitbox_component.enable()
 		follow_component.disable()
 		selectable_component.enable()
 		grabbable_component.disable()
-		hitbox_component.enable()
 		# Re-enables grabbing if the cursor is still over the object
 		selectable_component.query_hover()
 		_handle_item(false)
+
+
+func _on_health_changed(new_health: float, prev_health: float) -> void:
+		# TODO
+		pass
 
 
 func _on_died() -> void:

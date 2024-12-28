@@ -117,7 +117,6 @@ script = ExtResource("1_7nh3d")
 anim_sprite = NodePath("AnimatedSprite2D")
 state_chart = NodePath("StateChart")
 spawn_timer = NodePath("SpawnTimer")
-spawns = null
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_1s6ir")
@@ -133,7 +132,6 @@ shape = SubResource("CircleShape2D_woegi")
 [node name="HitboxComponent" parent="." instance=ExtResource("15_r8edr")]
 
 [node name="Area2D" type="Area2D" parent="HitboxComponent"]
-collision_layer = 17
 collision_mask = 79
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent/Area2D"]

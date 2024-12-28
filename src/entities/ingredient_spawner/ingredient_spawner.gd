@@ -43,6 +43,10 @@ func spawn_ingredient(data: IngredientData) -> Ingredient:
 	var ingredient = spawn_entity(data)
 	ingredient.decayed.connect(_remove_from_current_spawns)
 	ingredient.consumed.connect(_remove_from_current_spawns)
+	if data.name != "":
+		ingredient.name = data.name
+	else:
+		ingredient.name = "Ingredient"
 	add_child(ingredient)
 	
 	return ingredient

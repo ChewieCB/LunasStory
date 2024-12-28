@@ -67,6 +67,8 @@ func _rebake_nav() -> void:
 	if current_nav_region.is_baking():
 		await current_nav_region.bake_finished
 	current_nav_region.bake_navigation_polygon()
+	await current_nav_region.bake_finished
+	return
 
 
 func _get_current_nav_region() -> NavigationRegion2D:

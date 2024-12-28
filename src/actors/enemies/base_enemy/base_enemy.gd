@@ -34,6 +34,7 @@ var target_pos: Vector2:
 func _ready() -> void:
 	pathfinding_component.pathfinding_ready.connect(_spawn)
 	pathfinding_component.nav_target_updated.connect(_on_nav_target_updated)
+	pathfinding_component.nav_target_pos_updated.connect(_on_nav_target_pos_updated)
 	pathfinding_component.navigation_finished.connect(_on_navigation_finished)
 	attack_component.attack_chosen.connect(_on_attack_chosen)
 	attack_component.cooldown_finished.connect(_on_attack_cooldown_finished)
@@ -44,6 +45,10 @@ func _ready() -> void:
 	await get_tree().physics_frame
 	for tool in get_tree().get_nodes_in_group("tools"):
 		tool.tool_damage.connect(_take_tool_damage)
+
+
+func _process(delta: float) -> void:
+	queue_redraw()
 
 
 func _spawn():
@@ -76,11 +81,20 @@ func _set_target_node(new_target: InteractibleObject) -> void:
 
 
 func _connect_signal_callbacks(target_node: InteractibleObject) -> void:
-	pass
+	if target_node:
+		if target_node.grabbable_component:
+			target_node.grabbable_component.pickup.connect(pathfinding_component._get_target)
+			#target_node.grabbable_component.drop.connect(pathfinding_component._get_target)
+		target_node.health_component.died.connect(pathfinding_component._get_target)
 
 
 func _disconnect_signal_callbacks(target_node: InteractibleObject) -> void:
-	pass
+	if target_node:
+		if target_node.grabbable_component:
+			target_node.grabbable_component.pickup.disconnect(pathfinding_component._get_target)
+			#target_node.grabbable_component.drop.disconnect(pathfinding_component._get_target)
+		target_node.health_component.died.disconnect(pathfinding_component._get_target)
+
 
 
 ## ======== STATE MACHINE CALLBACKS ========
@@ -101,6 +115,9 @@ func _on_attacking_idle_state_entered() -> void:
 
 func _on_attacking_attack_state_entered():
 	state_chart.send_event("stop_moving")
+	if not target_node:
+		state_chart.send_event("abort_attack")
+		return
 	attack_component.attack(target_node)
 
 
@@ -134,7 +151,10 @@ func _on_damage_dead_state_entered() -> void:
 
 ## ======== Signal Callbacks ========
 
-func _on_nav_target_updated(_new_target_pos: Vector2) -> void:
+func _on_nav_target_updated(new_target: InteractibleObject) -> void:
+	target_node = new_target
+
+func _on_nav_target_pos_updated(_new_target_pos: Vector2) -> void:
 	state_chart.send_event("start_moving")
 
 func _on_navigation_finished() -> void:
@@ -183,4 +203,3 @@ func _on_died() -> void:
 	state_chart.send_event("died")
 	state_chart.send_event("stop_moving")
 	state_chart.send_event("abort_attack")
-	

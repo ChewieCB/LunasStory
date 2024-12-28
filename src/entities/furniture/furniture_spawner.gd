@@ -16,10 +16,14 @@ func spawn_furniture(data: FurnitureData) -> FurnitureBig:
 	new_furniture.follow_component_tilemap = tilemap
 	new_furniture.debug_placement_collider = debug_placement_collider
 	
+	if data.name != "":
+		new_furniture.name = data.name
+	else:
+		new_furniture.name = "Furniture"
 	add_child(new_furniture)
 	new_furniture.follow_component._move_entity_within_grid(new_furniture.global_position)
 	
-	
+	# TODO - move this arc tweening out into it's own method
 	# Tween the object in an arc from the cauldron from it's placement point
 	var final_pos: Vector2 = new_furniture.global_position
 	var spawn_pos: Vector2 = cauldron_target.global_position

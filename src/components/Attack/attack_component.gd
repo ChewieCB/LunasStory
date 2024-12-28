@@ -18,6 +18,7 @@ signal attack_failed(_attack: AttackResource)
 @onready var current_attack: AttackResource:
 	set(value):
 		current_attack = value
+		_update_attack_collider(current_attack)
 		var _timer = Timer.new()
 		add_child(_timer)
 		current_attack.cooldown_timer = _timer

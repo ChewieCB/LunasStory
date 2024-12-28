@@ -100,11 +100,34 @@ func _on_drop(entity: Node2D) -> void:
 		follow_component.blocked_tiles = []
 
 
+func _on_health_changed(new_health: float, prev_health: float) -> void:
+	super(new_health, prev_health)
+	
+	if new_health < prev_health:
+		var particles_to_spawn = [hit_particle, damage_particle]
+		for _particle in particles_to_spawn:
+			var particles = particles_component.spawn_one_shot_particle(_particle)
+			particles_component.emit_particles(self, particles)
+
+
+func _on_died() -> void:
+	super()
+	
+	var particles = particles_component.spawn_one_shot_particle(death_particle)
+	particles.finished.connect(queue_free)
+	particles_component.emit_particles(self, particles)
+	
+	dynamic_nav_obstacle.remove_previous_obstacle()
+	await dynamic_nav_obstacle._rebake_nav()
+	
+	queue_free()
+
+
 func _on_placement_preview_state_entered() -> void:
 	sprite.modulate = Color(Color.GREEN, 0.5)
 	selectable_component.disable()
 	grabbable_component.disable()
-	hitbox_component.disable()
+	#hitbox_component.disable()
 	follow_component.enable()
 
 
@@ -112,7 +135,7 @@ func _on_placement_preview_state_exited() -> void:
 	sprite.modulate = Color.WHITE
 	selectable_component.enable()
 	grabbable_component.enable()
-	hitbox_component.enable()
+	#hitbox_component.enable()
 	follow_component.disable()
 
 

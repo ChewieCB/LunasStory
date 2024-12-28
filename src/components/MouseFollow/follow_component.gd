@@ -186,6 +186,9 @@ func _on_disabled() -> void:
 
 func _placement_collision_callback(status: int, area_rid: RID, instance_id: int, area_shape_idx: int, self_shape_idx: int) -> void:
 	var collision_area = instance_from_id(instance_id)
+	if not collision_area:
+		return
+	
 	var object = collision_area.owner
 	if object is FurnitureBig and object != entity:
 		var tiles = object.sprite_tiles
