@@ -61,19 +61,6 @@ func _physics_process(_delta: float) -> void:
 		self.global_position = spawn_movement_target.global_position
 
 
-func get_tiles_for_sprite(tilemap: TileMapLayer) -> Array[Vector2]:
-		var tile_size: Vector2 = follow_component_tilemap.tile_set.tile_size
-		var x_tiles_per_sprite: int = data.sprite_size.x / tile_size.x
-		var y_tiles_per_sprite: int = data.sprite_size.y / tile_size.y
-		
-		var tiles: Array[Vector2] = []
-		for x_tile in range(x_tiles_per_sprite):
-			for y_tile in range(y_tiles_per_sprite):
-				tiles.append(Vector2(tile_size.x * x_tile, tile_size.y * y_tile))
-		
-		return tiles
-
-
 func enable_preview() -> void:
 	state_chart.send_event("preview")
 

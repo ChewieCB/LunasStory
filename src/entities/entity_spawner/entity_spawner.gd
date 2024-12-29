@@ -37,11 +37,24 @@ func spawn_entity(data: Data) -> InteractibleObject:
 	var entity = entity_scene.instantiate()
 	var valid_positions = get_valid_placements()
 	valid_positions.shuffle()
-	var spawn_pos = valid_positions.pop_front()
 	
-	entity.position = spawn_pos
 	entity.data = data
 	entity.follow_target = hand_cursor
+	
+	# Check we have enough space based on entity size
+	var entity_tiles: Array[Vector2] = entity.get_tiles_for_sprite(tilemap)
+	valid_positions = valid_positions.filter(
+		func(x):
+			# Check that we can place all of the tiles if we place that position
+			for tile in entity_tiles:
+				var check_cell = x + tile
+				if check_cell not in valid_positions:
+					return false
+			return true
+	)
+	
+	var spawn_pos = valid_positions.pop_front()
+	entity.position = spawn_pos
 	
 	return entity
 

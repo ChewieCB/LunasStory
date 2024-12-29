@@ -63,6 +63,19 @@ func toggle_hover_texture(state: bool):
 			sprite.texture = data.icon
 
 
+func get_tiles_for_sprite(tilemap: TileMapLayer) -> Array[Vector2]:
+		var tile_size: Vector2 = tilemap.tile_set.tile_size
+		var x_tiles_per_sprite: int = data.sprite_size.x / tile_size.x
+		var y_tiles_per_sprite: int = data.sprite_size.y / tile_size.y
+		
+		var tiles: Array[Vector2] = []
+		for x_tile in range(x_tiles_per_sprite):
+			for y_tile in range(y_tiles_per_sprite):
+				tiles.append(Vector2(tile_size.x * x_tile, tile_size.y * y_tile))
+		
+		return tiles
+
+
 func _handle_item(state: bool) -> void:
 	emit_signal("item", self, state)
 
